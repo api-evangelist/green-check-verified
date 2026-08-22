@@ -1,23 +1,124 @@
 aid: green-check-verified
 name: Green Check Verified
-description: 'Green Check Verified is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: 'Green Check Verified (Green Check) is a New Haven, Connecticut specialty-banking compliance
+  platform founded in 2017 that sits between financial institutions and the cannabis and other cash-intensive
+  businesses they serve. Banks and credit unions use it to onboard cannabis-related businesses (CRBs),
+  collect and review due-diligence documentation, validate that deposits trace to legally licensed sales,
+  monitor licenses and negative news, and produce the BSA/AML oversight reporting examiners require. Its
+  public developer product, Green Check Access, is a REST API suite that normalizes compliance, company
+  and transactional data across more than twenty point-of-sale and seed-to-sale systems — Dutchie, Treez,
+  Flowhub, Biotrack, Metrc, Cova, Canix, Greenbits and others — so service providers such as payroll
+  companies, CRMs, lenders and fintechs can programmatically create and onboard CRBs and read their sales,
+  products, inventory, customer and document data through one contract instead of one integration per POS.'
 url: https://raw.githubusercontent.com/api-evangelist/green-check-verified/refs/heads/main/apis.yml
+image: https://greencheckverified.com/wp-content/uploads/2021/06/Feature-Image.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-22'
 modified: '2026-08-22'
 tags:
 - Company
-apis: []
+- Cannabis
+- Compliance
+- Banking
+- Financial Services
+- BSA/AML
+- Regulatory Technology
+- Point of Sale
+- Onboarding
+- Due Diligence
+- Know Your Customer
+- Data Aggregation
+apis:
+- name: Green Check Access
+  description: 'Green Check Access is Green Check''s public REST API suite for service providers —
+    financial institutions, payroll companies, CRMs and other platforms serving the cannabis industry.
+    It exposes 49 operations across service-provider, CRB onboarding, onboarding-template, document,
+    sales, product, inventory, inventory-location and customer resources, plus an OAuth 2.0
+    client-credentials token endpoint and a pass-through Trace proxy to state track-and-trace systems.
+    Data for sales, products, inventory and customers is sourced from the CRB''s connected
+    point-of-sale or seed-to-sale system and normalized across providers.'
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Cannabis
+  - Compliance
+  - Onboarding
+  - Sales
+  - Inventory
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-access-openapi.yaml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/green-check-verified-domain-security.yml
+- type: Authentication
+  url: authentication/green-check-verified-authentication.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://greencheckverified.com/
+- type: DeveloperPortal
+  url: https://developer.greencheckverified.com/
+- type: Documentation
+  url: https://developer.greencheckverified.com/guides
+- type: APIReference
+  url: https://developer.greencheckverified.com/apis/swagger
+- type: GettingStarted
+  url: https://developer.greencheckverified.com/guides/insights-quickstart
+- type: Support
+  url: https://support.greencheckverified.com/
+- type: Blog
+  url: https://greencheckverified.com/knowledge-center/blog/
+- type: GitHubOrganization
+  url: https://github.com/greencheckverified
+- type: SignUp
+  url: https://greencheckverified.com/get-started/
+- type: Login
+  url: https://app.greencheckverified.com/login
+- type: TermsOfService
+  url: https://greencheckverified.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://greencheckverified.com/privacy-policy/
+- type: WellKnown
+  url: well-known/green-check-verified-well-known.yml
+- type: MCPServer
+  url: mcp/green-check-verified-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/green-check-verified-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/green-check-verified-llms.txt
+- type: Overlay
+  url: overlays/green-check-verified-access-overlay.yaml
+- type: Conformance
+  url: conformance/green-check-verified-conformance.yml
+- type: ErrorCatalog
+  url: errors/green-check-verified-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/green-check-verified-lifecycle.yml
+- type: OAuthScopes
+  url: scopes/green-check-verified-scopes.yml
+- type: Sandbox
+  url: sandbox/green-check-verified-sandbox.yml
+- type: Conventions
+  url: conventions/green-check-verified-conventions.yml
+- type: DataModel
+  url: data-model/green-check-verified-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/green-check-verified-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/green-check-verified-rate-limits.yml
+x-enrichment:
+  date: '2026-08-22'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

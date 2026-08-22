@@ -1,0 +1,152 @@
+{
+  "tools": [
+    {
+      "name": "list-apis",
+      "description": "Lists available APIs with their context and purpose",
+      "inputSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {
+          "filter": {
+            "type": "string",
+            "description": "API name (or part of it)",
+            "minLength": 1
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of APIs per page. Default is 300",
+            "minimum": 1,
+            "default": 300
+          }
+        }
+      }
+    },
+    {
+      "name": "get-endpoints",
+      "description": "Get all endpoints for a specific API",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "API name (or part of it)",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "get-endpoint-info",
+      "description": "Get comprehensive information about specific endpoint including parameters, security, and examples",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name",
+          "path",
+          "method"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "API name (or part of it)",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "description": "Endpoint path (e.g. /api/v1/users)",
+            "minLength": 1
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method (GET, POST, PUT, DELETE, etc.)",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "DELETE",
+              "PATCH",
+              "OPTIONS",
+              "HEAD",
+              "TRACE",
+              "get",
+              "post",
+              "put",
+              "delete",
+              "patch",
+              "options",
+              "head",
+              "trace"
+            ],
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "get-security-schemes",
+      "description": "Get the security schemes for a specific API",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "API name (or part of it)",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "get-full-api-description",
+      "description": "Get the complete OpenAPI description",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "API name (or part of it)",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "search",
+      "description": "Search across the documentation to fetch relevant content for a given query",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query. Should be a single word or that phrase that is presented in a documentation.",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}

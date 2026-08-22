@@ -1,0 +1,92 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  openapi/green-check-verified-access-openapi.yaml (response schemas on all 49 operations) +
+  https://developer.greencheckverified.com/tutorials/api-integration-workflow (error reference) +
+  https://developer.greencheckverified.com/guides/create-crb-connect-pos (response outcomes) +
+  live probe of POST https://prod-api.greencheckverified.com/auth/token (2026-08-22)
+docs: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+format: bespoke
+rfc9457: false
+media_type: application/json
+summary: >-
+  Every one of the 49 operations declares the same four error responses — 401, 403, 404, 422 — with
+  named component schemas, and one operation adds 409. The envelope is Green Check's own shape, not
+  RFC 9457 problem+json: there is no `type` URI, no `title`, no `instance`. Validation errors carry a
+  per-field `details` map, which is the most useful part for an agent.
+envelope:
+  common_fields:
+    name: short error name (e.g. "Unauthorized", "Forbidden", "Not Found")
+    message: human-readable message
+    status: numeric HTTP status (double in the schema)
+    stack: stack trace string (present in the schema; should not be relied on in production)
+    data: unstructured
+  validation_shape:
+    message: 'Validation Failed'
+    details: 'object keyed by "<location>.<field>", each value {message: "..."}'
+    locations: [body, query, path]
+  observed_live:
+    status: 422
+    body: '{"message":"Validation Failed","details":{"body.client_id":{"message":"''client_id'' is required"},"body.client_secret":{"message":"''client_secret'' is required"},"body.grant_type":{"message":"''grant_type'' is required"}}}'
+    note: >-
+      The live 422 body does NOT include the `name`, `status` or `stack` fields the ValidateError
+      schema declares. Code against `message` + `details` only.
+problem_type_count: 5
+problem_types:
+  - status: 401
+    name: Unauthorized
+    schema: UnauthorizedError
+    operations: 49
+    meaning: Invalid or missing token.
+    remediation: Re-authenticate with POST /auth/token and retry. Most commonly an expired token — tokens live 3600s.
+    source: docs error reference
+  - status: 403
+    name: Forbidden
+    schema: ForbiddenError
+    operations: 49
+    meaning: Insufficient permissions.
+    remediation: >-
+      Verify sp_id is correct and the CRB is connected to your organization. Also check the token's
+      scope array covers the operation — the contract declares per-operation scopes.
+    source: docs error reference
+  - status: 404
+    name: Not Found
+    schema: NotFoundError
+    operations: 49
+    meaning: Resource does not exist.
+    remediation: Double-check the sp_id and crb_id UUIDs.
+    source: docs error reference
+  - status: 422
+    name: Validation Failed
+    schema: ValidateError
+    operations: 49
+    meaning: Invalid parameters or body.
+    remediation: >-
+      Read `details` — it names each failing field and why. Check date format (YYYY-MM-DD) on
+      start_date/end_date. On CRB creation, POS credential validation failures surface here, including
+      an invalid location_id, which returns the list of valid options in the response.
+    source: docs error reference + live probe
+  - status: 409
+    name: Conflict
+    schema: ConflictError
+    operations: 1
+    operation_ids: [create-crb-for-service-provider]
+    meaning: Organization already exists — a CRB with the same name is already in Green Check.
+    remediation: >-
+      Check for an existing record (GET /service-providers/{sp_id}/ein-search) before submitting, to
+      prevent duplicates. This 409 is the only accidental replay guard on the create path; the API
+      publishes no idempotency key. See conventions/green-check-verified-conventions.yml.
+    source: https://developer.greencheckverified.com/guides/create-crb-connect-pos
+domain_validation_errors:
+  source: https://developer.greencheckverified.com/apis/swagger/service-provider/create-crb-for-service-provider.md
+  documented_rules:
+    - Organization business_type must match pos_type (a wholesale org must use a wholesale POS such as "Dutchie Wholesale").
+    - POS credentials must be valid — a test POS call is made at creation time.
+    - If the POS requires a location_id it must be valid; if missing or invalid, the 422 returns the valid options.
+    - The organization must not already be connected to your account.
+    - You must provide either pos_info OR a users array with at least one entry.
+rate_limit_error:
+  documented: false
+  note: >-
+    The docs describe X-RateLimit-* headers but never state the status code returned on exhaustion.
+    Assume 429 but do not rely on it — it is not published.

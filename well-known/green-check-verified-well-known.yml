@@ -1,0 +1,101 @@
+generated: '2026-08-22'
+method: probed
+source: live probes of /.well-known/ on every Green Check host (website, developer portal, app, prod + sandbox API)
+summary: >-
+  One real document is served across the whole estate: RFC 8414 OAuth authorization-server metadata on
+  the developer portal host. It is the discovery document for the portal's own hosted MCP server
+  (endpoints under /_mcp/), which is how the live MCP server at https://developer.greencheckverified.com/mcp
+  was found. Nothing else is served anywhere — no security.txt, no api-catalog, no OIDC discovery, no
+  ai-plugin.json, and no A2A agent card on any host.
+pointer_basis: >-
+  WellKnown pointer emitted on the strength of the single 200 carrying real JSON on
+  developer.greencheckverified.com. SecurityTxt pointer NOT emitted — RFC 9116 is unimplemented on
+  every host, so no Security/SecurityTxt claim is made on this provider's behalf.
+false_positive_watch: >-
+  app.greencheckverified.com answers HTTP 200 with the React SPA shell (1512 bytes, identical body)
+  for EVERY /.well-known/* path including paths that cannot exist. Those eight 200s are recorded
+  below as misses, not hits. The prod/sandbox API hosts are AWS API Gateway and answer every
+  /.well-known/* path with 403 {"message":"Missing Authentication Header"} — also a miss, not a
+  gated document.
+hosts:
+  - host: https://developer.greencheckverified.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: green-check-verified-developer-oauth-authorization-server.json
+        note: >-
+          RFC 8414 metadata. issuer https://auth.cloud.redocly.com; authorization_endpoint,
+          token_endpoint and registration_endpoint are all on greencheckverified.com under /_mcp/.
+          grant_types_supported includes client_credentials; PKCE S256 supported.
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://greencheckverified.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://prod-api.greencheckverified.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://sandbox-api.greencheckverified.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: https://app.greencheckverified.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: SPA shell (1512 bytes text/html), not a document — MISS.
+      - path: /.well-known/api-catalog
+        status: 200
+        note: SPA shell (1512 bytes text/html), not a document — MISS.
+      - path: /.well-known/agent-card.json
+        status: 200
+        note: SPA shell (1512 bytes text/html), not a document — MISS.
+      - path: /.well-known/agent.json
+        status: 200
+        note: SPA shell (1512 bytes text/html), not a document — MISS.

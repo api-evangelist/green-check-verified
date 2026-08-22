@@ -1,0 +1,48 @@
+generated: '2026-08-22'
+method: searched
+source: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+docs: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+summary: >-
+  Green Check documents that the API enforces rate limits and names the three response headers to
+  watch, but publishes no numeric limit, no window length, no burst allowance and no status code on
+  exhaustion. The runtime signal is documented; the budget is not.
+limit_count: 0
+limit_count_note: >-
+  An honest zero. Not a single numeric limit is published anywhere on the developer portal or in the
+  404KB OpenAPI. The three headers below ARE published, which is the more useful half for an agent —
+  but a client cannot size a batch job in advance from what Green Check publishes.
+headers:
+  - name: X-RateLimit-Limit
+    description: Maximum requests allowed per window.
+    documented: true
+  - name: X-RateLimit-Remaining
+    description: Requests left in the current window.
+    documented: true
+    guidance: 'Docs: back off when this reaches zero.'
+  - name: X-RateLimit-Reset
+    description: Unix timestamp when the window resets.
+    documented: true
+  - name: Retry-After
+    documented: false
+    note: Not documented and not observed.
+status_on_exhaustion:
+  documented: false
+  note: The docs never state the status code returned when the limit is exceeded. 429 is the reasonable assumption but is NOT published.
+window:
+  documented: false
+scope:
+  documented: false
+  note: >-
+    Not stated whether limits are per client_id, per service provider (sp_id), per endpoint, or global.
+observed:
+  date: '2026-08-22'
+  request: 'POST https://prod-api.greencheckverified.com/auth/token (unauthenticated, empty body)'
+  status: 422
+  ratelimit_headers_present: false
+  headers_returned: [x-amzn-trace-id, x-amzn-requestid, x-amz-apigw-id, etag, x-amz-cf-id, via]
+  note: >-
+    No X-RateLimit-* header appeared on the live unauthenticated response. The headers may be emitted
+    only on authenticated routes behind the custom Lambda authorizer; this could not be confirmed
+    without credentials. Recorded as an unverified documentation claim, not as an observed behaviour.
+plan_linkage:
+  note: No published plan tiers exist to attach limits to. See plans/green-check-verified-plans-pricing.yml.

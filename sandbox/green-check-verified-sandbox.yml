@@ -1,0 +1,81 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  https://developer.greencheckverified.com/apis/swagger/service-provider/create-crb-for-service-provider.md
+  (published "Testing Scenarios (Sandbox Only)" block) +
+  https://developer.greencheckverified.com/tutorials/api-integration-workflow +
+  openapi/green-check-verified-access-openapi.yaml (servers[] and *TestAuth schemas)
+docs: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+summary: >-
+  Green Check runs a real, separately-hosted sandbox and — unusually for a sales-gated B2B API —
+  publishes deterministic magic values that simulate every POS-connection failure mode. Every worked
+  example in the docs and tutorials targets the sandbox host, not production. Credentials are still
+  issued by Green Check; there is no self-service sandbox signup.
+environments:
+  - name: sandbox
+    base_url: https://sandbox-api.greencheckverified.com
+    described_in_spec: true
+    spec_description: Sandbox server
+    default_in_docs: true
+    note: >-
+      Every curl example and the complete Python client in the tutorials default to this host. Test POS
+      calls against it are simulated, not real connections.
+  - name: production
+    base_url: https://prod-api.greencheckverified.com
+    described_in_spec: true
+    spec_description: Production server
+credentials:
+  self_service: false
+  how_obtained: >-
+    client_id and client_secret are issued by Green Check as part of commercial onboarding. The
+    "Choosing Your CRB Onboarding Path" guide begins with the contract already signed. There is no
+    public sandbox key.
+  key_prefixes: none published
+test_values:
+  note: >-
+    Verbatim from Green Check's published testing-scenarios block on the create-CRB operation. These
+    are the provider's own documented simulation values — nothing here is invented.
+  pos_connection:
+    pos_type: Greenbits
+    username: testing
+    cases:
+      - password: testing
+        simulates: valid credentials — successful connection
+      - password: invalid_testing
+        simulates: invalid credentials — connection rejected
+  location_id:
+    - value: ''
+      simulates: missing required location — response returns the list of available location options
+    - value: invalidLocation
+      simulates: invalid location — response returns the list of available location options
+    - value: testing
+      simulates: successful connection, with no actual POS connection made
+  validation:
+    - scenario: >-
+        Provide pos_info naming a wholesale POS while org.business_type = "retail"
+      expects: 422 validation error (business_type must match pos_type)
+pos_credential_schemas:
+  discovery_operation: get-service-provider-pos-credentials-schema
+  path: GET /service-providers/{sp_id}/pos-credentials-schema
+  guidance: >-
+    The docs instruct integrators to drive UI forms dynamically from this endpoint at runtime rather
+    than caching or hardcoding provider fields, because the schema changes as integrations are added.
+  schemas_in_spec: 20
+  providers:
+    [Alleaves, Biotrack, Blaze, Brytemap, Canix, Cova, Flourish, Flowhub, Greenbits, GrowFlow,
+     GrowFlowWholesale, IndicaOnline, Intacct, Dutchie, Meadow, MjFreeway, POSaBIT, Proteus420,
+     Treez, Weave]
+  note: >-
+    Each *TestAuth component schema carries a prose description of exactly which role/permissions to
+    create inside that POS so Green Check can read it, several linking to per-POS articles on
+    support.greencheckverified.com. This is real integration documentation embedded in the contract.
+time_simulation:
+  supported: false
+  note: No test clocks or time-travel fixtures are published.
+data_reset:
+  documented: false
+console:
+  hosted_playground: false
+  note: >-
+    The API reference is a Redocly-rendered reference at https://developer.greencheckverified.com/apis/swagger.
+    No authenticated try-it console is exposed anonymously.

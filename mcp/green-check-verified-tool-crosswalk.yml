@@ -1,0 +1,89 @@
+generated: '2026-08-22'
+method: derived
+source: >-
+  mcp/green-check-verified-mcp-tools.json (live tools/list, probed 2026-08-22) bound against
+  openapi/green-check-verified-access-openapi.yaml (49 operations)
+summary: >-
+  The crosswalk is the finding here. Green Check's MCP surface and its REST surface do not overlap at
+  all: every one of the 6 MCP tools operates on the DOCUMENTATION (list APIs, read endpoints, fetch the
+  OpenAPI, search the docs), and every one of the 49 REST operations is unreachable from MCP. There is
+  no tool that reads a CRB, pulls sales, or creates an onboarding invite. An agent pointed at this MCP
+  server can fully learn the Access API and cannot execute a single Access API call through it.
+surfaces:
+  openapi:
+    file: openapi/green-check-verified-access-openapi.yaml
+    servers:
+      - https://sandbox-api.greencheckverified.com
+      - https://prod-api.greencheckverified.com
+    gated: true
+    note: All 49 operations require a Bearer token from POST /auth/token (client_credentials).
+  mcp:
+    url: https://developer.greencheckverified.com/mcp
+    gated: false
+    note: tools/list answers anonymously; tools read only published documentation.
+  graphql:
+    present: false
+    note: /graphql returns 404 on the docs host and 403 (API Gateway auth challenge) on both API hosts.
+coverage:
+  mcp_tools: 6
+  rest_operations: 49
+  bound: 0
+  mcp_only: 6
+  rest_only: 49
+  overlap_percent: 0
+crosswalk: []
+mcp_only:
+  - tool: list-apis
+    reason: Documentation-catalog tool. No Access API operation enumerates APIs; there is one API.
+  - tool: get-endpoints
+    reason: Reads the portal's own OpenAPI index. No REST counterpart — the spec is not served by the API host.
+  - tool: get-endpoint-info
+    reason: Returns parameters/security/examples for a documented endpoint. Metadata about the contract, not a call against it.
+  - tool: get-security-schemes
+    reason: Returns the access_auth apiKey scheme from the spec. Metadata; the REST equivalent would be reading the spec file.
+  - tool: get-full-api-description
+    reason: >-
+      Returns the complete OpenAPI description — the same document served at
+      https://developer.greencheckverified.com/_bundle/apis/swagger.yaml. Docs artifact, not an API operation.
+  - tool: search
+    reason: Full-text search across guides/tutorials/reference. No REST search operation over documentation exists.
+rest_only:
+  - operations: [get-token]
+    tag: Authentication
+    reason: Token exchange is not exposed as a tool; an agent must call POST /auth/token itself.
+  - operations: [get-service-provider, get-service-provider-crbs, create-crb-for-service-provider, get-service-provider-pos-credentials-schema, get-service-provider-licenses-search, get-service-provider-onboarding-templates, get-crbs-by-ein, connect-crb-by-id]
+    tag: Service Provider
+    reason: No MCP tool reaches service-provider or CRB-creation operations.
+  - operations: [get-crb-info, update-crb-info, generate-crb-access-creds]
+    tag: CRB Info
+    reason: No MCP tool reaches CRB profile read/write or credential generation.
+  - operations: [get-crb-onboarding-template, put-crb-onboarding-document, update-crb-onboarding-document, delete-crb-onboarding-document]
+    tag: CRB Templates
+    reason: No MCP tool reaches onboarding templates or document management.
+  - operations: [get-crb-sales, get-sales]
+    tag: Sales
+    reason: No MCP tool reaches transaction data.
+  - operations: [get-crb-products, get-crb-products-by-barcode, get-crb-product-by-id, get-products, get-products-by-barcode, get-product-by-id]
+    tag: Products
+    reason: No MCP tool reaches the product catalog.
+  - operations: [get-crb-inventory, get-crb-inventory-by-id, get-crb-inventory-by-location, get-inventory, get-inventory-by-id, get-inventory-by-location]
+    tag: Inventory
+    reason: No MCP tool reaches inventory.
+  - operations: [get-crb-inventory-locations, get-crb-inventory-location-by-id, get-inventory-locations, get-inventory-location-by-id]
+    tag: Inventory Locations
+    reason: No MCP tool reaches inventory locations.
+  - operations: [get-crb-customers, get-crb-customer-by-id, get-crb-customers-search, get-customers, get-customer-by-id]
+    tag: Customers
+    reason: No MCP tool reaches (hashed) customer records.
+  - operations: [get-crb-document-download-link, get-documents, get-document-by-id]
+    tag: Documents
+    reason: No MCP tool reaches compliance documents or download links.
+  - operations: [get-crb, ProxyGet, ProxyPost, ProxyPut, ProxyPatch, ProxyDelete, ProxyOptions]
+    tag: CRB / Trace
+    reason: >-
+      The Trace proxy pass-through to state track-and-trace systems is the highest-consequence surface
+      in the contract and has no tool binding.
+confidence_note: >-
+  Confidence is high throughout because both sides were read live: the MCP tool list was returned by an
+  unauthenticated tools/list against the running server, and the REST side is the provider's own
+  published OpenAPI. No mapping was inferred by name similarity because none exists to infer.

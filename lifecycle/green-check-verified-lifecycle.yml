@@ -1,0 +1,69 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  https://developer.greencheckverified.com/ (full portal crawl: guides, tutorials, tools, API
+  reference, llms.txt) + openapi/green-check-verified-access-openapi.yaml + probes of
+  status.greencheckverified.com, trust.greencheckverified.com,
+  https://developer.greencheckverified.com/changelog
+summary: >-
+  Green Check Access publishes a versioned contract (1.0.0) and nothing else about its lifecycle. No
+  changelog, no release notes, no deprecation policy, no Sunset/Deprecation headers, no SLA, and no
+  status page were found anywhere on the estate. No operation in the 49 is marked deprecated. A
+  consumer has no published signal that the contract has changed.
+versioning:
+  scheme: none-in-path
+  current_version: '1.0.0'
+  source: OpenAPI info.version
+  version_header: none
+  version_in_path: false
+  note: Paths carry no /v1/ segment; no Accept-version or API-Version header is documented.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: not-documented
+  deprecation_header: not-documented
+  rfc8594: false
+  deprecated_operations: []
+  deprecated_operation_count: 0
+  note: >-
+    Zero operations carry `deprecated: true` in the spec. That is a clean contract, not evidence of a
+    policy — no policy document exists. NO `Deprecation` pointer is emitted.
+status_page:
+  published: false
+  probes:
+    - url: https://status.greencheckverified.com/
+      status: 000
+      note: Host does not resolve / no TLS endpoint. Redirected to the marketing 404 body.
+    - url: https://greencheckverified.com/security/
+      status: 404
+  note: >-
+    No status page, uptime page, or incident history was found on any host, and none is linked from the
+    developer portal or the marketing site. NO `StatusPage` pointer is emitted.
+changelog:
+  published: false
+  probes:
+    - url: https://developer.greencheckverified.com/changelog
+      status: 404
+  note: >-
+    The developer portal has Guides, Tutorials, Tools and API Reference sections and no changelog or
+    release-notes section. llms.txt enumerates 13 documents; none is a changelog. NO `ChangeLog`
+    pointer is emitted. This is the single most consequential lifecycle gap for an integrator: with no
+    version segment in the path AND no changelog, a breaking change is undetectable until it breaks.
+sla:
+  published: false
+  note: No SLA, uptime commitment, or support-response target is published on the developer portal or the marketing site.
+support:
+  channel: https://support.greencheckverified.com/
+  type: knowledge base
+  note: >-
+    A Support Center (HTTP 200) carries operational knowledge articles, including per-POS connection
+    guides that the OpenAPI schema descriptions link to directly (e.g.
+    support.greencheckverified.com/en/knowledge/connect-greenbits-to-green-check).
+  contact: https://greencheckverified.com/contact/
+  phone: '+1-844-544-1940'
+maturity_signals:
+  company_founded: 2017
+  github_org_created: '2017-01-30'
+  spec_operations: 49
+  spec_schemas: 151
+  integrations_documented: 20+

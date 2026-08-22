@@ -1,0 +1,59 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  npm registry search (registry.npmjs.org/-/v1/search?text=greencheck), PyPI (pypi.org/pypi/greencheck/json),
+  GitHub org github.com/greencheckverified (public repos listing via api.github.com),
+  https://developer.greencheckverified.com/ (full portal crawl: guides, tutorials, tools, API reference, llms.txt)
+summary: >-
+  Green Check publishes no client SDK in any language. The developer portal has Guides, Tutorials,
+  Tools and API Reference sections and no SDK or downloads section; llms.txt enumerates 13 documents
+  and none is an SDK reference. The GitHub organization exists and is 8 years old but carries a single
+  unrelated public repository. Integrators are expected to call the REST API directly — the docs supply
+  a hand-written Python client class in the sales-data tutorial as the reference implementation, which
+  is a code sample, not a distributed package.
+package_count: 0
+official_package_count: 0
+packages: []
+registry_probes:
+  - registry: npm
+    query: greencheck
+    result: no first-party package
+    note: >-
+      The closest name match, @greencheck/sdk-client (v0.0.2, published 2026-07-06 by npm user
+      `kfancy`, described as a "client SDK for securely connecting to GreenCheck servers for
+      authentication"), is NOT Green Check Verified. It is unaffiliated with the cannabis-banking
+      platform, is published from a personal Gmail account, and is deliberately EXCLUDED rather than
+      credited to this provider.
+  - registry: pypi
+    query: greencheck
+    result: 404 Not Found
+  - registry: github
+    org: greencheckverified
+    org_exists: true
+    org_created: '2017-01-30'
+    public_repos: 1
+    result: no SDK
+    note: >-
+      The one public repo is `mobayashi-karu`, last updated 2020-02-26, with no language set and no
+      relationship to the Access API. The org is real (blog field points at greencheckverified.com,
+      location New Haven CT) so a GitHubOrganization pointer is earned, but there is no code to ship.
+  - registry: [maven-central, nuget, rubygems, packagist, crates.io, pkg.go.dev]
+    result: not searched individually
+    note: >-
+      Skipped after the docs crawl established that no SDK is advertised in any language. Recording
+      that honestly rather than implying six more registries were exhaustively probed.
+reference_implementation:
+  type: code-sample
+  language: python
+  location: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+  description: >-
+    A complete GreenCheckClient class using `requests` — authenticate(), get_crbs(), and a
+    get_sales() that paginates on metadata.total. Defaults to the sandbox base URL. Copy-paste
+    quality, not a versioned artifact.
+  version: null
+  published: null
+  note: >-
+    version and published are null because there is nothing to version — this is inline documentation
+    source, distributed by no registry and pinned by no URL. Checked, nothing to record.
+sdk_pointer_decision: >-
+  NO `SDKs` pointer is emitted. sdk_count is a genuine zero for this provider.

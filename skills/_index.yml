@@ -1,0 +1,46 @@
+generated: '2026-08-22'
+method: generated
+source: >-
+  openapi/green-check-verified-access-openapi.yaml (all operationIds verified against the served spec)
+  + https://developer.greencheckverified.com/ guides and tutorials
+api: Green Check Access
+summary: >-
+  Two packaged Agent Skills covering the marquee flows of Green Check Access: onboarding a
+  cannabis-related business, and pulling its normalized operational data. Every operationId referenced
+  is present in the provider's own OpenAPI; none is invented. Both skills carry the consequence and
+  reversibility warnings derived in conventions/green-check-verified-conventions.yml, because the write
+  surface has no idempotency key and no delete path.
+skill_count: 2
+skills:
+  - name: green-check-verified-onboard-crb
+    file: green-check-verified-onboard-crb.md
+    flow: CRB onboarding (invite path and connect-POS path)
+    write_surface: true
+    operations: [get-token, get-service-provider-onboarding-templates, get-crbs-by-ein,
+                 get-service-provider-pos-credentials-schema, create-crb-for-service-provider,
+                 connect-crb-by-id, get-service-provider-crbs, get-crb-info]
+    agent_cautions:
+      - Creation emails a named human and cannot be recalled.
+      - No idempotency key; do not blind-retry on timeout — re-check by EIN.
+      - No delete-CRB or cancel-invite operation exists.
+  - name: green-check-verified-pull-sales-data
+    file: green-check-verified-pull-sales-data.md
+    flow: Read normalized sales, products, inventory, locations and customers for a connected CRB
+    write_surface: false
+    operations: [get-token, get-service-provider-crbs, get-crb-sales, get-crb-products,
+                 get-crb-inventory, get-crb-inventory-locations, get-crb-inventory-by-location,
+                 get-crb-customers]
+    agent_cautions:
+      - Monetary amounts are integers in minor units.
+      - Empty collections usually mean no POS connection, not no data — check pos_integration_status.
+      - Customer records may carry medical_id / drivers_license_id; confirm before persisting.
+not_covered:
+  - flow: Trace proxy (/trace/*) to state track-and-trace systems
+    reason: >-
+      Deliberately excluded. The proxy is untyped — wildcard path, unconstrained bodies, empty
+      response schema — and its writes are regulatory filings against a government system of record
+      with no documented reversal. There is not enough published contract to ground a safe skill, and
+      authoring one anyway would be the fabrication this pipeline forbids.
+  - flow: Orders
+    reason: >-
+      The Orders schemas exist in components but no operation exposes them. Nothing to ground a skill in.

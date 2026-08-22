@@ -1,0 +1,225 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  https://developer.greencheckverified.com/guides/integration-overview,
+  https://developer.greencheckverified.com/tutorials/api-integration-workflow,
+  https://developer.greencheckverified.com/guides/create-crb-connect-pos,
+  https://developer.greencheckverified.com/guides/insights-quickstart,
+  openapi/green-check-verified-access-openapi.yaml, plus live unauthenticated probes of
+  https://prod-api.greencheckverified.com/auth/token (2026-08-22)
+summary: >-
+  Cross-cutting request/response semantics for the Green Check Access REST API. Auth is OAuth 2.0
+  client credentials returning a 1-hour Bearer token. Pagination is offset/limit with a metadata
+  envelope. Errors are a bespoke {message, details} envelope, not RFC 9457. Rate limiting is signalled
+  by X-RateLimit-* headers per the docs, though those headers were NOT observed on live unauthenticated
+  responses. Idempotency is effectively unavailable — see the idempotency block.
+authentication:
+  style: oauth2_client_credentials
+  token_endpoint: /auth/token
+  token_type: Bearer
+  header: 'Authorization: Bearer <access_token>'
+  lifetime_seconds: 3600
+  expiry_field: expires_at
+  expiry_units: unix timestamp
+  spec_modelling_note: >-
+    The OpenAPI models this as securityScheme `access_auth` of type apiKey in the Authorization header
+    (with an AWS API Gateway custom Lambda authorizer extension), not as an oauth2 scheme — even though
+    the flow the docs describe is textbook client_credentials with a scope array. A generator reading
+    the spec alone will emit an API-key client and miss token refresh entirely.
+  see: authentication/green-check-verified-authentication.yml
+  scopes: scopes/green-check-verified-scopes.yml
+pagination:
+  style: offset-limit
+  params:
+    limit:
+      default: 1000
+      max: 1000
+      note: The sales tutorial states default 1000 / max 1000; its worked example uses limit=100.
+    offset:
+      description: Number of records to skip.
+  response_envelope:
+    data: array of records
+    metadata:
+      total: total records matching the query
+      limit: page size used
+      offset: current starting position
+  applies_to: >-
+    Documented for sales; the quickstart states all inventory endpoints accept limit and offset. Treat
+    every collection endpoint as offset-paginated.
+  source: https://developer.greencheckverified.com/tutorials/api-integration-workflow
+filtering:
+  date_range:
+    params: [start_date, end_date]
+    format: YYYY-MM-DD
+    applies_to: sales, inventory snapshots
+  search_endpoints:
+    - GET /service-providers/{sp_id}/licenses-search
+    - GET /service-providers/{sp_id}/ein-search
+    - GET /service-providers/{sp_id}/crbs/{crb_id}/customers-search
+    - GET /service-providers/{sp_id}/crbs/{crb_id}/products-by-barcode/{barcode}
+field_expansion:
+  supported: false
+  note: No sparse-fieldset, expand or field-selection parameter is documented or present in the spec.
+error_envelope:
+  format: bespoke
+  rfc9457: false
+  content_type: application/json
+  shape:
+    message: human-readable summary
+    details: object keyed by field path, each value {message}
+  observed_live:
+    request: 'POST https://prod-api.greencheckverified.com/auth/token with {}'
+    status: 422
+    body: '{"message":"Validation Failed","details":{"body.client_id":{"message":"''client_id'' is required"}, ...}}'
+    note: Field keys are prefixed with their location (body., query., path.).
+  see: errors/green-check-verified-problem-types.yml
+request_tracing:
+  documented: false
+  method: probed
+  headers:
+    - name: x-amzn-requestid
+      note: Per-request AWS API Gateway id. Present on every response including 4xx. Quote this to support.
+    - name: x-amzn-trace-id
+      note: 'X-Ray style root trace id, e.g. Root=1-6a899601-...'
+    - name: x-amz-cf-id
+      note: CloudFront edge request id.
+    - name: etag
+      note: Weak ETag returned even on 422 bodies.
+  note: >-
+    Observed live on prod-api.greencheckverified.com 2026-08-22. None of these are documented; recorded
+    here so an integrator has a correlation id to quote. The stack is AWS API Gateway + Lambda +
+    Express behind CloudFront (x-powered-by: Express).
+rate_limit_signaling:
+  documented_headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  reset_units: unix timestamp
+  documented_limit_values: none
+  status_on_exhaustion: not stated
+  retry_after: not documented
+  observed: >-
+    NOT present on the live unauthenticated 422 from POST /auth/token (2026-08-22). The headers may
+    only be emitted on authenticated routes; this could not be confirmed without credentials.
+  see: rate-limits/green-check-verified-rate-limits.yml
+versioning:
+  scheme: none-in-path
+  current_version: '1.0.0'
+  version_source: OpenAPI info.version
+  note: >-
+    No version segment appears in any path and no version header is documented. There is no published
+    changelog, so a consumer has no signal that the contract changed.
+  see: lifecycle/green-check-verified-lifecycle.yml
+idempotency:
+  documented: false
+  header: null
+  grade: na-in-practice
+  finding: >-
+    The spec contains exactly one idempotency mechanism — `external_reference_id`, described in the
+    Order and PostOrderRequest schemas as "External Reference ID, used as an idempotency key to prevent
+    duplicate orders". Neither schema is referenced by any path. A reachability walk from paths[]
+    across $refs resolves 136 of 151 component schemas; the 15 orphans are the entire Orders subsystem
+    (Order, PostOrderRequest, OrderCustomer, OrderAddress, OrderLineItemRequest, OrderLineItemResponse,
+    PagedOrderResponse, AccessOrder*, SaleType, CannabisLicenseType). So the only idempotency key in
+    the contract belongs to an operation set the contract does not expose.
+  reachable_write_operations_with_idempotency: 0
+  pointer_decision: >-
+    NO `Idempotency` pointer is emitted. The agent-readiness idempotency dimension is a genuine zero
+    for this provider, not a missing pointer.
+  agent_risk: >-
+    POST /service-providers/{sp_id}/crbs creates a cannabis-related business and can send an email
+    invite to a named human. It has no replay-safe primitive. An agent that retries after a timeout
+    will either create a duplicate organization or hit the documented 409 Conflict on name collision —
+    409 is the only accidental guard, and it only fires when the org name matches exactly.
+reversibility:
+  grade: documented
+  credit_basis: >-
+    A reversal path exists for exactly one write family (onboarding documents) and no window is stated
+    anywhere, so this grades `documented`, not `verified`.
+  write_surface:
+    - operation: create-crb-for-service-provider
+      method: POST
+      path: /service-providers/{sp_id}/crbs
+      consequence: >-
+        Creates a CRB organization and, on the invite path, emails a named individual at the business.
+        The email cannot be recalled.
+      reversal: none
+      reversal_operation: null
+      window: null
+      note: >-
+        There is no delete-CRB or cancel-invite operation in the contract. Documented guard is a 409
+        Conflict when an organization of the same name already exists; the docs advise checking for an
+        existing record before submitting.
+    - operation: connect-crb-by-id
+      method: POST
+      path: /service-providers/{sp_id}/connect-crb
+      consequence: Links an existing CRB to the calling service provider, starting data flow.
+      reversal: none
+      reversal_operation: null
+      window: null
+      note: No disconnect operation is published. The docs warn that data-sharing consent must be in the contract with the CRB before connecting.
+    - operation: update-crb-info
+      method: PUT
+      path: /service-providers/{sp_id}/crbs/{crb_id}
+      consequence: Overwrites CRB business details.
+      reversal: partial
+      reversal_operation: update-crb-info
+      window: null
+      note: >-
+        A PUT is self-reversing only if the caller captured the prior state via get-crb-info first.
+        There is no version history, no restore operation, and no audit read-back in the contract.
+    - operation: put-crb-onboarding-document
+      method: PUT
+      path: /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents
+      consequence: Attaches a due-diligence document to an onboarding requirement.
+      reversal: yes
+      reversal_operation: delete-crb-onboarding-document
+      window: null
+      note: >-
+        DELETE .../documents/{document_id} removes a document from a requirement. This is the only
+        genuine undo in the contract. No retention or cut-off window is stated — it is not documented
+        whether deletion is still possible after the CRB submits the application or after the bank
+        approves it, which is exactly when it would matter.
+    - operation: generate-crb-access-creds
+      method: POST
+      path: /service-providers/{sp_id}/crbs/{crb_id}/access
+      consequence: Mints Green Check Access credentials on behalf of a CRB.
+      reversal: none
+      reversal_operation: null
+      window: null
+      note: >-
+        No revoke or rotate operation is published. An agent that generates credentials in error has no
+        documented way to invalidate them through the API.
+    - operation: [ProxyPost, ProxyPut, ProxyPatch, ProxyDelete]
+      method: POST/PUT/PATCH/DELETE
+      path: /trace/*
+      consequence: >-
+        Pass-through writes to a state contracted track-and-trace system (Metrc, BioTrack). These are
+        regulatory filings against a government system of record.
+      reversal: unknown
+      reversal_operation: null
+      window: null
+      note: >-
+        The proxy is untyped — path, request body and responses are all unconstrained in the spec.
+        Reversibility is whatever the downstream state system allows and is not stated by Green Check.
+        This is the highest-consequence, least-documented surface in the contract.
+  never_assert: >-
+    No reversal window is claimed anywhere in this file because Green Check publishes none. Do not
+    infer one from the 3600-second token lifetime or from the one-hour document download-link expiry —
+    neither is a reversal window.
+dry_run_mode:
+  supported: partial
+  note: >-
+    There is no dry-run flag, but the sandbox environment publishes deterministic simulation values
+    that let an agent rehearse CRB creation without connecting a real POS. See
+    sandbox/green-check-verified-sandbox.yml.
+event_surface:
+  webhooks: false
+  asyncapi: false
+  note: >-
+    Green Check sends EMAIL notifications when a CRB connects and when an application is completed, and
+    the docs explicitly say these "should be treated as a convenience — not a trigger for automated
+    workflows. Use status polling as the reliable signal in any production integration." There is no
+    webhook, callback, or streaming surface; zero occurrences of "webhook" in the 404KB spec. Recorded
+    as a genuine absence — no AsyncAPI or Webhooks pointer is emitted.
+  polling_pattern: >-
+    Poll GET /service-providers/{sp_id}/crbs and watch the `status` / `due_diligence_status` field
+    transition through gcv_pending -> gcv_in_progress -> bank_awaiting_review ->
+    bank_review_in_progress -> bank_approved.

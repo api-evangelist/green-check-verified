@@ -1,0 +1,74 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  https://developer.greencheckverified.com/guides/integration-overview +
+  https://developer.greencheckverified.com/tutorials/api-integration-workflow +
+  https://developer.greencheckverified.com/guides/create-crb-connect-pos +
+  openapi/green-check-verified-access-openapi.yaml + live probe of
+  https://prod-api.greencheckverified.com/auth/token (2026-08-22)
+docs: https://developer.greencheckverified.com/guides/integration-overview
+summary:
+  types:
+  - oauth2
+  - apiKey
+  api_key_in:
+  - header
+  model: >-
+    One scheme, described two ways. The docs describe OAuth 2.0 client credentials: POST /auth/token
+    with client_id + client_secret + grant_type, returning a Bearer access_token, a scope array and an
+    expires_at timestamp, valid 3600 seconds. The OpenAPI models the same thing as an apiKey scheme
+    named `access_auth` carried in the Authorization header, backed by an AWS API Gateway custom
+    Lambda authorizer. Per-operation scope requirements ARE declared in the spec under that scheme.
+schemes:
+- name: access_auth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  value_format: 'Bearer <access_token>'
+  effective_type: oauth2_client_credentials
+  scoped: true
+  scope_count: 10
+  gateway: aws-apigateway custom request authorizer (x-amazon-apigateway-authorizer)
+  sources:
+  - openapi/green-check-verified-access-openapi.yaml
+  - https://developer.greencheckverified.com/guides/integration-overview
+token_endpoint:
+  operationId: get-token
+  method: POST
+  path: /auth/token
+  security: []
+  unauthenticated: true
+  production: https://prod-api.greencheckverified.com/auth/token
+  sandbox: https://sandbox-api.greencheckverified.com/auth/token
+  request:
+    content_type: application/json
+    fields: [client_id, client_secret, grant_type]
+    grant_type: client_credentials
+  response:
+    fields: [access_token, token_type, scope, expires_at, issued_at, client_id]
+    token_type: Bearer
+    lifetime_seconds: 3600
+  probed:
+    date: '2026-08-22'
+    request: 'POST /auth/token with an empty JSON body'
+    status: 422
+    body: '{"message":"Validation Failed","details":{"body.client_id":{"message":"''client_id'' is required"},"body.client_secret":{...},"body.grant_type":{...}}}'
+    note: Confirms the endpoint is live, unauthenticated, and validates the three documented fields.
+credential_issuance:
+  path: >-
+    client_id and client_secret are issued to a service provider by Green Check during commercial
+    onboarding — the docs' "Choosing Your CRB Onboarding Path" guide begins "At this point you have
+    your contract signed, your API credentials, and access to the Green Check web UI." There is no
+    self-service key generation; a signed contract precedes access.
+  delegated_credentials:
+    operationId: generate-crb-access-creds
+    path: POST /service-providers/{sp_id}/crbs/{crb_id}/access
+    description: >-
+      A service provider can mint Green Check Access credentials on behalf of a connected CRB, to
+      operate that CRB's document-management calls. No revoke or rotate operation is published.
+token_handling_guidance:
+  - Tokens expire 3600 seconds after issue; check expires_at (unix) and re-authenticate before it passes.
+  - The docs warn that missing refresh logic produces unexpected 401s in production.
+  - client_secret must never be exposed in client-side code (stated in the tutorial).
+mtls: false
+openid_connect: false

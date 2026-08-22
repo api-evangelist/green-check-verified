@@ -1,0 +1,37 @@
+generated: '2026-08-22'
+method: searched
+source: >-
+  https://greencheckverified.com/ (full nav + footer crawl), https://greencheckverified.com/cannabisapi/,
+  https://greencheckverified.com/service-providers/, https://greencheckverified.com/get-started/,
+  https://developer.greencheckverified.com/ (all guides + tutorials), probe of
+  https://greencheckverified.com/pricing/
+docs: https://greencheckverified.com/get-started/
+plan_count: 0
+summary: >-
+  Green Check publishes no pricing. There is no pricing page — /pricing/ returns 404 and no pricing
+  link appears in the site navigation or footer — no plan tiers, no per-call rates, no quota
+  allowances, and no free tier. Access is sales-gated: the developer portal's own onboarding guide
+  opens with "At this point you have your contract signed, your API credentials, and access to the
+  Green Check web UI", which places a signed commercial contract before any API credential.
+plans: []
+probes:
+  - url: https://greencheckverified.com/pricing/
+    status: 404
+  - url: https://greencheckverified.com/get-started/
+    status: 200
+    note: A contact/demo request form, not a pricing page and not self-service signup.
+  - url: https://greencheckverified.com/cannabisapi/
+    status: 200
+    note: API product page. Describes capabilities and integrations; states no price.
+access_model:
+  self_service: false
+  free_tier: false
+  trial: not-published
+  gate: sales
+  gate_evidence: >-
+    https://developer.greencheckverified.com/guides/next-steps — "At this point you have your contract
+    signed, your API credentials, and access to the Green Check web UI."
+  request_path: https://greencheckverified.com/get-started/
+note_on_method: >-
+  method is `searched` and plan_count is a real, verified zero — the pricing page was probed and
+  returns 404. This is a measured absence, not an unchecked field.

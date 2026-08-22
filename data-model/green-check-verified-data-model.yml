@@ -1,0 +1,191 @@
+generated: '2026-08-22'
+method: derived
+source: >-
+  openapi/green-check-verified-access-openapi.yaml ($ref graph across 151 component schemas + id-
+  reference fields), cross-read against
+  https://developer.greencheckverified.com/guides/integration-overview (domain model narrative) and
+  https://developer.greencheckverified.com/guides/insights-quickstart (endpoint-group map)
+summary: >-
+  A two-level tenancy model. A Service Provider (the API caller) owns a set of Cannabis Related
+  Businesses (CRBs); every operational entity — sales, products, inventory, locations, customers,
+  documents — hangs off a CRB via crb_id, and almost every one carries a parallel pos_* identifier
+  from the upstream point-of-sale system it was normalized from. That dual-identifier pattern is the
+  distinguishing feature of this model: Green Check's own UUID plus the foreign system's native id,
+  side by side on the same record.
+root_entity: ServiceProvider
+scoping_rule: >-
+  Every request is scoped to sp_id. The quickstart states you can only query CRBs linked to your own
+  sp_id. A second, narrower route family (/crbs/{crb_id}/...) is scoped by CRB directly under the
+  crb:read scope, for credentials minted on behalf of a CRB.
+entities:
+  - name: ServiceProvider
+    id: id (UUID)
+    description: The calling organization — a bank, credit union, payroll company, CRM or fintech.
+    operations: [get-service-provider, get-service-provider-crbs]
+    relationships:
+      - has_many: CRB
+        via: sp_id
+      - has_many: OnboardingTemplate
+        via: sp_id
+  - name: CRB
+    aliases: [AccessCrb, ServiceProviderCRB]
+    id: id (UUID)
+    description: A Cannabis Related Business — dispensary, cultivator, wholesaler — onboarded by the service provider.
+    key_fields: [name, state, business_type, entity_type, ein, due_diligence_status, pos_connection_status]
+    operations: [get-crb-info, update-crb-info, get-crb, create-crb-for-service-provider, connect-crb-by-id, get-crbs-by-ein]
+    relationships:
+      - belongs_to: ServiceProvider
+        via: sp_id
+      - has_one: OnboardingTemplateResponse
+        via: org_id
+      - has_many: [RetailSale, WholesaleSale]
+        via: crb_id
+      - has_many: Product
+        via: crb_id
+      - has_many: Inventory
+        via: crb_id
+      - has_many: Location
+        via: crb_id
+      - has_many: Customer
+        via: crb_id
+      - has_many: Document
+        via: org_id
+    lifecycle:
+      field: due_diligence_status
+      states: [gcv_pending, gcv_in_progress, bank_awaiting_review, bank_review_in_progress, bank_approved]
+      source: https://developer.greencheckverified.com/guides/integration-overview
+  - name: OnboardingTemplate
+    id: template_id (UUID)
+    description: A configurable application form defining what a CRB must supply — document requirements plus custom fields. Authored in the Green Check web app, referenced by id via the API.
+    operations: [get-service-provider-onboarding-templates, get-crb-onboarding-template]
+    relationships:
+      - belongs_to: ServiceProvider
+      - has_many: DocumentRequirementResponse
+        via: requirement_id
+      - has_many: CustomRequirementResponse
+  - name: OnboardingTemplateResponse
+    id: id (UUID)
+    description: A specific CRB's filled-in answer to a template.
+    key_fields: [org_id, template_id, standard_requirements, custom_requirements]
+    relationships:
+      - belongs_to: CRB
+        via: org_id
+      - belongs_to: OnboardingTemplate
+        via: template_id
+      - has_many: RequirementDocumentResponse
+  - name: Document
+    id: id (UUID)
+    description: A compliance file attached to a CRB — business license, insurance certificate, state registration, financial statement.
+    operations: [get-documents, get-document-by-id, get-crb-document-download-link, put-crb-onboarding-document, update-crb-onboarding-document, delete-crb-onboarding-document]
+    relationships:
+      - belongs_to: CRB
+        via: org_id
+      - has_one: DocumentDownload
+        via: id
+    note: Download returns a base64-encoded blob behind a link that expires after one hour.
+  - name: RetailSale
+    id: id (UUID)
+    external_id: pos_sale_id
+    description: A normalized retail transaction ingested from the CRB's connected POS.
+    key_fields: [date, local_date, subtotal, total_discounts, tax_paid, total_paid, transaction_type, pos_name, line_items]
+    operations: [get-crb-sales, get-sales]
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+      - has_many: SaleLineItem
+      - has_one: SaleCustomer
+        via: customer_id
+    note: Monetary amounts are integers in minor units (the docs example shows subtotal 4500 for $45.00).
+  - name: WholesaleSale
+    id: id (UUID)
+    external_id: pos_sale_id
+    description: The wholesale counterpart, ingested from wholesale POS/seed-to-sale systems.
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+  - name: SaleLineItem
+    description: A line on a sale, carrying cannabis-specific attributes.
+    key_fields: [product_name, num_units, price_per_unit, grams, product_type, cannabis_product]
+    relationships:
+      - belongs_to: [RetailSale, WholesaleSale]
+      - references: Product
+        via: product_id (+ pos_product_id)
+  - name: Product
+    id: id (UUID)
+    external_id: pos_product_id
+    description: A catalog product with THC/CBD content and pricing.
+    operations: [get-crb-products, get-crb-product-by-id, get-crb-products-by-barcode, get-products, get-product-by-id, get-products-by-barcode]
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+      - has_many: Inventory
+        via: product_id
+    lookup_key: barcode
+  - name: Location
+    id: id (UUID)
+    external_id: pos_location_id
+    description: A CRB's physical inventory location.
+    operations: [get-crb-inventory-locations, get-crb-inventory-location-by-id, get-inventory-locations, get-inventory-location-by-id]
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+      - has_many: Inventory
+        via: location_id
+  - name: Inventory
+    id: id (UUID)
+    variants: [ExpandedInventory, InventoryByLocation, ExpandedInventoryByLocation, LocationInventory]
+    description: Quantity-on-hand for a product at a location on a given date. Snapshot-per-date, not a running balance.
+    operations: [get-crb-inventory, get-crb-inventory-by-id, get-crb-inventory-by-location, get-inventory, get-inventory-by-id, get-inventory-by-location]
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+      - references: Product
+        via: product_id
+      - references: Location
+        via: location_id
+  - name: Customer
+    id: id (UUID)
+    external_id: pos_customer_id
+    description: A CRB's retail customer record.
+    sensitive_fields: [medical_id, drivers_license_id, other_id]
+    operations: [get-crb-customers, get-crb-customer-by-id, get-crb-customers-search, get-customers, get-customer-by-id]
+    relationships:
+      - belongs_to: CRB
+        via: crb_id
+    privacy_note: >-
+      The quickstart describes these as "hashed customer records". The schema nonetheless carries
+      medical_id, drivers_license_id and other_id fields. An integrator should confirm what is
+      actually returned before storing it — this is regulated patient/consumer identity data.
+identifier_conventions:
+  primary: UUID (component schema `UUID`) on every first-class entity
+  dual_identifier_pattern: >-
+    Operational entities ingested from a POS carry BOTH Green Check's UUID and the upstream system's
+    native id: pos_sale_id, pos_product_id, pos_customer_id, pos_location_id, pos_order_id,
+    gc_inventory_id. This is what lets a consumer reconcile Green Check records against the CRB's own
+    POS reporting, and it is the single most useful structural feature of the model.
+  business_identifiers: [ein, cannabis license number (via licenses-search), employee_id]
+shared_value_types:
+  types:
+    [UUID, EIN, PhoneNumber, PostalCode, City, Website, ShortDate, UtcDateTime, USStates, Countries,
+     IANATimezones, PositiveInteger, NullablePositiveInteger, OrganizationType, DispensaryBusinessType,
+     EntityType, DueDiligenceStatus, PosConnectionStatus, FriendlyPosName, AvailablePosTypes,
+     CannabisLicenseType, SaleType]
+  note: >-
+    A genuinely well-factored value-type layer — 151 component schemas with heavy reuse of named
+    scalar types rather than inline strings. This is above average for the catalog.
+unreachable_subsystem:
+  finding: >-
+    A reachability walk from paths[] across every $ref resolves 136 of 151 component schemas. The 15
+    orphans form one coherent, complete subsystem — ORDERS — that no published operation exposes.
+  schemas: [Order, PostOrderRequest, OrderCustomer, OrderAddress, OrderLineItemRequest,
+            OrderLineItemResponse, PagedOrderResponse, AccessOrderLineItem, AccessOrderAddress,
+            AccessOrderCustomer, AccessOrderStatus, AccessOrderFulfillmentType, AccessOrderErrorCode,
+            SaleType, CannabisLicenseType]
+  significance: >-
+    The Orders schemas describe placing and tracking an order against a CRB's POS — including
+    fulfillment types, order status, per-order error codes, and an `external_reference_id` documented
+    as "used as an idempotency key to prevent duplicate orders". That is a designed write surface with
+    replay protection, fully modelled and entirely unexposed. Either it is unreleased or it is
+    partner-gated; the public contract says nothing either way. Recorded as an observation about the
+    published document, not as a claim about Green Check's roadmap.
+render: none

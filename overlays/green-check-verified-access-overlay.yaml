@@ -1,0 +1,68 @@
+# OpenAPI Overlay 1.0.0 — API Evangelist enrichment of Green Check Access.
+# generated: '2026-08-22'
+# method: generated
+# source: openapi/green-check-verified-access-openapi.yaml + https://developer.greencheckverified.com/ docs
+# This overlay records API Evangelist's derived semantics (auth flow, pagination, error envelope,
+# reversibility and consequence warnings). It is NOT published by Green Check and does not modify
+# the original spec, which is stored verbatim.
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay — Green Check Access
+  version: 1.0.0
+extends: openapi/green-check-verified-access-openapi.yaml
+actions:
+- target: $.info
+  update:
+    description: 'Green Check Access is Green Check Verified''s public REST API suite for service providers
+      serving cannabis-related businesses (CRBs). It normalizes compliance, company and transactional
+      data across 20+ point-of-sale and seed-to-sale systems. Authentication is OAuth 2.0 client credentials:
+      POST /auth/token returns a Bearer token valid 3600 seconds carrying a scope array. Collections are
+      paginated with limit/offset and return {data:[], metadata:{total,limit,offset}}. Errors use a bespoke
+      {message, details} envelope, not RFC 9457. Rate limiting is signalled with X-RateLimit-Limit/Remaining/Reset;
+      no numeric limit is published. There is no idempotency key on any reachable write operation, and
+      no webhook or event surface — poll due_diligence_status instead. Overlay authored by API Evangelist;
+      not published by Green Check.'
+    contact:
+      name: Green Check Access developer portal
+      url: https://developer.greencheckverified.com/
+    termsOfService: https://greencheckverified.com/terms-of-use/
+- target: $.components.securitySchemes['access_auth']
+  update:
+    description: 'Bearer token obtained from POST /auth/token via the OAuth 2.0 client-credentials grant.
+      Modelled here as apiKey-in-header because that is how the served contract declares it, but the effective
+      flow is oauth2 client_credentials with a 3600-second lifetime and the ten scopes enumerated per
+      operation. Send as: Authorization: Bearer <access_token>.'
+- target: $.servers
+  update:
+  - url: https://prod-api.greencheckverified.com
+    description: Production server
+  - url: https://sandbox-api.greencheckverified.com
+    description: Sandbox server — every worked example in the Green Check docs targets this host. Publishes
+      deterministic POS-connection simulation values (see sandbox/green-check-verified-sandbox.yml).
+- target: $.paths['/trace/*']
+  update:
+    description: HIGH-CONSEQUENCE, UNTYPED SURFACE. Pass-through proxy to state contracted seed-to-sale
+      track-and-trace systems (Metrc, BioTrack). Path is a wildcard, request bodies are unconstrained
+      and the 200 response schema is empty, so nothing here is machine-checkable. Writes through this
+      proxy are regulatory filings against a government system of record and Green Check documents no
+      reversal path or window for them. Agents should treat every non-GET on /trace/* as requiring human
+      confirmation.
+- target: $.paths['/service-providers/{sp_id}/crbs'].post
+  update:
+    description: NOT REPLAY-SAFE. Creates a CRB organization and, on the invite path, emails a named individual
+      at that business — an email that cannot be recalled. No idempotency key is accepted on this operation
+      and no delete-CRB or cancel-invite operation exists in the contract. The only accidental-duplicate
+      guard is the 409 Conflict returned on an exact organization-name collision. Call GET /service-providers/{sp_id}/ein-search
+      first.
+- target: $.paths['/service-providers/{sp_id}/crbs/{crb_id}/access'].post
+  update:
+    description: IRREVERSIBLE CREDENTIAL MINT. Generates Green Check Access credentials on behalf of the
+      CRB. The contract publishes no revoke or rotate operation, so credentials issued in error cannot
+      be invalidated through the API.
+- target: $.tags
+  update:
+  - name: Trace
+    description: Untyped pass-through proxy to state track-and-trace systems. Highest consequence, least
+      specified.
+  - name: Authentication
+    description: OAuth 2.0 client-credentials token exchange. The only unauthenticated operation.

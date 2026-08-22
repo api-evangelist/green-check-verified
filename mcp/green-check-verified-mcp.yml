@@ -1,0 +1,61 @@
+generated: '2026-08-22'
+method: probed
+source: https://developer.greencheckverified.com/mcp (JSON-RPC tools/list + initialize, 2026-08-22)
+summary: >-
+  Green Check runs a live, anonymously reachable remote MCP server on its developer-portal host. It is
+  the Redocly-portal documentation MCP: six tools that let an agent enumerate the APIs, list endpoints,
+  read per-endpoint parameters/security/examples, pull the complete OpenAPI description, and full-text
+  search the docs. It is a documentation-navigation surface, NOT a business-operations surface — none
+  of the six tools calls the Green Check Access API itself, so an agent can learn the contract through
+  MCP but must still call prod-api.greencheckverified.com over REST to do anything.
+deployment:
+  mode: remote
+  endpoint: https://developer.greencheckverified.com/mcp
+  auth: none
+  verified: probed
+discovery:
+  found_via: >-
+    https://developer.greencheckverified.com/.well-known/oauth-authorization-server (HTTP 200) names
+    authorization/token/registration endpoints under /_mcp/, which pointed at the MCP surface. The
+    /_mcp path itself returns the portal HTML shell; the JSON-RPC endpoint is /mcp.
+  oauth_metadata: well-known/green-check-verified-developer-oauth-authorization-server.json
+  note: >-
+    OAuth authorization-server metadata is published (issuer auth.cloud.redocly.com, dynamic client
+    registration, PKCE S256), but tools/list answers unauthenticated, so no token is required for the
+    tool surface as deployed today.
+server_info:
+  name: MCP server
+  version: '2026-08-22'
+  protocol_version: '2025-06-18'
+  transport: streamable-http (text/event-stream responses)
+  capabilities:
+    logging: {}
+    tools:
+      listChanged: true
+tools_file: green-check-verified-mcp-tools.json
+tool_count: 6
+tools:
+  - name: list-apis
+    description: Lists available APIs with their context and purpose
+    inputs: [filter, page, limit]
+  - name: get-endpoints
+    description: Get all endpoints for a specific API
+    inputs: [name]
+  - name: get-endpoint-info
+    description: Get comprehensive information about specific endpoint including parameters, security, and examples
+    inputs: [name, path, method]
+  - name: get-security-schemes
+    description: Get the security schemes for a specific API
+    inputs: [name]
+  - name: get-full-api-description
+    description: Get the complete OpenAPI description
+    inputs: [name]
+  - name: search
+    description: Search across the documentation to fetch relevant content for a given query
+    inputs: [query]
+provenance_caveat: >-
+  The server is provided by the Redocly-hosted developer portal rather than hand-built by Green Check,
+  and its tool set is identical across Redocly portals. It is nonetheless served from Green Check's own
+  host, reachable by any agent with no credentials, and returns Green Check's own OpenAPI — so it is
+  recorded as a real remote MCP surface. It is NOT evidence that the Access API itself is callable
+  through MCP.
