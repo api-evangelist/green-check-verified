@@ -1,0 +1,38 @@
+slug: green-check-verified
+provider: Green Check Verified
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: CRB Templates
+  spec_file: green-check-verified-crb-templates-api-openapi.yml
+  capability_id: BC-1300.20
+  capability_id_l1: BC-1300
+  capability_name: KYC & Customer Due Diligence Management
+  confidence: 0.75
+  evidence: '"Get CRB''s onboarding template for service provider"; "Add a new or existing document to
+    a requirement in a CRB''s onboarding template response"; schemas DueDiligenceStatus, DueDiligenceDocumentStatus,
+    CRBLicenseStatus'
+  reason: Operations manage the due-diligence document requirements a financial institution collects from
+    a cannabis-related business during onboarding — customer due diligence / KYC documentation for a banking
+    customer, not generic document storage.
+- tag: Service Provider
+  spec_file: green-check-verified-service-provider-api-openapi.yml
+  capability_id: BC-1300.10
+  capability_id_l1: BC-1300
+  capability_name: Customer Onboarding Management
+  confidence: 0.7
+  evidence: '"Create CRB"; "Connect a CRB to a SP by CRB_ID."; "Search for cannabis licenses"; "Search
+    for CRB info by EIN."; "Get service provider onboarding templates"'
+  reason: The financial-institution (service provider) side of establishing and connecting cannabis-business
+    customers, including licence and EIN lookup and onboarding templates — banking customer onboarding.
+    Some overlap with KYC/CDD keeps confidence moderate.
