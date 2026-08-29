@@ -11,6 +11,18 @@ description: 'Green Check Verified (Green Check) is a New Haven, Connecticut spe
   companies, CRMs, lenders and fintechs can programmatically create and onboard CRBs and read their sales,
   products, inventory, customer and document data through one contract instead of one integration per POS.'
 url: https://raw.githubusercontent.com/api-evangelist/green-check-verified/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://greencheckverified.com/wp-content/uploads/2021/06/Feature-Image.png
 x-type: company
 x-source: harvest:secondary-market
