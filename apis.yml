@@ -34,6 +34,19 @@ tags:
 - Cannabis
 - Compliance
 - Banking
+- Financial-Services
+- BSA/AML
+- Regulatory Technology
+- Point-of-Sale
+- Onboarding
+- Due Diligence
+- Know Your Customer
+- Data Aggregation
+tags_raw:
+- Company
+- Cannabis
+- Compliance
+- Banking
 - Financial Services
 - BSA/AML
 - Regulatory Technology
@@ -219,6 +232,8 @@ apis:
   humanURL: https://developer.greencheckverified.com/apis/swagger
   baseURL: https://prod-api.greencheckverified.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
