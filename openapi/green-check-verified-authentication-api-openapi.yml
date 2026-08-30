@@ -1,0 +1,333 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Authentication API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Authentication
+paths:
+  /auth/token:
+    post:
+      operationId: get-token
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: Exchange credentials for an bearer token.
+      summary: Get Bearer Token
+      tags:
+      - Authentication
+      security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequestBody'
+components:
+  schemas:
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    AuthResponse:
+      properties:
+        access_token:
+          type: string
+          description: Bearer token passed with request
+        token_type:
+          type: string
+          enum:
+          - Bearer
+          description: Access returns a Bearer token
+        scope:
+          items:
+            $ref: '#/components/schemas/AccessScopes'
+          type: array
+          description: List of scopes this token has access to
+        expires_at:
+          type: number
+          format: double
+          description: Seconds until this token expires
+        client_id:
+          type: string
+          description: Your client Id
+        issued_at:
+          type: number
+          format: double
+          description: When the token was issued, expressed as the number of seconds since the Unix epoch
+      required:
+      - access_token
+      - token_type
+      - scope
+      - expires_at
+      - client_id
+      - issued_at
+      type: object
+      additionalProperties: false
+    AccessGrantType:
+      enum:
+      - client_credentials
+      type: string
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    TokenRequestBody:
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        grant_type:
+          $ref: '#/components/schemas/AccessGrantType'
+        scope:
+          items:
+            $ref: '#/components/schemas/AccessScopes'
+          type: array
+      required:
+      - client_id
+      - client_secret
+      - grant_type
+      type: object
+      additionalProperties: false
+    AccessScopes:
+      enum:
+      - service-provider:read
+      - service-provider:write
+      - crb:read
+      - point-of-sale:read
+      - point-of-sale:write
+      - trace
+      - admin
+      - ein:read
+      - crb-id-request:read
+      - create-crb-api-key:write
+      - connect-crb-to-sp:write
+      type: string
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

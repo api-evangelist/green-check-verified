@@ -1,0 +1,3680 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Service Provider API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Service Provider
+paths:
+  /service-providers/{sp_id}:
+    get:
+      operationId: get-service-provider
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get service provider
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+  /service-providers/{sp_id}/crbs:
+    get:
+      operationId: get-service-provider-crbs
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProviderCrbs'
+              examples:
+                Example 1:
+                  value:
+                    nisi_2:
+                      pos_configs:
+                      - name: Dutchie Wholesale
+                        status: Connected
+                        updated_date: '2023-10-31T15:21:57.000Z'
+                      org_type: muo
+                      business_type: wholesale
+                      template_id: 5d53d7a2-2D86-c5Cb-8F2e-541dcD31a3cB
+                      template_result_id: 6622efbD-aAdb-ff0b-58C2-ebB4C9D972fc
+                      status: bank_approved
+                      mailing_street_address: 161 Main St
+                      mailing_city: Chicago
+                      mailing_state: WA
+                      mailing_postal_code: '97201'
+                      established_date: '2022-02-02T00:00:00.000Z'
+                      ftEmployees: null
+                      ptEmployees: 6
+                      entityType: sole
+                      dba: Green Check Dispensary
+                      monthlySales: '20000'
+                      monthlyCustomers: 2500
+                      id: CdCFCfEF-ebdf-0578-a5bF-713c66B43e11
+                      name: Dispensary1
+                      street_address: 78685 Ben Harbor
+                      street_address_2: Suite 901
+                      city: North Annamae
+                      ein: 55-5555555
+                      phone_number: (555) 555-5555
+                      postal_code: '55437'
+                      country: unitedstates
+                      state: SC
+                      website: null
+                      timezone: America/Juneau
+                    pariatur3c_:
+                      pos_configs:
+                      - name: GrowFlow
+                        status: Needs Attention
+                        updated_date: '2023-10-31T15:18:22.000Z'
+                      - name: Proteus420
+                        status: Connected
+                        updated_date: '2023-10-31T15:18:22.000Z'
+                      org_type: dispensary
+                      business_type: wholesale
+                      template_id: 35fAaa1F-C959-F02f-D7E1-Dd76AAB78bA2
+                      template_result_id: AFFef922-1F6C-CeD3-14B0-BCB94d49a5d8
+                      status: bank_approved
+                      mailing_street_address: 789 Main St
+                      mailing_city: Phoenix
+                      mailing_state: NJ
+                      mailing_postal_code: '80202'
+                      established_date: '2019-10-10T00:00:00.000Z'
+                      ftEmployees: 22
+                      ptEmployees: null
+                      entityType: sole
+                      dba: Green Check Dispensary
+                      monthlySales: '20000'
+                      monthlyCustomers: null
+                      id: 5c88c7D3-e395-c601-625C-71Cd6DBCEB3E
+                      name: Dispensary2
+                      street_address: 65467 Clarence Street
+                      street_address_2: Apt. 635
+                      city: null
+                      ein: 55-5555555
+                      phone_number: (555) 555-5555
+                      postal_code: null
+                      country: unitedstates
+                      state: OR
+                      website: null
+                      timezone: America/Los_Angeles
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: Get all CRBs for service provider
+      summary: Get service provider CRBs
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    post:
+      operationId: create-crb-for-service-provider
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CRB'
+              examples:
+                Example 1:
+                  value:
+                    mailing_street_address: 131 Main St
+                    mailing_city: Los Angeles
+                    mailing_state: MI
+                    mailing_postal_code: '80202'
+                    established_date: '2021-06-06T00:00:00.000Z'
+                    ftEmployees: null
+                    ptEmployees: 43
+                    entityType: llc
+                    dba: Green Check Dispensary
+                    monthlySales: '20000'
+                    monthlyCustomers: null
+                    id: 6c1E91E6-1ffA-C89D-E2Be-7f48EeF58DCd
+                    name: Dispensary2
+                    street_address: 30776 Berge Mountain
+                    street_address_2: null
+                    city: null
+                    ein: 55-5555555
+                    phone_number: (555) 555-5555
+                    postal_code: null
+                    country: unitedstates
+                    state: NM
+                    website: https://genuine-parsley.name/
+                    timezone: Pacific/Guam
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              examples:
+                Example 1:
+                  value:
+                    message: Unauthorized
+                    details: We were unable to connect to [POS] using the credentials provided. Please check them and try again
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+              examples:
+                Example 1:
+                  value:
+                    message: Conflict
+                    details: The following organization(s) already exist and are connected to your account
+                    data:
+                      org_id: c6d67e98-83ea-49f0-8812-e4abae2b68bc
+                      name: AlreadyConnectedDispensary
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+              examples:
+                Example 1:
+                  value:
+                    message: Validation Failed
+                    details:
+                      org.business_type:
+                        message: Business type and point of sale type mismatch
+                        value: wholesale
+                      pos_info.pos_type:
+                        message: Business type and point of sale type mismatch
+                        value: GrowFlow
+                Example 2:
+                  value:
+                    message: Validation Failed
+                    details:
+                      locations:
+                        message: Available locations
+                        value:
+                        - id: '1'
+                          name: Example Dispensary
+                          address: 420 Main St
+                        - id: '2'
+                          name: Example Dispensary Center Street
+                          address: 22 Center Street
+                    data:
+                      locations:
+                      - id: '1'
+                        name: Example Dispensary
+                        address: 420 Main St
+                      - id: '2'
+                        name: Example Dispensary Center Street
+                        address: 22 Center Street
+                Example 3:
+                  value:
+                    users:
+                      message: Users are required when POS credentials are not supplied.
+                      value: []
+                    pos_info.pos_credentials:
+                      message: POS credentials are required when users are not supplied.
+                    message: If POS credentials are not provided, users are required so that they can be invited to the app to input credentials. If users are not invited, POS credentials are required to prevent duplicate or empty organizations from being created.
+      description: "Create a new CRB and associate with service provider.\n\nThere are two supported onboarding workflows:\n\n1. Provide POS Credentials Up Front (`pos_info`)\n   - Use when the CRB has already provided their POS credentials.\n   - Include the `pos_info` object in your request.\n   - Inviting users is optional.\n\n2. Invite the CRB for In-App Onboarding\n   - Use when you don't have the CRB's POS credentials yet.\n   - Do NOT include `pos_info`.\n   - MUST include at least one user in the `users` array to send an invite.\n\nNote: You MUST provide either `pos_info` OR `users` with at least one entry. You may also provide both.\n\n-------------------------\nValidation Rules\n-------------------------\n\nIf `pos_info` is provided:\n- Org `business_type` must match `pos_type` (e.g. wholesale org must use a wholesale POS like \"Dutchie Wholesale\").\n- Credentials must be valid; a test POS call is made.\n- If the POS requires a `location_id`, it must be valid.\n  - If missing or invalid, a validation error is returned with valid options.\n- The org must not already be connected to your account.\n\nIf `pos_info` is NOT provided:\n- At least one user must be included in the `users` array.\n\n-------------------------\nTesting Scenarios (Sandbox Only)\n-------------------------\n\n1. Provide `pos_info` with a wholesale POS, but `business_type = \"retail\"` → Expect validation error.\n2. Provide `pos_info` with:\n   - `pos_type = \"Greenbits\"`\n   - `username = \"testing\"`\n   - `password = \"invalid_testing\"` → Simulates invalid credentials\n   - `password = \"testing\"` → Simulates valid credentials\n3. Leave `location_id` empty → Simulates missing required location, returns available options.\n4. Set `location_id = \"invalidLocation\"` → Simulates invalid location, returns available options.\n5. Set `location_id = \"testing\"` → Simulates successful connection (no actual POS connection made)."
+      summary: Create CRB
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:write
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrbCreationParams'
+  /service-providers/{sp_id}/pos-credentials-schema:
+    get:
+      operationId: get-service-provider-pos-credentials-schema
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PosCredentialInformation'
+              examples:
+                Example 1:
+                  value:
+                    Alleaves:
+                      pos_type: Alleaves
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: AlleavesTestAuth
+                        credentials_description: 'You can connect your Alleaves account to Green Check by simply using your Alleaves username and password. First, you''ll want to ensure that your user has the proper API access permissions in order for the integration to succeed. If your user has admin permissions, it should have the proper access by default.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-alleaves-to-green-check'
+                        credentials_properties:
+                          username:
+                            type: string
+                          password:
+                            type: string
+                        required_properties:
+                        - password
+                        - username
+                    BioTrack:
+                      pos_type: BioTrack
+                      business_type: retail
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: BiotrackTestAuth
+                        credentials_description: 'BioTrack enables its users to connect to other systems like Green Check with something called a SQL to SQL Pipeline. This simply means that Green Check will have read-only access to your BioTrack data. First, you''ll need to ask BioTrack to email you the necessary credentials for the integration. Copy and paste the email below and send it to Support@biotrackthc.com. Then, you''ll need to configure BioTrack to grant Green Check access, follow the instructions found here: https://f.hubspotusercontent20.net/hubfs/5237927/Connect%20BioTrack%20to%20Green%20Check.pdf. If your Network Connection requires you to whitelist Green Check''s IP, please add these IP addresses to your whitelist: 52.4.48.232 and 35.169.209.100
+
+
+                          Hello,
+
+                          I need some assistance. I would like to integrate our system with the Green Check system. Please provide me with the necessary information about our database that the Green Check team needs for Read Only access.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-biotrack-to-green-check
+
+                          https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-connection-refusal-errors
+
+                          https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-pg_hba.conf-errors'
+                        credentials_properties:
+                          port:
+                            type: number
+                          username:
+                            type: string
+                          password:
+                            type: string
+                          server_ip:
+                            type: string
+                          database_name:
+                            type: string
+                        required_properties:
+                        - database_name
+                        - password
+                        - port
+                        - server_ip
+                        - username
+                    BioTrack Wholesale:
+                      pos_type: BioTrack Wholesale
+                      business_type: wholesale
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: BiotrackTestAuth
+                        credentials_description: 'BioTrack enables its users to connect to other systems like Green Check with something called a SQL to SQL Pipeline. This simply means that Green Check will have read-only access to your BioTrack data. First, you''ll need to ask BioTrack to email you the necessary credentials for the integration. Copy and paste the email below and send it to Support@biotrackthc.com. Then, you''ll need to configure BioTrack to grant Green Check access, follow the instructions found here: https://f.hubspotusercontent20.net/hubfs/5237927/Connect%20BioTrack%20to%20Green%20Check.pdf. If your Network Connection requires you to whitelist Green Check''s IP, please add these IP addresses to your whitelist: 52.4.48.232 and 35.169.209.100
+
+
+                          Hello,
+
+                          I need some assistance. I would like to integrate our system with the Green Check system. Please provide me with the necessary information about our database that the Green Check team needs for Read Only access.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-biotrack-to-green-check
+
+                          https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-connection-refusal-errors
+
+                          https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-pg_hba.conf-errors'
+                        credentials_properties:
+                          port:
+                            type: number
+                          username:
+                            type: string
+                          password:
+                            type: string
+                          server_ip:
+                            type: string
+                          database_name:
+                            type: string
+                        required_properties:
+                        - database_name
+                        - password
+                        - port
+                        - server_ip
+                        - username
+                    Blaze:
+                      pos_type: Blaze
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: BlazeTestAuth
+                        credentials_description: 'Blaze provides its users with a unique Developer Key that can be used to integrate with other systems like Green Check. In order to connect with third party applications, you will need to generate a developer key from the backend of BLAZE Retail. Follow the instructions in the link below to generate a key.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-blaze-to-green-check'
+                        credentials_properties:
+                          Authorization:
+                            type: string
+                        required_properties:
+                        - Authorization
+                    Canix:
+                      pos_type: Canix
+                      business_type: wholesale
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: CanixTestAuth
+                        credentials_description: 'Canix provides its users with a unique API key that can be used to integrate with other systems like Green Check. Go to your Canix settingsToggle the switch next to Green Check Verified to the on position. Copy your client API key.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-canix-to-green-check'
+                        credentials_properties:
+                          key:
+                            type: string
+                        required_properties:
+                        - key
+                    Dutchie:
+                      pos_type: Dutchie
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: DutchieTestAuth
+                        credentials_description: 'Leaf Logix/Dutchie provides its users with unique API keys that can be used to integrate with other systems like Green Check. First, you''ll need to ask Leaf Logix to email you your API credentials. Copy and paste the email below and send it to possupport@dutchie.com. Please note: If your location is licensed for both medical and recreational sales, you will have two separate API keys for this location.
+
+
+                          Hello,
+
+                          I need some assistance. I would like to integrate our system with the Green Check system. Please help me locate my API key(s) so that I can provide this to the Green Check team to set up the integration.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-leaf-logix-to-green-check'
+                        credentials_properties:
+                          medApiKey:
+                            type: string
+                          recApiKey:
+                            type: string
+                        required_properties: []
+                    Dutchie Wholesale:
+                      pos_type: Dutchie Wholesale
+                      business_type: wholesale
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: DutchieTestAuth
+                        credentials_description: 'Leaf Logix/Dutchie provides its users with unique API keys that can be used to integrate with other systems like Green Check. First, you''ll need to ask Leaf Logix to email you your API credentials. Copy and paste the email below and send it to possupport@dutchie.com. Please note: If your location is licensed for both medical and recreational sales, you will have two separate API keys for this location.
+
+
+                          Hello,
+
+                          I need some assistance. I would like to integrate our system with the Green Check system. Please help me locate my API key(s) so that I can provide this to the Green Check team to set up the integration.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-leaf-logix-to-green-check'
+                        credentials_properties:
+                          medApiKey:
+                            type: string
+                          recApiKey:
+                            type: string
+                        required_properties: []
+                    Flowhub:
+                      pos_type: Flowhub
+                      business_type: retail
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: FlowhubTestAuth
+                        credentials_description: 'Flowhub provides its users with a unique API key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Flowhub to email you your API credentials. Please initiate the process by following this link to the Flowhub Integration Request form: https://flowhub.com/api-integration-request. Please fill out all fields and select Green Check as the desired partner and Submit.
+
+
+                          https://support.greencheckverified.com/knowledge/connecting-flowhub-to-green-check'
+                        credentials_properties:
+                          key:
+                            type: string
+                          clientId:
+                            type: string
+                        required_properties:
+                        - clientId
+                        - key
+                    Flourish Wholesale:
+                      pos_type: Flourish Wholesale
+                      business_type: wholesale
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: FlourishTestAuth
+                        credentials_description: 'To connect this integration, you’ll need your Flourish Username and API Key. Go to the following URL for a full guide on how to do this: https://docs.flourishsoftware.com/article/xsefgb8b0s-external-api-generate-or-reset-api-key
+
+
+                          https://support.greencheckverified.com/knowledge/connect-flourish-to-green-check'
+                        credentials_properties:
+                          api_key:
+                            type: string
+                        required_properties:
+                        - api_key
+                    Greenbits:
+                      pos_type: Greenbits
+                      business_type: retail
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: GreenbitsTestAuth
+                        credentials_description: 'To share your API token with Green Check, you will need to set up a new Role and User account in Greenbits that Green Check will use to access the token. Ensure this role has the following permissions: View Products, Access Backoffice, View product types, View brands, View strains, View suppliers. Follow the instructions in the link below to set this up.
+
+
+                          https://support.greencheckverified.com/en/knowledge/connect-greenbits-to-green-check'
+                        credentials_properties:
+                          username:
+                            type: string
+                          password:
+                            type: string
+                        required_properties:
+                        - password
+                        - username
+                    GrowFlow:
+                      pos_type: GrowFlow
+                      business_type: retail
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: GrowFlowTestAuth
+                        credentials_description: 'First, you''ll need to ask GrowFlow to enable the Green Check integration. Log into your GrowFlow account. Using the chat bubble, ask their Support team to enable the Green Check integration for all of your locations. Then use your client ID, found in the URL of any growflow page, like: https://retail.growflow.com/c/CLIENT_ID/
+
+
+                          https://support.greencheckverified.com/knowledge/connect-growflow-to-green-check'
+                        credentials_properties:
+                          client_id_name:
+                            type: string
+                        required_properties:
+                        - client_id_name
+                    GrowFlow Wholesale:
+                      pos_type: GrowFlow Wholesale
+                      business_type: wholesale
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: GrowFlowWholesaleTestAuth
+                        credentials_description: To connect this integration, you'll need your cannabis license number and the state it was issued in
+                        credentials_properties:
+                          state:
+                            type: string
+                          license_number:
+                            type: string
+                        required_properties:
+                        - license_number
+                        - state
+                    IndicaOnline:
+                      pos_type: IndicaOnline
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: IndicaOnlineTestAuth
+                        credentials_description: To connect this integration, you’ll need your IndicaOnline API Key
+                        credentials_properties:
+                          apiKey:
+                            type: string
+                          officeId:
+                            type: number
+                        required_properties:
+                        - apiKey
+                        - officeId
+                    Meadow:
+                      pos_type: Meadow
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: MeadowTestAuth
+                        credentials_description: 'You can connect your Meadow  account to Green Check by simply using your Meadow API Key. Generate a key by navigating to your organization''s API Settings page at https://admin.getmeadow.com/settings/api. Click the "Add Integration" button. Click the Company drop-down and select "Green Check Verified". Select the "Analytics Access" checkbox.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-meadow-to-green-check'
+                        credentials_properties:
+                          clientKey:
+                            type: string
+                        required_properties:
+                        - clientKey
+                    POSaBIT:
+                      pos_type: POSaBIT
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: POSaBITTestAuth
+                        credentials_description: 'POSaBIT provides its users with a unique API Token that can be used to integrate with other systems like Green Check. Please contact POSaBIT for help in creating an api key.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-posabit-to-green-check'
+                        credentials_properties:
+                          apiToken:
+                            type: string
+                        required_properties:
+                        - apiToken
+                    Proteus420:
+                      pos_type: Proteus420
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: Proteus420TestAuth
+                        credentials_description: 'To configure this integration, you’ll need your Proteus420 Client Name and API Key. The Client Name will be the Proteus420 account name that shows on the top of the Proteus420 homepage when logged in. The API Key can be accessed and generated on the web services page (Settings>webservices). There will be a unique API Key for each location.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-proteus420-to-green-check'
+                        credentials_properties:
+                          clientName:
+                            type: string
+                          apiKey:
+                            type: string
+                        required_properties:
+                        - apiKey
+                        - clientName
+                    Sage Intacct:
+                      pos_type: Sage Intacct
+                      business_type: wholesale
+                      location_required: true
+                      pos_credentials_schema:
+                        credentials_name: IntacctTestAuth
+                        credentials_description: 'To configure this integration, you’ll need to enable access for the Green Check Web Sender ID in your Sage Intacct system and create a Green Check Web Services User. You will then need to gather the credentials listed below. Follow the steps in the following link to help you facilitate this setup.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-sage-intacct-to-green-check'
+                        credentials_properties:
+                          user_id:
+                            description: The username of the Web Services user created by the customer
+                            type: string
+                          company_id:
+                            description: The company of the customer as assigned by Sage
+                            type: string
+                          user_password:
+                            description: The password of the Web Services user created by the customer
+                            type: string
+                        required_properties:
+                        - company_id
+                        - user_id
+                        - user_password
+                    Treez:
+                      pos_type: Treez
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: TreezTestAuth
+                        credentials_description: 'Treez provides its users with a unique API key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Treez to email you your API credentials. Copy and paste the email below and send it to support@treez.io. You will also need the organization''s name, found in the portal URL like: https://sampleorgname.treez.io
+
+
+                          Hello,
+
+                          I need some assistance. I would like to integrate our system with the Green Check system. Please provide my API credentials so that I can provide them to the Green Check team to set up the integration.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-treez-to-green-check'
+                        credentials_properties:
+                          apiKey:
+                            type: string
+                          dispensaryName:
+                            type: string
+                        required_properties:
+                        - apiKey
+                        - dispensaryName
+                    Weave:
+                      pos_type: Weave
+                      business_type: retail
+                      location_required: false
+                      pos_credentials_schema:
+                        credentials_name: WeaveTestAuth
+                        credentials_description: 'To configure this integration, you’ll need your Weave API Key. To generate your Weave API Key, you’ll navigate to https://retail.weaveiq.com/location/overview/api-integrations then click the checkbox to enable Greencheck.
+
+
+                          https://support.greencheckverified.com/knowledge/connect-weave-to-green-check'
+                        credentials_properties:
+                          apiKey:
+                            type: string
+                        required_properties:
+                        - apiKey
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get POS Credentials Schema
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+  /service-providers/{sp_id}/licenses-search:
+    get:
+      operationId: get-service-provider-licenses-search
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedBusinessLicenseResponse'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - licensee: tempor veniam do eiusmod
+                      license_identifier: null
+                      med_rec_classification: null
+                      locality: ad et cillum amet
+                      licensing_authority_name: labore sint
+                      licensing_authority_tier: locality
+                      licensing_authority_address:
+                        sub_premise: consectetur
+                        country: null
+                        box_number: enim cillum Lorem commodo
+                        sub_locality: ipsum adipisicing quis
+                        updated_at: null
+                        premise: null
+                        street: null
+                        locality: null
+                        created_at: null
+                        region: culpa proident magna veniam
+                        sub_region: null
+                        postal_code: commodo ad labore qui aliquip
+                      state_license_class_description: null
+                      state_license_status_description: adipisicing cillum do enim
+                      state_license_sub_class_description: elit irure
+                      reported_license_type_description: magna cupidatat anim consectetur
+                      reported_license_status: dolore fugiat quis sint
+                      reported_license_sub_type: null
+                      uniform_license_type_description: Unknown
+                      uniform_license_status_description: Unlicensed
+                      status_date: aliquip laboris proident amet ut
+                      issued_at: sed in labore
+                      expires_at: aliquip
+                      created_at: ut ea ad
+                      updated_at: sit
+                      edited_at: elit
+                      businesses:
+                      - name: ipsum exercitation eu
+                      - name: consectetur deserunt
+                      - name: minim ex laboris
+                      - name: in sed laborum cupidatat dolore
+                      individuals:
+                      - name: veniam nostrud minim
+                      - name: reprehenderit exercitation sed ipsum est
+                      - name: occaecat amet ea nisi laboris
+                    - licensee: null
+                      license_identifier: et reprehenderit aliqua consectetur esse
+                      med_rec_classification: both
+                      locality: null
+                      licensing_authority_name: Duis minim sit
+                      licensing_authority_tier: other
+                      licensing_authority_address:
+                        sub_premise: null
+                        country: null
+                        box_number: null
+                        sub_locality: amet
+                        updated_at: null
+                        premise: null
+                        street: null
+                        locality: null
+                        created_at: consectetur sit laborum ad aliqua
+                        region: null
+                        sub_region: id eiusmod
+                        postal_code: null
+                      state_license_class_description: null
+                      state_license_status_description: laboris Ut anim ipsum pariatur
+                      state_license_sub_class_description: null
+                      reported_license_type_description: Ut culpa ullamco
+                      reported_license_status: consectetur anim quis laboris
+                      reported_license_sub_type: anim
+                      uniform_license_type_description: Manufacturer/Processor
+                      uniform_license_status_description: Unlicensed
+                      status_date: non nostrud in officia
+                      issued_at: cupidatat ex ea cillum voluptate
+                      expires_at: null
+                      created_at: pariatur sit esse proident quis
+                      updated_at: non eu Ut minim sit
+                      edited_at: est elit sunt
+                      businesses:
+                      - name: veniam commodo voluptate proident dolore
+                      - name: ea
+                      - name: ullamco Duis in
+                      - name: pariatur sint commodo fugiat
+                      individuals:
+                      - name: ex cupidatat dolore
+                    - licensee: ut in cillum nisi
+                      license_identifier: commodo ut eu qui occaecat
+                      med_rec_classification: both
+                      locality: mollit exercitation irure sit
+                      licensing_authority_name: fugiat ut eiusmod veniam sed
+                      licensing_authority_tier: sub_region
+                      licensing_authority_address:
+                        sub_premise: null
+                        country: voluptate minim veniam eiusmod
+                        box_number: null
+                        sub_locality: null
+                        updated_at: adipisicing
+                        premise: null
+                        street: null
+                        locality: ad enim ipsum id nulla
+                        created_at: null
+                        region: tempor Duis fugiat
+                        sub_region: null
+                        postal_code: consectetur et mollit laboris id
+                      state_license_class_description: null
+                      state_license_status_description: aliquip minim
+                      state_license_sub_class_description: null
+                      reported_license_type_description: nulla non ut
+                      reported_license_status: ex
+                      reported_license_sub_type: sint sit occaecat in
+                      uniform_license_type_description: Unknown
+                      uniform_license_status_description: Inactive
+                      status_date: aute reprehenderit
+                      issued_at: voluptate sint dolor
+                      expires_at: laboris quis voluptate
+                      created_at: nisi laborum cupidatat
+                      updated_at: consequat proident aliqua
+                      edited_at: magna dolor dolor mollit
+                      businesses:
+                      - name: culpa laborum non
+                      - name: sint eiusmod do magna est
+                      - name: labore mollit tempor pariatur est
+                      individuals:
+                      - name: ea ad nisi
+                      - name: magna Excepteur in laboris in
+                    - licensee: laborum sed sint
+                      license_identifier: null
+                      med_rec_classification: null
+                      locality: null
+                      licensing_authority_name: tempor Excepteur
+                      licensing_authority_tier: sub_region
+                      licensing_authority_address:
+                        sub_premise: nulla incididunt
+                        country: null
+                        box_number: null
+                        sub_locality: null
+                        updated_at: null
+                        premise: null
+                        street: null
+                        locality: null
+                        created_at: null
+                        region: null
+                        sub_region: null
+                        postal_code: dolore irure
+                      state_license_class_description: null
+                      state_license_status_description: null
+                      state_license_sub_class_description: null
+                      reported_license_type_description: reprehenderit velit occaecat Lorem
+                      reported_license_status: nostrud consequat
+                      reported_license_sub_type: null
+                      uniform_license_type_description: Testing
+                      uniform_license_status_description: Unlicensed
+                      status_date: aliquip aliqua ex tempor
+                      issued_at: null
+                      expires_at: null
+                      created_at: Excepteur reprehenderit
+                      updated_at: fugiat sint et deserunt sit
+                      edited_at: nisi anim cupidatat ex pariatur
+                      businesses:
+                      - name: ea deserunt eu Ut in
+                      - name: mollit velit commodo consequat Lorem
+                      - name: voluptate dolor magna reprehenderit esse
+                      individuals:
+                      - name: id sit
+                    - licensee: null
+                      license_identifier: null
+                      med_rec_classification: recreational
+                      locality: sint enim laboris sed
+                      licensing_authority_name: incididunt ut irure
+                      licensing_authority_tier: other
+                      licensing_authority_address:
+                        sub_premise: magna
+                        country: null
+                        box_number: null
+                        sub_locality: est
+                        updated_at: laboris voluptate consequat est fugiat
+                        premise: elit ut voluptate
+                        street: dolore dolor dolore
+                        locality: null
+                        created_at: est minim cupidatat elit
+                        region: null
+                        sub_region: sunt sint dolore Ut minim
+                        postal_code: null
+                      state_license_class_description: anim mollit Duis
+                      state_license_status_description: amet irure dolor tempor pariatur
+                      state_license_sub_class_description: null
+                      reported_license_type_description: labore aute occaecat Duis culpa
+                      reported_license_status: et aliquip qui eu
+                      reported_license_sub_type: dolor elit ut consectetur ea
+                      uniform_license_type_description: Retail/Dispensary
+                      uniform_license_status_description: Active
+                      status_date: est cupidatat ea
+                      issued_at: null
+                      expires_at: consectetur ut
+                      created_at: sunt officia magna non
+                      updated_at: commodo ullamco magna
+                      edited_at: ut
+                      businesses:
+                      - name: est
+                      - name: nulla consequat tempor labore sint
+                      - name: eiusmod
+                      individuals:
+                      - name: amet fugiat in magna ut
+                    metadata:
+                      count: 100 - 172
+                      total: 75128306
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Search for cannabis licenses
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: License number / identifier
+        in: query
+        name: licenseNumber
+        required: false
+        schema:
+          type: string
+      - description: Name of licensee or holding business
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+      - description: State of Licensing Authority (CAN = Cananda, NLA = No Licensing Authority)
+        in: query
+        name: state
+        required: false
+        schema:
+          $ref: '#/components/schemas/BusinessLicenseState'
+      - description: License Type
+        in: query
+        name: licenseType
+        required: false
+        schema:
+          $ref: '#/components/schemas/CRBMUniformLicenseTypeDescription'
+  /service-providers/{sp_id}/onboarding-templates:
+    get:
+      operationId: get-service-provider-onboarding-templates
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OnboardingTemplate'
+                type: array
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: Get all onboarding templates
+      summary: Get service provider onboarding templates
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+  /service-providers/{sp_id}/ein-search:
+    get:
+      operationId: get-crbs-by-ein
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ThinCrbInfo'
+                type: array
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: Checks to see if any CRBs in our system have the provided EIN.
+      summary: Search for CRB info by EIN.
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - ein:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: EIN of potential CRB in system
+        in: query
+        name: ein
+        required: true
+        schema:
+          type: string
+          pattern: ^\d{2}-\d{7}$
+  /service-providers/{sp_id}/connect-crb:
+    post:
+      operationId: connect-crb-by-id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CRB'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: Connects a CRB to a Service Provider by CRB_ID.
+      summary: Connect a CRB to a SP by CRB_ID.
+      tags:
+      - Service Provider
+      security:
+      - access_auth:
+        - admin
+        - connect-crb-to-sp:write
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectCrbParams'
+components:
+  schemas:
+    Proteus420TestAuth:
+      description: 'To configure this integration, you’ll need your Proteus420 Client Name and API Key. The Client Name will be the Proteus420 account name that shows on the top of the Proteus420 homepage when logged in. The API Key can be accessed and generated on the web services page (Settings>webservices). There will be a unique API Key for each location.
+
+
+        https://support.greencheckverified.com/knowledge/connect-proteus420-to-green-check'
+      properties:
+        apiKey:
+          type: string
+        clientName:
+          type: string
+      required:
+      - apiKey
+      - clientName
+      type: object
+      additionalProperties: false
+    BiotrackTestAuth:
+      description: 'BioTrack enables its users to connect to other systems like Green Check with something called a SQL to SQL Pipeline. This simply means that Green Check will have read-only access to your BioTrack data. First, you''ll need to ask BioTrack to email you the necessary credentials for the integration. Copy and paste the email below and send it to Support@biotrackthc.com. Then, you''ll need to configure BioTrack to grant Green Check access, follow the instructions found here: https://f.hubspotusercontent20.net/hubfs/5237927/Connect%20BioTrack%20to%20Green%20Check.pdf. If your Network Connection requires you to whitelist Green Check''s IP, please add these IP addresses to your whitelist: 52.4.48.232 and 35.169.209.100
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please provide me with the necessary information about our database that the Green Check team needs for Read Only access.
+
+
+        https://support.greencheckverified.com/knowledge/connect-biotrack-to-green-check
+
+        https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-connection-refusal-errors
+
+        https://support.greencheckverified.com/knowledge/how-to-handle-biotrack-pg_hba.conf-errors'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        server_ip:
+          type: string
+        port:
+          type: number
+          format: double
+        database_name:
+          type: string
+      required:
+      - username
+      - password
+      - server_ip
+      - port
+      - database_name
+      type: object
+      additionalProperties: false
+    IANATimezones:
+      enum:
+      - America/New_York
+      - America/Detroit
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Indiana/Indianapolis
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Vevay
+      - America/Chicago
+      - America/Indiana/Tell_City
+      - America/Indiana/Knox
+      - America/Menominee
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/North_Dakota/Beulah
+      - America/Denver
+      - America/Boise
+      - America/Phoenix
+      - America/Los_Angeles
+      - America/Anchorage
+      - America/Juneau
+      - America/Puerto_Rico
+      - America/Sitka
+      - America/St_Thomas
+      - America/Metlakatla
+      - America/Yakutat
+      - America/Nome
+      - America/Adak
+      - Pacific/Honolulu
+      - Pacific/Guam
+      - Pacific/Kosrae
+      - Pacific/Midway
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Kwajalein
+      - Pacific/Saipan
+      type: string
+    PosConnectionStatus:
+      type: string
+      enum:
+      - Connected
+      - Not Connected
+      - Needs Attention
+      - Pending
+    DutchieTestAuth:
+      description: 'Leaf Logix/Dutchie provides its users with unique API keys that can be used to integrate with other systems like Green Check. First, you''ll need to ask Leaf Logix to email you your API credentials. Copy and paste the email below and send it to possupport@dutchie.com. Please note: If your location is licensed for both medical and recreational sales, you will have two separate API keys for this location.
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please help me locate my API key(s) so that I can provide this to the Green Check team to set up the integration.
+
+
+        https://support.greencheckverified.com/knowledge/connect-leaf-logix-to-green-check'
+      properties:
+        medApiKey:
+          type: string
+        recApiKey:
+          type: string
+      type: object
+      additionalProperties: false
+    GreenbitsTestAuth:
+      description: 'To share your API token with Green Check, you will need to set up a new Role and User account in Greenbits that Green Check will use to access the token. Ensure this role has the following permissions: View Products, Access Backoffice, View product types, View brands, View strains, View suppliers. Follow the instructions in the link below to set this up.
+
+
+        https://support.greencheckverified.com/en/knowledge/connect-greenbits-to-green-check'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+      type: object
+      additionalProperties: false
+    SmartRuleOperator:
+      description: The different condition operators to use
+      enum:
+      - Is Equal To
+      - Is Not Equal To
+      - Is Empty
+      - Is Filled
+      type: string
+    MjFreewayTestAuth:
+      description: 'MJ Freeway provides its users with unique API tokens that can be used to integrate with other systems like Green Check. First, you''ll need to ask MJ Freeway to add your API key to Green Check''s MJ Freeway Partners account. Copy and paste the email below and send it to partners@mjfreeway.com.
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please help me by providing access to Green Check''s MJ Freeway Partners account. This account is set up under engineering@greencheckverified.com.
+
+
+        https://support.greencheckverified.com/en/knowledge/connect-mj-freeway-to-green-check'
+      properties:
+        apiKey:
+          type: string
+        facilityId:
+          type: string
+        orgId:
+          type: string
+        userId:
+          type: string
+      required:
+      - apiKey
+      - facilityId
+      - orgId
+      - userId
+      type: object
+      additionalProperties: false
+    EntityType:
+      enum:
+      - sole
+      - partnership
+      - corporation
+      - llc
+      type: string
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    ShortDate:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
+    Countries:
+      type: string
+      enum:
+      - Afghanistan
+      - Albania
+      - Algeria
+      - American Samoa
+      - Andorra
+      - Angola
+      - Anguilla
+      - Antigua & Barbuda
+      - Argentina
+      - Armenia
+      - Aruba
+      - Australia
+      - Austria
+      - Azerbaijan
+      - Bahamas, The
+      - Bahrain
+      - Bangladesh
+      - Barbados
+      - Belarus
+      - Belgium
+      - Belize
+      - Benin
+      - Bermuda
+      - Bhutan
+      - Bolivia
+      - Bosnia & Herzegovina
+      - Botswana
+      - Brazil
+      - British Virgin Is.
+      - Brunei
+      - Bulgaria
+      - Burkina Faso
+      - Burma
+      - Burundi
+      - Cambodia
+      - Cameroon
+      - Canada
+      - Cape Verde
+      - Cayman Islands
+      - Central African Rep.
+      - Chad
+      - Chile
+      - China
+      - Colombia
+      - Comoros
+      - Congo, Dem. Rep.
+      - Congo, Repub. of the
+      - Cook Islands
+      - Costa Rica
+      - Cote d'Ivoire
+      - Croatia
+      - Cuba
+      - Cyprus
+      - Czech Republic
+      - Denmark
+      - Djibouti
+      - Dominica
+      - Dominican Republic
+      - East Timor
+      - Ecuador
+      - Egypt
+      - El Salvador
+      - Equatorial Guinea
+      - Eritrea
+      - Estonia
+      - Ethiopia
+      - Faroe Islands
+      - Fiji
+      - Finland
+      - France
+      - French Guiana
+      - French Polynesia
+      - Gabon
+      - Gambia, The
+      - Gaza Strip
+      - Georgia
+      - Germany
+      - Ghana
+      - Gibraltar
+      - Greece
+      - Greenland
+      - Grenada
+      - Guadeloupe
+      - Guam
+      - Guatemala
+      - Guernsey
+      - Guinea
+      - Guinea-Bissau
+      - Guyana
+      - Haiti
+      - Honduras
+      - Hong Kong
+      - Hungary
+      - Iceland
+      - India
+      - Indonesia
+      - Iran
+      - Iraq
+      - Ireland
+      - Isle of Man
+      - Israel
+      - Italy
+      - Jamaica
+      - Japan
+      - Jersey
+      - Jordan
+      - Kazakhstan
+      - Kenya
+      - Kiribati
+      - Korea, North
+      - Korea, South
+      - Kuwait
+      - Kyrgyzstan
+      - Laos
+      - Latvia
+      - Lebanon
+      - Lesotho
+      - Liberia
+      - Libya
+      - Liechtenstein
+      - Lithuania
+      - Luxembourg
+      - Macau
+      - Macedonia
+      - Madagascar
+      - Malawi
+      - Malaysia
+      - Maldives
+      - Mali
+      - Malta
+      - Marshall Islands
+      - Martinique
+      - Mauritania
+      - Mauritius
+      - Mayotte
+      - Mexico
+      - Micronesia, Fed. St.
+      - Moldova
+      - Monaco
+      - Mongolia
+      - Montserrat
+      - Morocco
+      - Mozambique
+      - Namibia
+      - Nauru
+      - Nepal
+      - Netherlands
+      - Netherlands Antilles
+      - New Caledonia
+      - New Zealand
+      - Nicaragua
+      - Niger
+      - Nigeria
+      - N. Mariana Islands
+      - Norway
+      - Oman
+      - Pakistan
+      - Palau
+      - Panama
+      - Papua New Guinea
+      - Paraguay
+      - Peru
+      - Philippines
+      - Poland
+      - Portugal
+      - Puerto Rico
+      - Qatar
+      - Reunion
+      - Romania
+      - Russia
+      - Rwanda
+      - Saint Helena
+      - Saint Kitts & Nevis
+      - Saint Lucia
+      - St Pierre & Miquelon
+      - Saint Vincent and the Grenadines
+      - Samoa
+      - San Marino
+      - Sao Tome & Principe
+      - Saudi Arabia
+      - Senegal
+      - Serbia
+      - Seychelles
+      - Sierra Leone
+      - Singapore
+      - Slovakia
+      - Slovenia
+      - Solomon Islands
+      - Somalia
+      - South Africa
+      - Spain
+      - Sri Lanka
+      - Sudan
+      - Suriname
+      - Swaziland
+      - Sweden
+      - Switzerland
+      - Syria
+      - Taiwan
+      - Tajikistan
+      - Tanzania
+      - Thailand
+      - Togo
+      - Tonga
+      - Trinidad & Tobago
+      - Tunisia
+      - Turkey
+      - Turkmenistan
+      - Turks & Caicos Is
+      - Tuvalu
+      - Uganda
+      - Ukraine
+      - United Arab Emirates
+      - United Kingdom
+      - United States
+      - Uruguay
+      - Uzbekistan
+      - Vanuatu
+      - Venezuela
+      - Vietnam
+      - Virgin Islands
+      - Wallis and Futuna
+      - West Bank
+      - Western Sahara
+      - Yemen
+      - Zambia
+      - Zimbabwe
+      description: Enumeration of all of the countries on Earth
+    GrowFlowTestAuth:
+      description: 'First, you''ll need to ask GrowFlow to enable the Green Check integration. Log into your GrowFlow account. Using the chat bubble, ask their Support team to enable the Green Check integration for all of your locations. Then use your client ID, found in the URL of any growflow page, like: https://retail.growflow.com/c/CLIENT_ID/
+
+
+        https://support.greencheckverified.com/knowledge/connect-growflow-to-green-check'
+      properties:
+        client_id_name:
+          type: string
+      required:
+      - client_id_name
+      type: object
+      additionalProperties: false
+    BrytemapTestAuth:
+      description: 'Brytemap provides its users with a unique Client Key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Brytemap to add your Client Key to Green Check''s Brytemap account. Copy and paste the email below and send it to support@brytemap.com.
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please help me by providing access to Green Check''s Brytemap Partners account. This account is set up under engineering@greencheckverified.com.
+
+
+        https://support.greencheckverified.com/knowledge/connect-brytemap-to-green-check'
+      properties:
+        client_key:
+          type: string
+      required:
+      - client_key
+      type: object
+      additionalProperties: false
+    IntacctTestAuth:
+      description: 'To configure this integration, you’ll need to enable access for the Green Check Web Sender ID in your Sage Intacct system and create a Green Check Web Services User. You will then need to gather the credentials listed below. Follow the steps in the following link to help you facilitate this setup.
+
+
+        https://support.greencheckverified.com/knowledge/connect-sage-intacct-to-green-check'
+      properties:
+        company_id:
+          type: string
+          description: The company of the customer as assigned by Sage
+        user_id:
+          type: string
+          description: The username of the Web Services user created by the customer
+        user_password:
+          type: string
+          description: The password of the Web Services user created by the customer
+      required:
+      - company_id
+      - user_id
+      - user_password
+      type: object
+      additionalProperties: false
+    BusinessLicenseState:
+      anyOf:
+      - $ref: '#/components/schemas/USStates'
+      - type: string
+        enum:
+        - CAN
+        - NLA
+    OrganizationType:
+      enum:
+      - bank
+      - dispensary
+      - gcv
+      - transport_vendor
+      - muo
+      - data_integrator_client
+      type: string
+    CRBMMedRecClassification:
+      enum:
+      - both
+      - hemp
+      - medical
+      - recreational
+      type: string
+    AvailablePosTypes:
+      type: string
+      enum:
+      - Alleaves
+      - BioTrack
+      - BioTrack Wholesale
+      - Blaze
+      - Canix
+      - Dutchie
+      - Dutchie Wholesale
+      - Flourish Wholesale
+      - Flowhub
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - IndicaOnline
+      - Meadow
+      - POSaBIT
+      - Proteus420
+      - Sage Intacct
+      - Treez
+      - Weave
+    AlleavesTestAuth:
+      description: 'You can connect your Alleaves account to Green Check by simply using your Alleaves username and password. First, you''ll want to ensure that your user has the proper API access permissions in order for the integration to succeed. If your user has admin permissions, it should have the proper access by default.
+
+
+        https://support.greencheckverified.com/knowledge/connect-alleaves-to-green-check'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - username
+      - password
+      type: object
+      additionalProperties: false
+    SmartRuleAction:
+      description: The desired action to take on the field if all conditions are true
+      enum:
+      - Show
+      - Hide
+      type: string
+    MeadowTestAuth:
+      description: 'You can connect your Meadow  account to Green Check by simply using your Meadow API Key. Generate a key by navigating to your organization''s API Settings page at https://admin.getmeadow.com/settings/api. Click the "Add Integration" button. Click the Company drop-down and select "Green Check Verified". Select the "Analytics Access" checkbox.
+
+
+        https://support.greencheckverified.com/knowledge/connect-meadow-to-green-check'
+      properties:
+        clientKey:
+          type: string
+      required:
+      - clientKey
+      type: object
+      additionalProperties: false
+    GrowFlowWholesaleTestAuth:
+      description: To connect this integration, you'll need your cannabis license number and the state it was issued in
+      properties:
+        state:
+          type: string
+        license_number:
+          type: string
+      required:
+      - state
+      - license_number
+      type: object
+      additionalProperties: false
+    CanixTestAuth:
+      description: 'Canix provides its users with a unique API key that can be used to integrate with other systems like Green Check. Go to your Canix settingsToggle the switch next to Green Check Verified to the on position. Copy your client API key.
+
+
+        https://support.greencheckverified.com/knowledge/connect-canix-to-green-check'
+      properties:
+        key:
+          type: string
+      required:
+      - key
+      type: object
+      additionalProperties: false
+    CredentialsSchema:
+      properties:
+        credentials_name:
+          type: string
+        credentials_description:
+          type: string
+        credentials_properties:
+          properties: {}
+          additionalProperties:
+            properties:
+              type:
+                type: string
+                enum:
+                - string
+                - number
+            required:
+            - type
+            type: object
+          type: object
+        required_properties:
+          items:
+            type: string
+          type: array
+      required:
+      - credentials_name
+      - credentials_description
+      - credentials_properties
+      - required_properties
+      type: object
+      additionalProperties: false
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    OnboardingTemplate:
+      properties:
+        template_id:
+          type: string
+          description: ID of this template
+        date_created:
+          type: string
+        date_updated:
+          type: string
+        updated_by:
+          type: string
+        created_by:
+          type: string
+        published_date:
+          type: string
+        published_by:
+          type: string
+        version:
+          type: string
+          description: Current template version. Will be "draft" if unpublished changes
+        name:
+          type: string
+          description: Template name. Internal only
+        description:
+          type: string
+          description: Template description. Internal only
+        custom_field_sections:
+          items:
+            properties:
+              smart_rule:
+                $ref: '#/components/schemas/SmartRule'
+              fields:
+                items:
+                  properties:
+                    attachments:
+                      items:
+                        properties:
+                          id:
+                            type: string
+                          file_name:
+                            type: string
+                        required:
+                        - id
+                        - file_name
+                        type: object
+                      type: array
+                      description: List of file names and document IDs of files attached to this field. Used in File and Display Content fields
+                    paragraph:
+                      type: string
+                      description: Paragraph of text. Used in Display Content
+                    smart_rule:
+                      $ref: '#/components/schemas/SmartRule'
+                    required:
+                      type: boolean
+                      description: Set to true if this field should be required in the form
+                    helpText:
+                      type: string
+                      description: Tooltip text
+                    label:
+                      type: string
+                    type:
+                      $ref: '#/components/schemas/CustomFieldType'
+                    id:
+                      type: string
+                  required:
+                  - label
+                  - type
+                  - id
+                  type: object
+                type: array
+              order:
+                type: number
+                format: double
+              description:
+                type: string
+              label:
+                type: string
+              section_id:
+                type: string
+            required:
+            - fields
+            - order
+            - label
+            - section_id
+            type: object
+          type: array
+          description: Custom fields array. These are a list of freeform questions to collect any information from your clients.
+        document_requirements:
+          items:
+            properties:
+              type:
+                anyOf:
+                - $ref: '#/components/schemas/RequirementTypeBankCustom'
+                - $ref: '#/components/schemas/RequirementTypeBusinessLicense'
+                - $ref: '#/components/schemas/RequirementTypeEmployeeLicense'
+                - $ref: '#/components/schemas/RequirementTypeGcvStandard'
+              archived:
+                type: boolean
+              required:
+                type: boolean
+              attachments:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    file_name:
+                      type: string
+                  required:
+                  - id
+                  - file_name
+                  type: object
+                type: array
+              category:
+                $ref: '#/components/schemas/RequirementCategory'
+              description:
+                type: string
+              name:
+                type: string
+              requirement_id:
+                type: string
+            required:
+            - type
+            - required
+            - category
+            - description
+            - name
+            - requirement_id
+            type: object
+          type: array
+      required:
+      - template_id
+      - date_created
+      - date_updated
+      - updated_by
+      - created_by
+      - version
+      - name
+      - description
+      - custom_field_sections
+      - document_requirements
+      type: object
+      additionalProperties: false
+    ConflictError:
+      properties:
+        name:
+          type: string
+          default: Conflict
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 409
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    SmartRuleConditionStatement:
+      properties:
+        operator:
+          $ref: '#/components/schemas/SmartRuleOperator'
+          description: The logical operator being applied (is equal to, is not equal to, etc)
+        targetFieldId:
+          type: string
+          description: The field to check the value of against the target value
+        targetValue:
+          type: string
+          description: The value upon which the operator checks against the target field's value
+      required:
+      - operator
+      - targetFieldId
+      type: object
+      additionalProperties: false
+    RequirementTypeEmployeeLicense:
+      enum:
+      - employee_license
+      type: string
+    DueDiligenceStatus:
+      enum:
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
+      type: string
+    EIN:
+      type: string
+      description: 'EIN (Employer Identification Number) - ##-#######'
+      pattern: ^\d{2}-\d{7}$
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    CrbCreationParams:
+      properties:
+        org:
+          properties:
+            monthlyCustomers:
+              $ref: '#/components/schemas/PositiveInteger'
+              description: Monthly Customers
+            monthlySales:
+              $ref: '#/components/schemas/PositiveInteger'
+              description: Monthly Sales
+            dba:
+              type: string
+              description: DBA (Doing Business As)
+            entityType:
+              $ref: '#/components/schemas/EntityType'
+              description: Entity Type
+            ptEmployees:
+              $ref: '#/components/schemas/PositiveInteger'
+              description: Part-time Employees
+            ftEmployees:
+              $ref: '#/components/schemas/PositiveInteger'
+              description: Full-time Employees
+            established_date:
+              $ref: '#/components/schemas/ShortDate'
+              description: Established Date
+            website:
+              $ref: '#/components/schemas/Website'
+              description: Website
+            phone_number:
+              $ref: '#/components/schemas/PhoneNumber'
+              description: 'Phone Number - (###) ####-####'
+            ein:
+              $ref: '#/components/schemas/EIN'
+              description: 'EIN (Employer Identification Number) - ##-#######'
+            mailing_postal_code:
+              $ref: '#/components/schemas/PostalCode'
+              description: Mailing Postal Code
+            mailing_state:
+              $ref: '#/components/schemas/USStates'
+              description: Mailing State
+            mailing_city:
+              $ref: '#/components/schemas/City'
+              description: Mailing City
+            mailing_street_address:
+              type: string
+              description: Mailing Street Address
+            country:
+              $ref: '#/components/schemas/Countries'
+              description: Country
+            postal_code:
+              $ref: '#/components/schemas/PostalCode'
+              description: Postal Code
+            city:
+              $ref: '#/components/schemas/City'
+              description: City
+            street_address_2:
+              type: string
+              description: Street Address 2
+            street_address:
+              type: string
+              description: Street Address
+            primary_contact_email:
+              type: string
+              description: Primary contact email of the CRB to help facilitate notification emails. If not provided, default to support
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+              description: Crb's business type (retail or wholesale)
+            template_id:
+              $ref: '#/components/schemas/UUID'
+              description: Onboarding Template Id to assign the CRB
+            timezone:
+              $ref: '#/components/schemas/IANATimezones'
+              description: Crb's IANA Timezone. If not provided, will default to default value for state
+            state:
+              $ref: '#/components/schemas/USStates'
+              description: State
+            name:
+              type: string
+          required:
+          - business_type
+          - state
+          - name
+          type: object
+        pos_info:
+          properties:
+            location_id:
+              anyOf:
+              - type: string
+              - type: number
+                format: double
+              description: 'Location ID to specify which specific location within the POS is related to this CRB. Optional.
+
+                If not provided and the selected POS requires location ID, we will return an error message
+
+                with available locations so that you can provide one and call again'
+            pos_credentials:
+              $ref: '#/components/schemas/PosCredentials'
+              description: POS credentials specific to the POS
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+              description: Point-of-Sale type of the CRB
+          required:
+          - pos_credentials
+          - pos_type
+          type: object
+        users:
+          items:
+            properties:
+              phone:
+                type: string
+              email:
+                type: string
+              lastName:
+                type: string
+              firstName:
+                type: string
+            required:
+            - email
+            - lastName
+            - firstName
+            type: object
+          type: array
+          description: CRB users to invite
+        options:
+          properties:
+            onboarding_required:
+              type: boolean
+              description: True to leave this CRB in pending state. Requires users to be present so that we can invite them to complete onboarding on-app. Defaults to false and CRBs are auto-approved.
+          type: object
+      required:
+      - org
+      type: object
+      additionalProperties: false
+    City:
+      type: string
+      description: City
+      pattern: ^[a-zA-Z\s.-]+$
+    RequirementCategory:
+      enum:
+      - financial
+      - insurance
+      - legal
+      - license
+      - operational
+      type: string
+    PagedBusinessLicenseResponse:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/BusinessLicense'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    WeaveTestAuth:
+      description: 'To configure this integration, you’ll need your Weave API Key. To generate your Weave API Key, you’ll navigate to https://retail.weaveiq.com/location/overview/api-integrations then click the checkbox to enable Greencheck.
+
+
+        https://support.greencheckverified.com/knowledge/connect-weave-to-green-check'
+      properties:
+        apiKey:
+          type: string
+      required:
+      - apiKey
+      type: object
+      additionalProperties: false
+    AccessCrb:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: ID
+        name:
+          type: string
+          description: Organization name
+        street_address:
+          type: string
+          description: Street Address
+        street_address_2:
+          type:
+          - string
+          - 'null'
+          description: Street Address 2
+        city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          description: City
+          type:
+          - string
+          - 'null'
+        ein:
+          allOf:
+          - $ref: '#/components/schemas/EIN'
+          description: Employer Identification Number
+          type:
+          - string
+          - 'null'
+        phone_number:
+          allOf:
+          - $ref: '#/components/schemas/PhoneNumber'
+          description: Phone Number
+          type:
+          - string
+          - 'null'
+        postal_code:
+          allOf:
+          - $ref: '#/components/schemas/PostalCode'
+          description: Postal Code
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+          description: Country
+        state:
+          $ref: '#/components/schemas/USStates'
+          description: State
+        website:
+          allOf:
+          - $ref: '#/components/schemas/Website'
+          description: Website
+          type:
+          - string
+          - 'null'
+        timezone:
+          $ref: '#/components/schemas/IANATimezones'
+          description: Timezone
+        mailing_street_address:
+          type:
+          - string
+          - 'null'
+          description: Mailing Street Address
+        mailing_city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          description: Mailing City
+          type:
+          - string
+          - 'null'
+        mailing_state:
+          allOf:
+          - $ref: '#/components/schemas/USStates'
+          description: Mailing State
+          type:
+          - string
+          - 'null'
+        mailing_postal_code:
+          allOf:
+          - $ref: '#/components/schemas/PostalCode'
+          description: Mailing Postal Code
+          type:
+          - string
+          - 'null'
+        established_date:
+          allOf:
+          - $ref: '#/components/schemas/ShortDate'
+          description: Date the dispensary was established
+          type:
+          - string
+          - 'null'
+        ftEmployees:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Number of full time employees
+        ptEmployees:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Number of part time employees
+        entityType:
+          allOf:
+          - $ref: '#/components/schemas/EntityType'
+          description: Type of business entity
+          type:
+          - string
+          - 'null'
+        dba:
+          type:
+          - string
+          - 'null'
+          description: Doing Business As
+        monthlySales:
+          type:
+          - string
+          - 'null'
+          description: Estimated amouunt of monthly sales
+        monthlyCustomers:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Estimated amount of monthly customers
+        org_type:
+          $ref: '#/components/schemas/OrganizationType'
+          description: 'Org Type
+
+
+            dispensary = standalone dispensary. MUO stands for Multi-Unit Organization, where the "muo" org is the parent and it''s child orgs have org type dispesary'
+        business_type:
+          allOf:
+          - $ref: '#/components/schemas/DispensaryBusinessType'
+          type:
+          - string
+          - 'null'
+        template_id:
+          $ref: '#/components/schemas/UUID'
+        template_result_id:
+          $ref: '#/components/schemas/UUID'
+        status:
+          $ref: '#/components/schemas/DueDiligenceStatus'
+        pos_configs:
+          items:
+            $ref: '#/components/schemas/AccessPosConfig'
+          type: array
+      required:
+      - id
+      - name
+      - street_address
+      - street_address_2
+      - city
+      - ein
+      - phone_number
+      - postal_code
+      - country
+      - state
+      - website
+      - timezone
+      - mailing_street_address
+      - mailing_city
+      - mailing_state
+      - mailing_postal_code
+      - established_date
+      - ftEmployees
+      - ptEmployees
+      - entityType
+      - dba
+      - monthlySales
+      - monthlyCustomers
+      - org_type
+      - business_type
+      - template_id
+      - template_result_id
+      - status
+      - pos_configs
+      type: object
+      additionalProperties: false
+    PostalCode:
+      type: string
+      description: Postal Code
+      pattern: ^\d{5}(?:[-\s]?\d{4})?$
+    ServiceProviderCrbs:
+      properties: {}
+      additionalProperties:
+        $ref: '#/components/schemas/AccessCrb'
+      type: object
+    PhoneNumber:
+      type: string
+      description: 'Phone Number - (###) ####-####'
+      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    CRBMUniformLicenseStatusDescription:
+      enum:
+      - Active
+      - Approved/Pending
+      - Inactive
+      - Pre-License
+      - Unknown
+      - Unlicensed
+      type: string
+    Website:
+      type: string
+      description: Website
+      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
+    BusinessLicense:
+      properties:
+        licensee:
+          type:
+          - string
+          - 'null'
+        license_identifier:
+          type:
+          - string
+          - 'null'
+        med_rec_classification:
+          allOf:
+          - $ref: '#/components/schemas/CRBMMedRecClassification'
+          type:
+          - string
+          - 'null'
+        locality:
+          type:
+          - string
+          - 'null'
+        licensing_authority_name:
+          type: string
+        licensing_authority_tier:
+          $ref: '#/components/schemas/CRBMLicensingAuthorityTier'
+        licensing_authority_address:
+          properties:
+            postal_code:
+              type:
+              - string
+              - 'null'
+            sub_region:
+              type:
+              - string
+              - 'null'
+            region:
+              type:
+              - string
+              - 'null'
+            created_at:
+              type:
+              - string
+              - 'null'
+            locality:
+              type:
+              - string
+              - 'null'
+            street:
+              type:
+              - string
+              - 'null'
+            premise:
+              type:
+              - string
+              - 'null'
+            updated_at:
+              type:
+              - string
+              - 'null'
+            sub_locality:
+              type:
+              - string
+              - 'null'
+            box_number:
+              type:
+              - string
+              - 'null'
+            country:
+              type:
+              - string
+              - 'null'
+            sub_premise:
+              type:
+              - string
+              - 'null'
+          required:
+          - postal_code
+          - sub_region
+          - region
+          - created_at
+          - locality
+          - street
+          - premise
+          - updated_at
+          - sub_locality
+          - box_number
+          - country
+          - sub_premise
+          type: object
+        state_license_class_description:
+          type:
+          - string
+          - 'null'
+        state_license_status_description:
+          type:
+          - string
+          - 'null'
+        state_license_sub_class_description:
+          type:
+          - string
+          - 'null'
+        reported_license_type_description:
+          type: string
+        reported_license_status:
+          type: string
+        reported_license_sub_type:
+          type:
+          - string
+          - 'null'
+        uniform_license_type_description:
+          $ref: '#/components/schemas/CRBMUniformLicenseTypeDescription'
+        uniform_license_status_description:
+          $ref: '#/components/schemas/CRBMUniformLicenseStatusDescription'
+        status_date:
+          type: string
+        issued_at:
+          type:
+          - string
+          - 'null'
+        expires_at:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        edited_at:
+          type: string
+        businesses:
+          items:
+            properties:
+              name:
+                type: string
+            required:
+            - name
+            type: object
+          type: array
+        individuals:
+          items:
+            properties:
+              name:
+                type: string
+            required:
+            - name
+            type: object
+          type: array
+      required:
+      - licensee
+      - license_identifier
+      - med_rec_classification
+      - locality
+      - licensing_authority_name
+      - licensing_authority_tier
+      - licensing_authority_address
+      - state_license_class_description
+      - state_license_status_description
+      - state_license_sub_class_description
+      - reported_license_type_description
+      - reported_license_status
+      - reported_license_sub_type
+      - uniform_license_type_description
+      - uniform_license_status_description
+      - status_date
+      - issued_at
+      - expires_at
+      - created_at
+      - updated_at
+      - edited_at
+      - businesses
+      - individuals
+      type: object
+      additionalProperties: false
+    SmartRule:
+      properties:
+        action:
+          $ref: '#/components/schemas/SmartRuleAction'
+          description: The resulting action to take on the field if all conditions are true
+        conditions:
+          items:
+            $ref: '#/components/schemas/SmartRuleConditionStatement'
+          type: array
+          description: Array of conditions that must all be met in order for the rule to evaluate true. Currently limited to one condition but using an array to make it easier to extend
+      required:
+      - action
+      - conditions
+      type: object
+      additionalProperties: false
+    FlowhubTestAuth:
+      description: 'Flowhub provides its users with a unique API key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Flowhub to email you your API credentials. Please initiate the process by following this link to the Flowhub Integration Request form: https://flowhub.com/api-integration-request. Please fill out all fields and select Green Check as the desired partner and Submit.
+
+
+        https://support.greencheckverified.com/knowledge/connecting-flowhub-to-green-check'
+      properties:
+        key:
+          type: string
+        clientId:
+          type: string
+      required:
+      - key
+      - clientId
+      type: object
+      additionalProperties: false
+    PosCredentials:
+      anyOf:
+      - $ref: '#/components/schemas/AlleavesTestAuth'
+      - $ref: '#/components/schemas/BiotrackTestAuth'
+      - $ref: '#/components/schemas/BlazeTestAuth'
+      - $ref: '#/components/schemas/BrytemapTestAuth'
+      - $ref: '#/components/schemas/CanixTestAuth'
+      - $ref: '#/components/schemas/CovaTestAuth'
+      - $ref: '#/components/schemas/FlourishTestAuth'
+      - $ref: '#/components/schemas/FlowhubTestAuth'
+      - $ref: '#/components/schemas/GreenbitsTestAuth'
+      - $ref: '#/components/schemas/GrowFlowTestAuth'
+      - $ref: '#/components/schemas/GrowFlowWholesaleTestAuth'
+      - $ref: '#/components/schemas/IndicaOnlineTestAuth'
+      - $ref: '#/components/schemas/IntacctTestAuth'
+      - $ref: '#/components/schemas/DutchieTestAuth'
+      - $ref: '#/components/schemas/MeadowTestAuth'
+      - $ref: '#/components/schemas/MjFreewayTestAuth'
+      - $ref: '#/components/schemas/POSaBITTestAuth'
+      - $ref: '#/components/schemas/Proteus420TestAuth'
+      - $ref: '#/components/schemas/TreezTestAuth'
+      - $ref: '#/components/schemas/WeaveTestAuth'
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    CRBMLicensingAuthorityTier:
+      enum:
+      - country
+      - locality
+      - other
+      - region
+      - sub_region
+      type: string
+    ThinCrbInfo:
+      properties:
+        ein:
+          type: string
+        name:
+          type: string
+        mailingstreetaddress:
+          type: string
+        mailingstate:
+          type: string
+        mailingpostalcode:
+          type: string
+        mailingcity:
+          type: string
+        streetaddress:
+          type: string
+        state:
+          type: string
+        postalcode:
+          type: string
+        city:
+          type: string
+      required:
+      - ein
+      type: object
+      additionalProperties: false
+    DispensaryBusinessType:
+      type: string
+      enum:
+      - retail
+      - wholesale
+    FlourishTestAuth:
+      description: 'To connect this integration, you’ll need your Flourish Username and API Key. Go to the following URL for a full guide on how to do this: https://docs.flourishsoftware.com/article/xsefgb8b0s-external-api-generate-or-reset-api-key
+
+
+        https://support.greencheckverified.com/knowledge/connect-flourish-to-green-check'
+      properties:
+        api_key:
+          type: string
+      required:
+      - api_key
+      type: object
+      additionalProperties: false
+    USStates:
+      description: Enumeration of all of the United States
+      enum:
+      - AL
+      - AK
+      - AZ
+      - AR
+      - AS
+      - CA
+      - CO
+      - CT
+      - DE
+      - DC
+      - FM
+      - FL
+      - GA
+      - GU
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MH
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - MP
+      - OH
+      - OK
+      - OR
+      - PW
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UM
+      - UT
+      - VT
+      - VA
+      - VI
+      - WA
+      - WV
+      - WI
+      - WY
+      - AA
+      - AE
+      - AP
+      type: string
+    TreezTestAuth:
+      description: 'Treez provides its users with a unique API key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Treez to email you your API credentials. Copy and paste the email below and send it to support@treez.io. You will also need the organization''s name, found in the portal URL like: https://sampleorgname.treez.io
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please provide my API credentials so that I can provide them to the Green Check team to set up the integration.
+
+
+        https://support.greencheckverified.com/knowledge/connect-treez-to-green-check'
+      properties:
+        apiKey:
+          type: string
+        dispensaryName:
+          type: string
+      required:
+      - apiKey
+      - dispensaryName
+      type: object
+      additionalProperties: false
+    IndicaOnlineTestAuth:
+      description: To connect this integration, you’ll need your IndicaOnline API Key
+      properties:
+        apiKey:
+          type: string
+        officeId:
+          type: number
+          format: double
+      required:
+      - apiKey
+      - officeId
+      type: object
+      additionalProperties: false
+    CRBMUniformLicenseTypeDescription:
+      enum:
+      - Caregiver
+      - CBD
+      - Corporate Officer
+      - Cultivation
+      - Delivery/Transporter
+      - Event Organizer
+      - Hemp
+      - Illicit Establishment
+      - Management Company
+      - Manufacturer/Processor
+      - Owner/Investor
+      - Research
+      - Retail/Dispensary
+      - Senior Manager
+      - Social Use Club
+      - Storage
+      - Testing
+      - Unknown
+      - Vertically Integrated
+      - Waste Disposal
+      - Wholesale/Distribution
+      type: string
+    UtcDateTime:
+      type: string
+      format: date-time
+    PosCredentialInformation:
+      properties:
+        Alleaves:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Dutchie:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Dutchie Wholesale:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Meadow:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Greenbits:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        GrowFlow:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        GrowFlow Wholesale:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Flourish Wholesale:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Flowhub:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        BioTrack:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        BioTrack Wholesale:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Treez:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Blaze:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Sage Intacct:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Canix:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        POSaBIT:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Proteus420:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        IndicaOnline:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+        Weave:
+          properties:
+            pos_credentials_schema:
+              $ref: '#/components/schemas/CredentialsSchema'
+            location_required:
+              type: boolean
+            business_type:
+              $ref: '#/components/schemas/DispensaryBusinessType'
+            pos_type:
+              $ref: '#/components/schemas/AvailablePosTypes'
+          required:
+          - pos_credentials_schema
+          - location_required
+          - business_type
+          - pos_type
+          type: object
+      required:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Meadow
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Sage Intacct
+      - Canix
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Weave
+      type: object
+    ConnectCrbParams:
+      properties:
+        id:
+          type: string
+        template_id:
+          type: string
+      required:
+      - id
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    CRB:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: ID
+        name:
+          type: string
+          description: Organization name
+        street_address:
+          type: string
+          description: Street Address
+        street_address_2:
+          type:
+          - string
+          - 'null'
+          description: Street Address 2
+        city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          description: City
+          type:
+          - string
+          - 'null'
+        ein:
+          allOf:
+          - $ref: '#/components/schemas/EIN'
+          description: Employer Identification Number
+          type:
+          - string
+          - 'null'
+        phone_number:
+          allOf:
+          - $ref: '#/components/schemas/PhoneNumber'
+          description: Phone Number
+          type:
+          - string
+          - 'null'
+        postal_code:
+          allOf:
+          - $ref: '#/components/schemas/PostalCode'
+          description: Postal Code
+          type:
+          - string
+          - 'null'
+        country:
+          type:
+          - string
+          - 'null'
+          description: Country
+        state:
+          $ref: '#/components/schemas/USStates'
+          description: State
+        website:
+          allOf:
+          - $ref: '#/components/schemas/Website'
+          description: Website
+          type:
+          - string
+          - 'null'
+        timezone:
+          $ref: '#/components/schemas/IANATimezones'
+          description: Timezone
+        mailing_street_address:
+          type:
+          - string
+          - 'null'
+          description: Mailing Street Address
+        mailing_city:
+          allOf:
+          - $ref: '#/components/schemas/City'
+          description: Mailing City
+          type:
+          - string
+          - 'null'
+        mailing_state:
+          allOf:
+          - $ref: '#/components/schemas/USStates'
+          description: Mailing State
+          type:
+          - string
+          - 'null'
+        mailing_postal_code:
+          allOf:
+          - $ref: '#/components/schemas/PostalCode'
+          description: Mailing Postal Code
+          type:
+          - string
+          - 'null'
+        established_date:
+          allOf:
+          - $ref: '#/components/schemas/ShortDate'
+          description: Date the dispensary was established
+          type:
+          - string
+          - 'null'
+        ftEmployees:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Number of full time employees
+        ptEmployees:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Number of part time employees
+        entityType:
+          allOf:
+          - $ref: '#/components/schemas/EntityType'
+          description: Type of business entity
+          type:
+          - string
+          - 'null'
+        dba:
+          type:
+          - string
+          - 'null'
+          description: Doing Business As
+        monthlySales:
+          type:
+          - string
+          - 'null'
+          description: Estimated amouunt of monthly sales
+        monthlyCustomers:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Estimated amount of monthly customers
+      required:
+      - id
+      - name
+      - street_address
+      - street_address_2
+      - city
+      - ein
+      - phone_number
+      - postal_code
+      - country
+      - state
+      - website
+      - timezone
+      - mailing_street_address
+      - mailing_city
+      - mailing_state
+      - mailing_postal_code
+      - established_date
+      - ftEmployees
+      - ptEmployees
+      - entityType
+      - dba
+      - monthlySales
+      - monthlyCustomers
+      type: object
+      additionalProperties: false
+    ServiceProvider:
+      properties:
+        id:
+          type: string
+          description: ID
+        name:
+          type: string
+          description: Organization name
+        street_address:
+          type: string
+          description: Street Address
+        city:
+          type: string
+          description: City
+        ein:
+          type: string
+          description: Employer Identification Number
+        phone_number:
+          type: string
+          description: Phone Number
+        postal_code:
+          type: string
+          description: Postal Code
+        country:
+          type: string
+          description: Country
+        state:
+          $ref: '#/components/schemas/USStates'
+          description: State
+        website:
+          type: string
+          description: Website
+        timezone:
+          $ref: '#/components/schemas/IANATimezones'
+          description: Timezone
+        primary_point_of_contact:
+          properties:
+            phoneNumber:
+              type: string
+            emailAddress:
+              type: string
+            title:
+              type: string
+            lastName:
+              type: string
+            firstName:
+              type: string
+          required:
+          - phoneNumber
+          - emailAddress
+          - title
+          - lastName
+          - firstName
+          type: object
+      required:
+      - id
+      - name
+      - street_address
+      - city
+      - ein
+      - phone_number
+      - postal_code
+      - country
+      - state
+      - website
+      - timezone
+      type: object
+      additionalProperties: false
+    RequirementTypeGcvStandard:
+      enum:
+      - gcv_standard
+      type: string
+    POSaBITTestAuth:
+      description: 'POSaBIT provides its users with a unique API Token that can be used to integrate with other systems like Green Check. Please contact POSaBIT for help in creating an api key.
+
+
+        https://support.greencheckverified.com/knowledge/connect-posabit-to-green-check'
+      properties:
+        apiToken:
+          type: string
+      required:
+      - apiToken
+      type: object
+      additionalProperties: false
+    CovaTestAuth:
+      description: 'Cova provides its users with a unique API key that can be used to integrate with other systems like Green Check. First, you''ll need to ask Cova to add your API key to Green Check''s Cova Partners account. Copy and paste the email below and send it to apisupport@covasoftware.com.
+
+
+        Hello,
+
+        I need some assistance. I would like to integrate our system with the Green Check system. Please help me by providing access to Green Check''s Cova Partners account. This account is set up under engineering@greencheckverified.com.
+
+
+        https://support.greencheckverified.com/knowledge/connect-cova-to-green-check'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+      required:
+      - username
+      - password
+      - client_id
+      - client_secret
+      type: object
+      additionalProperties: false
+    AccessPosConfig:
+      properties:
+        name:
+          $ref: '#/components/schemas/FriendlyPosName'
+        status:
+          $ref: '#/components/schemas/PosConnectionStatus'
+        updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+      required:
+      - name
+      - updated_date
+      type: object
+      additionalProperties: false
+    CustomFieldType:
+      enum:
+      - textSingleLine
+      - textMultiLine
+      - radio
+      - select
+      - checkbox
+      - date
+      - file
+      - fileDownload
+      - displayContent
+      - hyperlink
+      type: string
+    RequirementTypeBankCustom:
+      enum:
+      - bank_custom
+      type: string
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    BlazeTestAuth:
+      description: 'Blaze provides its users with a unique Developer Key that can be used to integrate with other systems like Green Check. In order to connect with third party applications, you will need to generate a developer key from the backend of BLAZE Retail. Follow the instructions in the link below to generate a key.
+
+
+        https://support.greencheckverified.com/knowledge/connect-blaze-to-green-check'
+      properties:
+        Authorization:
+          type: string
+      required:
+      - Authorization
+      type: object
+      additionalProperties: false
+    RequirementTypeBusinessLicense:
+      enum:
+      - business_license
+      type: string
+    NullablePositiveInteger:
+      type:
+      - integer
+      - 'null'
+      format: int32
+      minimum: 0
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

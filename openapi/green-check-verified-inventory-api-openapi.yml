@@ -1,0 +1,1489 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Inventory API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Inventory
+paths:
+  /crbs/{crb_id}/inventory:
+    get:
+      operationId: get-inventory
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedInventory'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - id: 493bf7De-Cfb2-F297-cB74-738985DF0471
+                      crb_id: C08EaBD1-cf02-b41D-17Fe-5F7ca0d6FF8f
+                      pos_type: MJ Freeway
+                      product_id: 8378981A-8f9D-AeCD-fdc3-F5ccAE8a3aeA
+                      name: Kief Bulk - Blissful Wizard
+                      sku: '12385689'
+                      barcode: 1A40F01000000C9000009645
+                      total_quantity: 39
+                      pos_updated_date: '2023-09-18T20:57:34.917Z'
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-10-31T15:21:57.000Z'
+                      gc_updated_date: '2023-09-18T20:57:34.000Z'
+                      location_data:
+                      - name: Main Inventory
+                        quantity: 45
+                        location_id: 505aCEdc-cccb-91fc-ac5d-FaE7cA39703C
+                        pos_location_type: qui ut
+                      - name: Store 4
+                        quantity: 47
+                        location_id: Cf93014D-eab3-B3BA-ce09-fB9D76dACAa7
+                        pos_location_type: null
+                      - name: Main Inventory
+                        quantity: 16
+                        location_id: 4EbDbf7E-b8d5-Ba61-c961-24Bda1C959Fc
+                        pos_location_type: consequat Excepteur deserunt
+                      - name: Store 4
+                        quantity: 29
+                        location_id: adCCA7Ca-A77f-40DD-9aA4-02e2C8e6Bd6f
+                        pos_location_type: null
+                    - id: ADC8a4Eb-Cd0f-aed4-eABa-5ccBE3cbdc2C
+                      crb_id: 626de38E-04Cd-5cbB-bBEc-C5eFBEbE129a
+                      pos_type: Treez
+                      product_id: null
+                      name: Kief Bulk - Blissful Wizard
+                      sku: '82734891'
+                      barcode: '01506'
+                      total_quantity: 39
+                      pos_updated_date: null
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-10-31T15:18:22.000Z'
+                      gc_updated_date: '2023-10-31T15:21:57.000Z'
+                      location_data:
+                      - name: Main Store
+                        quantity: 16
+                        location_id: 5eDfBfEA-5aCe-5D81-6FAa-7FfF1aF9A924
+                        pos_location_type: aliqua
+                      - name: Store 4
+                        quantity: 100
+                        location_id: f8F545eE-BCe7-986F-b7E1-70E8a8A7Fa5A
+                        pos_location_type: null
+                      - name: Bulk Inventory
+                        quantity: 18
+                        location_id: c7f7Fa74-fEff-AfD7-6Cda-2bc04E658a9B
+                        pos_location_type: null
+                    - id: 7252FDcB-c608-Ed21-e72F-E937cF6595F9
+                      crb_id: C4F2dEB7-7FdF-6BF4-0cC7-160C5dF2FddE
+                      pos_type: POSaBIT
+                      product_id: BbDad04D-Ed14-BCe8-3FB5-ad05a5df9AA5
+                      name: Rudeboi OG
+                      sku: '30752973'
+                      barcode: 1A40F0100000B55000005484
+                      total_quantity: 47
+                      pos_updated_date: '2023-02-28T14:00:33.603Z'
+                      pos_updated_date_local: '2023-09-18T20:57:34.917Z'
+                      gc_created_date: '2023-10-31T15:18:22.000Z'
+                      gc_updated_date: '2023-02-28T14:01:33.000Z'
+                      location_data:
+                      - name: Store 3
+                        quantity: 29
+                        location_id: 840BE69F-57BC-3f28-10ca-bFB7C41a98d6
+                        pos_location_type: esse minim irure anim
+                      - name: Store 3
+                        quantity: 39
+                        location_id: 0c0a088C-988f-a3C3-56f5-3298bdc34d60
+                        pos_location_type: est
+                    - id: 6Ae2bc05-bD3b-4251-f4EE-de9f730d2CBC
+                      crb_id: 290CEbcD-cde5-A08E-F4bE-E5AF9cDE9fd0
+                      pos_type: Cova
+                      product_id: 64f480A3-3bc6-56Ae-daF1-f1A9BEC512EF
+                      name: Bulk Batter (GG4)
+                      sku: '12894689'
+                      barcode: '01506'
+                      total_quantity: 39
+                      pos_updated_date: '2023-10-31T15:18:22.650Z'
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-02-28T14:01:33.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      location_data:
+                      - name: Store 3
+                        quantity: 16
+                        location_id: dCbd9dE8-ABED-D3D1-cFFa-8a1c4CC0EC5F
+                        pos_location_type: null
+                      - name: Bulk Inventory
+                        quantity: 200
+                        location_id: 9ecea46E-cA3F-84ec-2bFF-84bb9eC7ddA7
+                        pos_location_type: Ut in
+                      - name: Store 4
+                        quantity: 39
+                        location_id: 1711B9Fc-FE4E-8eB1-2d9B-CC81DFBced0A
+                        pos_location_type: et esse officia
+                    metadata:
+                      count: 1 - 100
+                      total: 45223798
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB inventory
+      tags:
+      - Inventory
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: Expands the response by including product data related to this resource
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: boolean
+      - description: 'Last updated from date: yyyy-MM-dd'
+        in: query
+        name: last_updated_from
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'Last updated to date: yyyy-MM-dd'
+        in: query
+        name: last_updated_to
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+  /crbs/{crb_id}/inventory/{inventory_id}:
+    get:
+      operationId: get-inventory-by-id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                title: GetCrbInventoryByIdResponse
+                anyOf:
+                - $ref: '#/components/schemas/Inventory'
+                - $ref: '#/components/schemas/ExpandedInventory'
+              examples:
+                Example 1:
+                  value:
+                    id: 2284c0E4-62B2-33F5-FaC5-0FdC1d2dDb6a
+                    crb_id: B8cDDF80-04e0-87CE-A7d9-a55d95049DBA
+                    pos_type: Treez
+                    product_id: 130eD1De-CA28-4690-396c-cc55eB2198f2
+                    name: Kief Bulk - Blissful Wizard
+                    sku: '54389678'
+                    barcode: 03508
+                    total_quantity: 45
+                    pos_updated_date: '2023-02-28T14:00:33.603Z'
+                    pos_updated_date_local: '2023-09-18T20:57:34.917Z'
+                    gc_created_date: '2023-09-18T20:57:34.000Z'
+                    gc_updated_date: '2023-10-31T15:21:57.000Z'
+                    location_data:
+                    - name: Main Inventory
+                      quantity: 47
+                      location_id: dF6D5fDa-00EC-AeFA-3bdf-3d86BA592f95
+                      pos_location_type: null
+                    - name: Store 3
+                      quantity: 200
+                      location_id: BEeCF70A-430B-86A5-FAaA-fEd5Baf63eeB
+                      pos_location_type: null
+                Example 2:
+                  value:
+                    product:
+                      crb_id: 631412dB-92DE-edcA-66c8-AA1559Ab29Fa
+                      id: 7cdd91b0-DF8c-0bbD-44F7-2737bCFaa61b
+                      pos_product_id: fugiat elit veniam
+                      pos_type: Quickbooks
+                      name: Preroll Bulk - GG2B
+                      gc_product_category_name: edible
+                      pos_product_category_name: Edible
+                      pos_product_subcategory_name: Mad Terps - Terpstix
+                      pos_strain_name: Kush Berry
+                      pos_brand_name: Trulieve
+                      medicated: false
+                      sku: '54389678'
+                      description: Night Rider is a hybrid strain created by Greenpoint Seeds.
+                      gc_net_weight_grams: 35924299.84716305
+                      pos_unit_of_measure: Wgt
+                      price: 64239145
+                      unit_cost: null
+                      pos_updated_date: '2023-10-31T15:21:57.167Z'
+                      pos_updated_date_local: '2023-10-31T15:18:22.652Z'
+                      gc_created_date: '2023-02-28T14:01:33.000Z'
+                      gc_updated_date: '2023-02-28T14:01:33.000Z'
+                      price_tiers:
+                      - tier_name: Bulk Flower Deals
+                        tier_price: 85413970
+                        pos_tier_type: Quantity
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: null
+                        tier_valid_until_date_local: null
+                      - tier_name: Weight Tiers
+                        tier_price: 20413893
+                        pos_tier_type: Time Limited
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: '2023-02-28T14:00:33.603Z'
+                        tier_valid_until_date_local: '2023-10-31T15:18:22.652Z'
+                      - tier_name: Free Offers
+                        tier_price: 81427503
+                        pos_tier_type: Quantity
+                        pos_tier_type_condition_value: '10'
+                        tier_valid_until_date: '2023-10-28T17:31:35.563Z'
+                        tier_valid_until_date_local: null
+                      - tier_name: Free Offers
+                        tier_price: 92630953
+                        pos_tier_type: Quantity
+                        pos_tier_type_condition_value: 1 - 3.5
+                        tier_valid_until_date: '2023-10-31T15:21:57.167Z'
+                        tier_valid_until_date_local: '2023-10-28T11:31:35.563Z'
+                      images:
+                      - url: sit
+                        description: null
+                      - url: pariatur minim magna in
+                        description: proident
+                      - url: culpa
+                        description: null
+                    id: CE82d84B-28Ab-0FcA-cdFD-28DFbD720EE9
+                    crb_id: a4C9adA3-0F1B-6bF0-CaF6-B3840738f18e
+                    pos_type: Cova
+                    product_id: FF3BF8f9-165F-7cd9-eBB6-d5aD3ccadeCA
+                    name: Kief Bulk - Blissful Wizard
+                    sku: '12385689'
+                    barcode: 03508
+                    total_quantity: 29
+                    pos_updated_date:
+                      description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                    pos_updated_date_local:
+                      description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                    gc_created_date: '2023-10-31T15:18:22.000Z'
+                    gc_updated_date: '2023-10-28T17:31:35.000Z'
+                    location_data:
+                    - name: Store 4
+                      quantity: 47
+                      location_id: F6da3A66-FEFB-d00C-A53A-0e16DC2Ad10E
+                      pos_location_type: in elit nulla aute Duis
+                    - name: Bulk Inventory
+                      quantity: 16
+                      location_id: 7e9CAEEE-9Ed8-a7B1-E39A-9dAB8b44729A
+                      pos_location_type: null
+                    - name: Store 4
+                      quantity: 1000
+                      location_id: EC9faf5e-2142-32fe-F32B-78b39af1d4E6
+                      pos_location_type: adipisicing fugiat
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB inventory record by ID
+      tags:
+      - Inventory
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Inventory Id
+        in: path
+        name: inventory_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Expands the response by including product data related to this resource
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: boolean
+  /crbs/{crb_id}/inventory-locations/{location_id}/inventory:
+    get:
+      operationId: get-inventory-by-location
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedLocationInventory'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - product: null
+                      id: 671ceaad-D1B7-A6C2-1Bdb-10d04eb30dBD
+                      crb_id: FaC8Ce51-FA7d-7Ac2-CBeA-24135c505AcB
+                      pos_type: Cova
+                      product_id: null
+                      name: Rocket Fuel .85 Cart
+                      sku: '30752973'
+                      barcode: 1A40F01000000C9000009645
+                      total_quantity: 52842866.87700297
+                      pos_updated_date: null
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-09-18T20:57:34.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      quantity: 40
+                    - product:
+                        crb_id: C3aeAc6B-F1Ba-b753-4E7A-824618dFbEfa
+                        id: C3b8903f-f557-E3AE-E67A-863cfCF5cdff
+                        pos_product_id: labore
+                        pos_type:
+                          description: The POS system that this data is sourced from.
+                        name: Hypnos Cartridge
+                        gc_product_category_name: null
+                        pos_product_category_name: Merch
+                        pos_product_subcategory_name: Live Resin (Bulk)
+                        pos_strain_name: Sweet Sticky Melon
+                        pos_brand_name: Reserve
+                        medicated: null
+                        sku: '10563228'
+                        description: A 20 pack of 5mg sativa gummies.
+                        gc_net_weight_grams: null
+                        pos_unit_of_measure: Qty
+                        price: 78760823
+                        unit_cost: null
+                        pos_updated_date: '2023-10-31T15:21:57.167Z'
+                        pos_updated_date_local: '2023-10-28T11:31:35.563Z'
+                        gc_created_date: '2023-10-31T15:21:57.000Z'
+                        gc_updated_date: '2023-10-28T17:31:35.000Z'
+                        price_tiers:
+                        - tier_name: Free Offers
+                          tier_price: 64434514
+                          pos_tier_type: Quantity
+                          pos_tier_type_condition_value: '10'
+                          tier_valid_until_date:
+                            description: Datetime that this tier stops being valid, if applicable
+                          tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                        - tier_name: Bulk Flower Deals
+                          tier_price: 83757010
+                          pos_tier_type: Weight
+                          pos_tier_type_condition_value: Special Offer
+                          tier_valid_until_date: null
+                          tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                        - tier_name: Bulk Flower Deals
+                          tier_price: 65784219
+                          pos_tier_type: Time Limited
+                          pos_tier_type_condition_value: '10'
+                          tier_valid_until_date: null
+                          tier_valid_until_date_local: '2023-09-18T20:57:34.917Z'
+                        - tier_name: Bulk Flower Deals
+                          tier_price: 16481713
+                          pos_tier_type: Quantity
+                          pos_tier_type_condition_value: 1 - 3.5
+                          tier_valid_until_date: '2023-10-31T15:18:22.650Z'
+                          tier_valid_until_date_local: '2023-10-28T11:31:35.563Z'
+                        - tier_name: Bulk Flower Deals
+                          tier_price: 83622811
+                          pos_tier_type: Weight
+                          pos_tier_type_condition_value: 3.5 - 7
+                          tier_valid_until_date: '2023-10-31T15:21:57.167Z'
+                          tier_valid_until_date_local: null
+                        images:
+                        - url: sit
+                          description: enim
+                        - url: est occaecat eiusmod aute amet
+                          description: et nisi pariatur dolore voluptate
+                        - url: pariatur reprehenderit
+                          description: labore esse pariatur proident irure
+                        - url: adipisicing est
+                          description: null
+                        - url: in consectetur do
+                          description: aliqua labore
+                      id: ebdf900f-4ef2-91DA-Da07-Aa4EE5CA0F97
+                      crb_id: ea9De3aA-1df6-aFAC-DFD2-e26FDCbd2e5b
+                      pos_type: Treez
+                      product_id: 61abcb32-3171-B793-fbe4-fa8bdcEC0c5D
+                      name: Trim - White Fire OG
+                      sku: '64392902'
+                      barcode: 1A40F0100000191000001750
+                      total_quantity: 19865073.36509391
+                      pos_updated_date:
+                        description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                      pos_updated_date_local:
+                        description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                      gc_created_date: '2023-10-31T15:21:57.000Z'
+                      gc_updated_date: '2023-02-28T14:01:33.000Z'
+                      quantity: 5
+                    - product: {}
+                      id: da5E025A-Fbef-db8D-cCe8-4e1E61F2a382
+                      crb_id: b240b4DE-cFbc-9eC5-6bCB-7c75db884C86
+                      pos_type: POSaBIT
+                      product_id: null
+                      name: Plant Material - Cuvée
+                      sku: '12385689'
+                      barcode: '01506'
+                      total_quantity: 52998213.93217628
+                      pos_updated_date: null
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-02-28T14:01:33.000Z'
+                      gc_updated_date: '2023-02-28T14:01:33.000Z'
+                      quantity: 5
+                    - product: {}
+                      id: 98dFd33c-e6fc-dBc2-a6c6-fbBeDbe2D06a
+                      crb_id: 94CeC7F4-b12A-E138-C5a9-B8e90A7a55D2
+                      pos_type: Blaze
+                      product_id: null
+                      name: Preroll Bulk - GG2B
+                      sku: '64392902'
+                      barcode: 03508
+                      total_quantity: 13004278.620693022
+                      pos_updated_date:
+                        description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                      pos_updated_date_local:
+                        description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+                      gc_created_date: '2023-10-31T15:21:57.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      quantity: 16
+                    metadata:
+                      count: 1 - 100
+                      total: 65920250
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get Inventory by Location
+      tags:
+      - Inventory
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Location Id
+        in: path
+        name: location_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: 'Inventory snapshot date: yyyy-MM-dd'
+        in: query
+        name: date
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: Expands the response by including product data related to this resource
+        in: query
+        name: expand
+        required: false
+        schema:
+          type: boolean
+      - description: 'Last updated from date: yyyy-MM-dd'
+        in: query
+        name: last_updated_from
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'Last updated to date: yyyy-MM-dd'
+        in: query
+        name: last_updated_to
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+components:
+  schemas:
+    NullableLocalDateTime:
+      type:
+      - string
+      - 'null'
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    Product:
+      properties:
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB the product record belongs to.
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The unique ID of this product record.
+        pos_product_id:
+          type: string
+          description: Product ID in the POS system
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The POS system that this data is sourced from.
+        name:
+          type: string
+          description: The name of the product.
+        gc_product_category_name:
+          $ref: '#/components/schemas/ProductCategoryType'
+          description: The Green Check standardized category. Null if we are unable to standardize
+        pos_product_category_name:
+          type:
+          - string
+          - 'null'
+          description: Category name as given by the POS.
+        pos_product_subcategory_name:
+          type:
+          - string
+          - 'null'
+          description: Subcategory name as given by the POS.
+        pos_strain_name:
+          type:
+          - string
+          - 'null'
+          description: Strain name as given by the POS.
+        pos_brand_name:
+          type:
+          - string
+          - 'null'
+          description: Brand name as given by the POS.
+        medicated:
+          type:
+          - boolean
+          - 'null'
+          description: True or false if this is a THC having marijuana product.
+        sku:
+          type:
+          - string
+          - 'null'
+          description: The SKU for the product.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Product description.
+        gc_net_weight_grams:
+          $ref: '#/components/schemas/NullablePositiveDouble'
+          description: Our calculated net weight of the product in grams.
+        pos_unit_of_measure:
+          type:
+          - string
+          - 'null'
+          description: The unit of measure of the product as sold by the POS (weight, quantity, etc).
+        price:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Price of the product in cents. Can be null if priced by tiers only.
+        unit_cost:
+          $ref: '#/components/schemas/NullablePositiveDouble'
+          description: Unit cost of the product in cents. Can be null if not supplied by the POS.
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: The timestamp reported by the POS for the last update to this record in UTC.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: The timestamp reported by the POS for the last update to this record in the CRB local time.
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: The timestamp of this record's insertion in UTC.
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        price_tiers:
+          items:
+            $ref: '#/components/schemas/ProductPriceTier'
+          type:
+          - array
+          - 'null'
+          description: Price tiers applied to this product. May or may not be provided by the POS system.
+        images:
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          type:
+          - array
+          - 'null'
+          description: A list of any images associated with this product.
+      required:
+      - crb_id
+      - id
+      - pos_product_id
+      - pos_type
+      - name
+      - gc_product_category_name
+      - pos_product_category_name
+      - pos_product_subcategory_name
+      - pos_strain_name
+      - pos_brand_name
+      - medicated
+      - sku
+      - description
+      - gc_net_weight_grams
+      - pos_unit_of_measure
+      - price
+      - unit_cost
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      - price_tiers
+      - images
+      type: object
+      additionalProperties: false
+    LocationInventory:
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Location name
+        quantity:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Quantity of product within this location
+        location_id:
+          $ref: '#/components/schemas/UUID'
+          description: Id of the location
+        pos_location_type:
+          type:
+          - string
+          - 'null'
+          description: Type of location
+      required:
+      - name
+      - quantity
+      - location_id
+      - pos_location_type
+      type: object
+      additionalProperties: false
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ProductImage:
+      properties:
+        url:
+          type: string
+          description: URL to the image file
+        description:
+          type:
+          - string
+          - 'null'
+          description: Any description provided by the POS like file name, dimensions, product description
+      required:
+      - url
+      - description
+      type: object
+      additionalProperties: false
+    NullablePositiveDouble:
+      type:
+      - number
+      - 'null'
+      format: double
+      minimum: 0
+    ProductCategoryType:
+      type:
+      - string
+      - 'null'
+      enum:
+      - flower
+      - oil/concentrate
+      - edible
+      - other
+      - seedling
+      - seed
+      - liquid
+      - solid
+      - extract
+      - plant
+      - accessory
+      - marijuana_product
+      - topical
+      - edible_liquid
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NullableUUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    PagedLocationInventory:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/InventoryByLocation'
+            type: array
+          - items:
+              $ref: '#/components/schemas/ExpandedInventoryByLocation'
+            type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    ExpandedInventoryByLocation:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The primary key in the record
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The PosType the inventory record is sourced from
+        product_id:
+          $ref: '#/components/schemas/NullableUUID'
+          description: The id of the product from the pos system. Soon will be required and populated
+        name:
+          type: string
+          description: Name of the product
+        sku:
+          type:
+          - string
+          - 'null'
+          description: SKU for the product. May or may not be provided by the POS
+        barcode:
+          type:
+          - string
+          - 'null'
+          description: The tag from the track and trace system that uniquely identifies this product for tracking purposes. May or may not be provided by the POS
+        total_quantity:
+          $ref: '#/components/schemas/PositiveDouble'
+          description: Total inventory quantity on record across all locations
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Timestamp for when this inventory record was processed by green check
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        quantity:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Quantity in this location
+        product:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - crb_id
+      - pos_type
+      - product_id
+      - name
+      - sku
+      - barcode
+      - total_quantity
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      - quantity
+      - product
+      type: object
+      additionalProperties: false
+    ProductPriceTier:
+      properties:
+        tier_name:
+          type:
+          - string
+          - 'null'
+          description: Price Tier name, if any
+        tier_price:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Price of the product price tier in cents
+        pos_tier_type:
+          type: string
+          description: The type of tier condition from the pos system (like quantity or volume)
+        pos_tier_type_condition_value:
+          type: string
+          description: The condition(s) required (based on the tier type) to apply this tier on the product
+        tier_valid_until_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Datetime that this tier stops being valid, if applicable
+          type:
+          - string
+          - 'null'
+          format: date-time
+        tier_valid_until_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: Datetime that this tier stops being valid in CRB’s local timezone, if applicable
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+      required:
+      - tier_name
+      - tier_price
+      - pos_tier_type
+      - pos_tier_type_condition_value
+      - tier_valid_until_date
+      - tier_valid_until_date_local
+      type: object
+      additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    InventoryByLocation:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The primary key in the record
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The PosType the inventory record is sourced from
+        product_id:
+          $ref: '#/components/schemas/NullableUUID'
+          description: The id of the product from the pos system. Soon will be required and populated
+        name:
+          type: string
+          description: Name of the product
+        sku:
+          type:
+          - string
+          - 'null'
+          description: SKU for the product. May or may not be provided by the POS
+        barcode:
+          type:
+          - string
+          - 'null'
+          description: The tag from the track and trace system that uniquely identifies this product for tracking purposes. May or may not be provided by the POS
+        total_quantity:
+          $ref: '#/components/schemas/PositiveDouble'
+          description: Total inventory quantity on record across all locations
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Timestamp for when this inventory record was processed by green check
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        quantity:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Quantity in this location
+      required:
+      - id
+      - crb_id
+      - pos_type
+      - product_id
+      - name
+      - sku
+      - barcode
+      - total_quantity
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      - quantity
+      type: object
+      additionalProperties: false
+    PositiveDouble:
+      type: number
+      format: double
+      minimum: 0
+    ExpandedInventory:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The primary key in the record
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The PosType the inventory record is sourced from
+        product_id:
+          $ref: '#/components/schemas/NullableUUID'
+          description: The unique ID of the product, can be accessed with /product endpoints
+        name:
+          type: string
+          description: Name of the product
+        sku:
+          type:
+          - string
+          - 'null'
+          description: SKU for the product. May or may not be provided by the POS
+        barcode:
+          type:
+          - string
+          - 'null'
+          description: The tag from the track and trace system that uniquely identifies this product for tracking purposes. May or may not be provided by the POS
+        total_quantity:
+          $ref: '#/components/schemas/PositiveDouble'
+          description: Total inventory quantity on record across all locations
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Timestamp for when this inventory record was processed by green check
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        location_data:
+          items:
+            $ref: '#/components/schemas/LocationInventory'
+          type: array
+          description: Location specific quantities. Not all POS systems support location data.
+        product:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - crb_id
+      - pos_type
+      - product_id
+      - name
+      - sku
+      - barcode
+      - total_quantity
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      - product
+      type: object
+      additionalProperties: false
+    PagedInventory:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Inventory'
+            type: array
+          - items:
+              $ref: '#/components/schemas/ExpandedInventory'
+            type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    UtcDateTime:
+      type: string
+      format: date-time
+    Inventory:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The primary key in the record
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The PosType the inventory record is sourced from
+        product_id:
+          $ref: '#/components/schemas/NullableUUID'
+          description: The unique ID of the product, can be accessed with /product endpoints
+        name:
+          type: string
+          description: Name of the product
+        sku:
+          type:
+          - string
+          - 'null'
+          description: SKU for the product. May or may not be provided by the POS
+        barcode:
+          type:
+          - string
+          - 'null'
+          description: The tag from the track and trace system that uniquely identifies this product for tracking purposes. May or may not be provided by the POS
+        total_quantity:
+          $ref: '#/components/schemas/PositiveDouble'
+          description: Total inventory quantity on record across all locations
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: CRB local timestamp reported by the pos for the last update to this record. May or may not be provided by the POS
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Timestamp for when this inventory record was processed by green check
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        location_data:
+          items:
+            $ref: '#/components/schemas/LocationInventory'
+          type: array
+          description: Location specific quantities. Not all POS systems support location data.
+      required:
+      - id
+      - crb_id
+      - pos_type
+      - product_id
+      - name
+      - sku
+      - barcode
+      - total_quantity
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      type: object
+      additionalProperties: false
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    NullablePositiveInteger:
+      type:
+      - integer
+      - 'null'
+      format: int32
+      minimum: 0
+    NullableUtcDateTime:
+      type:
+      - string
+      - 'null'
+      format: date-time
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

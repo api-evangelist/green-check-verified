@@ -1,0 +1,1141 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Sales API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Sales
+paths:
+  /crbs/{crb_id}/sales:
+    get:
+      operationId: get-sales
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedSales'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - type: retail
+                      customer:
+                        customer_id: null
+                        pos_customer_id: sint in cupidatat in elit
+                        type: rec
+                        dob: '1960-07-29T00:00:00.000Z'
+                        id_type: medical
+                        id_expiration_date: '2025-11-08T00:00:00.000Z'
+                      compliance_status: warning
+                      compliance_exceptions:
+                      - Excepteur culpa commodo sit voluptate
+                      - proident nisi officia Excepteur eu
+                      - irure consequat in nisi aute
+                      compliance_warnings:
+                      - velit voluptate
+                      - cupidatat in nisi esse do
+                      id: 870cb44e-A5A4-dED8-BA29-BdBeEB1eD677
+                      pos_sale_id: null
+                      crb_id: F9F6F024-A7CB-8154-0cb2-3Ca5EBE7Fd37
+                      subtotal: 4050
+                      total_discounts: 10300
+                      tax_paid: 49
+                      total_paid: 10000
+                      date: '2023-10-30T13:57:30.000Z'
+                      local_date: '2023-10-31T15:21:57.167Z'
+                      gc_created_date: '2023-10-31T15:18:22.000Z'
+                      gc_updated_date: '2023-09-18T20:57:34.000Z'
+                      transaction_type: return
+                      pos_name: Treez
+                      employee_id: null
+                      line_items:
+                      - product_id: null
+                        pos_product_id: qui ullamco dolor fugiat
+                        product_name: Preroll Bulk - GG2B
+                        num_units: 2
+                        price_per_unit: 12500
+                        grams: 1
+                        product_type: flower
+                        cannabis_product: null
+                        line_item_discounts:
+                        - flat_amount: 19000
+                          pct_amount: 0.08
+                          name: Employee
+                        line_item_taxes:
+                        - flat_amount: 22914
+                          pct_amount: 0.95
+                          name: County - 2.5
+                        line_item_fees:
+                        - fee_name: Card fee
+                          percent_amount: 0.95
+                          flat_amount: 375
+                          included_in_subtotal: null
+                        - fee_name: Card fee
+                          percent_amount: 0.08
+                          flat_amount: 375
+                          included_in_subtotal: null
+                        - fee_name: Donation
+                          percent_amount: 0.95
+                          flat_amount: 500
+                          included_in_subtotal: null
+                        - fee_name: Donation
+                          percent_amount: 0.25
+                          flat_amount: 375
+                          included_in_subtotal: null
+                        - fee_name: Card fee
+                          percent_amount: 0.95
+                          flat_amount: 500
+                          included_in_subtotal: false
+                      - product_id: in eu
+                        pos_product_id: in minim reprehenderit consectetur cillum
+                        product_name: Rocket Fuel .85 Cart
+                        num_units: 7
+                        price_per_unit: 4500
+                        grams: 3.5
+                        product_type: other
+                        cannabis_product: null
+                        line_item_discounts:
+                        - flat_amount: 22914
+                          pct_amount: 0.08
+                          name: Buy two - $5 discount
+                        - flat_amount: 6480
+                          pct_amount: 0.95
+                          name: Employee
+                        line_item_taxes:
+                        - flat_amount: 10000
+                          pct_amount: 0.08
+                          name: State
+                        - flat_amount: 22914
+                          pct_amount: 0.25
+                          name: County - 2.5
+                        - flat_amount: 4050
+                          pct_amount: 0.25
+                          name: County - 2.5
+                        line_item_fees:
+                        - fee_name: Card fee
+                          percent_amount: 0.95
+                          flat_amount: 375
+                          included_in_subtotal: null
+                      discounts: []
+                      taxes:
+                      - flat_amount: 6480
+                        pct_amount: 0.25
+                        name: State
+                      - flat_amount: 4880
+                        pct_amount: 0.25
+                        name: County - 2.5
+                      - flat_amount: 5240
+                        pct_amount: 0.25
+                        name: State
+                      - flat_amount: 10000
+                        pct_amount: 0.95
+                        name: State
+                      - flat_amount: 6480
+                        pct_amount: 0.25
+                        name: State
+                      payments:
+                      - type: store_credit
+                        amount_paid: 6176
+                      - type: cash
+                        amount_paid: 23046
+                      - type: check
+                        amount_paid: 35000
+                      fees: []
+                    metadata:
+                      count: 100 - 172
+                      total: 40836116
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB sales
+      tags:
+      - Sales
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: 'Start Date: yyyy-MM-dd'
+        in: query
+        name: start_date
+        required: true
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'End Date: yyyy-MM-dd'
+        in: query
+        name: end_date
+        required: true
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: Customer ID, our internal customer ID available on retail POS only
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: POS Customer ID, the customer ID internal to the specific POS, works available for both retail and wholesale POS
+        in: query
+        name: pos_customer_id
+        required: false
+        schema:
+          type: string
+      - description: 'Last updated from date: yyyy-MM-dd'
+        in: query
+        name: last_updated_from
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'Last updated to date: yyyy-MM-dd'
+        in: query
+        name: last_updated_to
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+components:
+  schemas:
+    IDType:
+      enum:
+      - drivers
+      - medical
+      - ssn
+      - passport
+      - medical_with_rec
+      - medical_with_state_card
+      - caregiver
+      - minor_medical
+      - temporary_minor_medical
+      - temporary_adult
+      type: string
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    SalePayment:
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentType'
+          description: Payment Type
+        amount_paid:
+          type: number
+          format: double
+          description: Amount in cents for this payment type
+      required:
+      - type
+      - amount_paid
+      type: object
+      additionalProperties: false
+    SaleTypeWholesale:
+      enum:
+      - wholesale
+      type: string
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    RetailSale:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: Green Check generated ID
+        pos_sale_id:
+          type:
+          - string
+          - 'null'
+          description: Sale ID in the POS system
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        subtotal:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Pre-tax dollar amount in cents
+        total_discounts:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Total discount amount in cents
+        tax_paid:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Tax amount in cents
+        total_paid:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price + Tax in cents
+        date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: UTC ISO Date of the Sale
+          type: string
+          format: date-time
+        local_date:
+          $ref: '#/components/schemas/LocalDateTime'
+          description: Local Date of the Sale
+          type: string
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Our created / updated dates
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        transaction_type:
+          allOf:
+          - $ref: '#/components/schemas/TransactionType'
+          description: Transaction Type provided by point of sale
+          type:
+          - string
+          - 'null'
+        pos_name:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: Point of Sale that the sale originated from
+        type:
+          $ref: '#/components/schemas/SaleTypeRetail'
+        employee_id:
+          type:
+          - string
+          - 'null'
+          description: Employee ID
+        line_items:
+          items:
+            $ref: '#/components/schemas/SaleLineItem'
+          type: array
+          description: Sale Line Items
+        discounts:
+          items:
+            $ref: '#/components/schemas/SaleDiscount'
+          type: array
+          description: Sale Discounts
+        taxes:
+          items:
+            $ref: '#/components/schemas/SaleTax'
+          type: array
+          description: Sale Taxes
+        payments:
+          items:
+            $ref: '#/components/schemas/SalePayment'
+          type: array
+          description: Payment type and amount
+        customer:
+          $ref: '#/components/schemas/SaleCustomer'
+          description: Customer Information
+        fees:
+          items:
+            $ref: '#/components/schemas/SaleFee'
+          type: array
+          description: Sale Fees
+        compliance_status:
+          allOf:
+          - $ref: '#/components/schemas/ComplianceStatus'
+          description: Green Check Verified compliance status
+          type:
+          - string
+          - 'null'
+        compliance_exceptions:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+          description: Compliance Exceptions
+        compliance_warnings:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+          description: Compliance Warnings
+      required:
+      - id
+      - pos_sale_id
+      - crb_id
+      - subtotal
+      - total_discounts
+      - tax_paid
+      - total_paid
+      - date
+      - local_date
+      - gc_created_date
+      - gc_updated_date
+      - transaction_type
+      - pos_name
+      - type
+      - line_items
+      - discounts
+      - taxes
+      - payments
+      - customer
+      - fees
+      - compliance_status
+      - compliance_exceptions
+      - compliance_warnings
+      type: object
+      additionalProperties: false
+    ComplianceStatus:
+      enum:
+      - unchecked
+      - red_flag
+      - green_checked
+      - warning
+      type: string
+    PaymentType:
+      enum:
+      - cash
+      - check
+      - debit
+      - credit
+      - multiple
+      - ach
+      - wire
+      - other
+      - unknown
+      type: string
+    ProductCategoryType:
+      type:
+      - string
+      - 'null'
+      enum:
+      - flower
+      - oil/concentrate
+      - edible
+      - other
+      - seedling
+      - seed
+      - liquid
+      - solid
+      - extract
+      - plant
+      - accessory
+      - marijuana_product
+      - topical
+      - edible_liquid
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    LocalDateTime:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    SaleFee:
+      properties:
+        fee_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the fee
+        percent_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Fee percentage as a real number
+        flat_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Flat amount of fee in cents
+        included_in_subtotal:
+          type:
+          - boolean
+          - 'null'
+          description: True if this fee's calculation is included in the subtotal
+      required:
+      - fee_name
+      - percent_amount
+      - flat_amount
+      - included_in_subtotal
+      type: object
+      additionalProperties: false
+    PagedSales:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/RetailSale'
+            - $ref: '#/components/schemas/WholesaleSale'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    SaleDiscount:
+      properties:
+        flat_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Discount amount in cents
+        pct_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Discount percentage as a real number
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of discount
+      required:
+      - flat_amount
+      - pct_amount
+      - name
+      type: object
+      additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    TransactionType:
+      enum:
+      - sale
+      - return
+      - adjustment
+      type: string
+    SaleTax:
+      properties:
+        flat_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Tax amount in cents
+        pct_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Tax percentage as a real number
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of tax
+      required:
+      - flat_amount
+      - pct_amount
+      - name
+      type: object
+      additionalProperties: false
+    SaleCustomer:
+      properties:
+        customer_id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          description: Green Check Customer ID
+          type:
+          - string
+          - 'null'
+        pos_customer_id:
+          type:
+          - string
+          - 'null'
+          description: The customer ID in the POS system
+        type:
+          allOf:
+          - $ref: '#/components/schemas/MedicalOrRec'
+          description: Is Sale Medical or Adult Use
+          type:
+          - string
+          - 'null'
+        dob:
+          type:
+          - string
+          - 'null'
+          description: Customer Date of Birth yyyy-MM-dd
+        id_type:
+          allOf:
+          - $ref: '#/components/schemas/IDType'
+          description: Customer ID Type
+          type:
+          - string
+          - 'null'
+        id_expiration_date:
+          type:
+          - string
+          - 'null'
+          description: Customer ID Expiration Date
+      required:
+      - customer_id
+      - pos_customer_id
+      - type
+      - dob
+      - id_type
+      - id_expiration_date
+      type: object
+      additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    SaleLineItem:
+      properties:
+        product_id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          description: The unique ID of the product, can be accessed with /product endpoints
+          type:
+          - string
+          - 'null'
+        pos_product_id:
+          type:
+          - string
+          - 'null'
+          description: The product ID in the POS system
+        product_name:
+          type:
+          - string
+          - 'null'
+          description: Name in POS system
+        num_units:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Number of units bought
+        price_per_unit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price per individual unit
+        grams:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Weight of product in grams
+        product_type:
+          allOf:
+          - $ref: '#/components/schemas/ProductCategoryType'
+          description: GCV mapped product type
+          type:
+          - string
+          - 'null'
+        cannabis_product:
+          type:
+          - boolean
+          - 'null'
+          description: Whether product contains cannabis
+        line_item_discounts:
+          items:
+            $ref: '#/components/schemas/SaleDiscount'
+          type: array
+          description: Line item specific discounts
+        line_item_taxes:
+          items:
+            $ref: '#/components/schemas/SaleTax'
+          type: array
+          description: Line item specific taxes
+        line_item_fees:
+          items:
+            $ref: '#/components/schemas/SaleFee'
+          type: array
+          description: Line item specific fees
+      required:
+      - product_id
+      - pos_product_id
+      - product_name
+      - num_units
+      - price_per_unit
+      - grams
+      - product_type
+      - cannabis_product
+      - line_item_discounts
+      - line_item_taxes
+      - line_item_fees
+      type: object
+      additionalProperties: false
+    WholesaleSale:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: Green Check generated ID
+        pos_sale_id:
+          type:
+          - string
+          - 'null'
+          description: Sale ID in the POS system
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB
+        subtotal:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Pre-tax dollar amount in cents
+        total_discounts:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Total discount amount in cents
+        tax_paid:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Tax amount in cents
+        total_paid:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price + Tax in cents
+        date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: UTC ISO Date of the Sale
+          type: string
+          format: date-time
+        local_date:
+          $ref: '#/components/schemas/LocalDateTime'
+          description: Local Date of the Sale
+          type: string
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Our created / updated dates
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        transaction_type:
+          allOf:
+          - $ref: '#/components/schemas/TransactionType'
+          description: Transaction Type provided by point of sale
+          type:
+          - string
+          - 'null'
+        pos_name:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: Point of Sale that the sale originated from
+        type:
+          $ref: '#/components/schemas/SaleTypeWholesale'
+        employee_id:
+          type:
+          - string
+          - 'null'
+          description: Employee ID
+        line_items:
+          items:
+            $ref: '#/components/schemas/SaleLineItem'
+          type: array
+          description: Sale Line Items
+        discounts:
+          items:
+            $ref: '#/components/schemas/SaleDiscount'
+          type: array
+          description: Sale Discounts
+        taxes:
+          items:
+            $ref: '#/components/schemas/SaleTax'
+          type: array
+          description: Sale Taxes
+        payments:
+          items:
+            $ref: '#/components/schemas/SalePayment'
+          type: array
+          description: Payment type and amount
+        customer:
+          allOf:
+          - $ref: '#/components/schemas/SaleCustomer'
+          description: Customer Information
+          type:
+          - string
+          - 'null'
+        fees:
+          items:
+            $ref: '#/components/schemas/SaleFee'
+          type: array
+          description: Sale Fees
+        invoice:
+          properties:
+            pos_customer_id:
+              type:
+              - string
+              - 'null'
+              description: Wholesale POS customer ID
+            memo:
+              type:
+              - string
+              - 'null'
+              description: Invoice Memo
+            open_balance:
+              type:
+              - number
+              - 'null'
+              format: double
+              description: Invoice Open Balance
+            total:
+              type:
+              - number
+              - 'null'
+              format: double
+              description: Invoice Total
+            id:
+              type:
+              - string
+              - 'null'
+              description: Invoice Id
+          required:
+          - pos_customer_id
+          - memo
+          - open_balance
+          - total
+          - id
+          type: object
+      required:
+      - id
+      - pos_sale_id
+      - crb_id
+      - subtotal
+      - total_discounts
+      - tax_paid
+      - total_paid
+      - date
+      - local_date
+      - gc_created_date
+      - gc_updated_date
+      - transaction_type
+      - pos_name
+      - type
+      - line_items
+      - discounts
+      - taxes
+      - payments
+      - customer
+      - fees
+      - invoice
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
+    UtcDateTime:
+      type: string
+      format: date-time
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    SaleTypeRetail:
+      enum:
+      - retail
+      type: string
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

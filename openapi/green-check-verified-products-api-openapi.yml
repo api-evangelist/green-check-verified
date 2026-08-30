@@ -1,0 +1,994 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Products API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Products
+paths:
+  /crbs/{crb_id}/products:
+    get:
+      operationId: get-products
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedProducts'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - crb_id: 8Ed5c3ed-18D8-abeA-C14F-aa5aAE3b8Bdf
+                      id: 1B3eF4eb-ca44-C1C8-DeE3-Da6B893Cfd60
+                      pos_product_id: do pariatur Lorem commodo
+                      pos_type: GrowFlow
+                      name: Rudeboi OG
+                      gc_product_category_name: extract
+                      pos_product_category_name: Edible
+                      pos_product_subcategory_name: Topical-Dermal-Balm
+                      pos_strain_name: Cherry Bang Bang
+                      pos_brand_name: Lookah
+                      medicated: null
+                      sku: '10563228'
+                      description: These pre-rolls are perfect for a portable smoking experience
+                      gc_net_weight_grams: 69517386.46189576
+                      pos_unit_of_measure: Qty
+                      price: null
+                      unit_cost: 8761151.729771521
+                      pos_updated_date: '2023-09-18T20:57:34.917Z'
+                      pos_updated_date_local: '2023-10-31T15:18:22.652Z'
+                      gc_created_date: '2023-10-31T15:18:22.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers:
+                      - tier_name: Bulk Flower Deals
+                        tier_price: 5824797
+                        pos_tier_type: Weight
+                        pos_tier_type_condition_value: Special Offer
+                        tier_valid_until_date: '2023-10-31T15:21:57.167Z'
+                        tier_valid_until_date_local: '2023-02-28T14:00:33.603Z'
+                      - tier_name: Bulk Flower Deals
+                        tier_price: 9430357
+                        pos_tier_type: Time Limited
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: null
+                        tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                      - tier_name: Weight Tiers
+                        tier_price: 4990149
+                        pos_tier_type: Time Limited
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: null
+                        tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                      images:
+                      - url: culpa
+                        description: null
+                      - url: laboris
+                        description: null
+                      - url: anim laboris voluptate Ut
+                        description: ullamco adipisicing
+                      - url: fugiat
+                        description: null
+                    - crb_id: e207Da9d-Efb0-E0B6-7840-32AcB87E01Ef
+                      id: 39FFba0C-0Dcd-57eb-bD4a-E1e5C57daff6
+                      pos_product_id: qui
+                      pos_type: Jane
+                      name: Preroll Bulk - GG2B
+                      gc_product_category_name: marijuana_product
+                      pos_product_category_name: Prerolls
+                      pos_product_subcategory_name: Candy Bar
+                      pos_strain_name: Purple Haze
+                      pos_brand_name: Trulieve
+                      medicated: true
+                      sku: '12894689'
+                      description: These pre-rolls are perfect for a portable smoking experience
+                      gc_net_weight_grams: 36999729.80599808
+                      pos_unit_of_measure: Wgt
+                      price: null
+                      unit_cost: 34347266.477119364
+                      pos_updated_date: '2023-02-28T14:00:33.603Z'
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-10-28T17:31:35.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: null
+                      images: null
+                    - crb_id: fc8e5B5E-ac95-79Fc-1f9B-8B4CBF54ceA8
+                      id: DB65DC2c-9f4C-3689-7Ea2-c6fB559F8eE5
+                      pos_product_id: in
+                      pos_type: Weave
+                      name: Blue Raspberry Gummies - 10 Pieces
+                      gc_product_category_name: null
+                      pos_product_category_name: Prerolls
+                      pos_product_subcategory_name: Candy Bar
+                      pos_strain_name: Rocket Pop
+                      pos_brand_name: Lookah
+                      medicated: false
+                      sku: '54389678'
+                      description: A 20 pack of 5mg sativa gummies.
+                      gc_net_weight_grams: null
+                      pos_unit_of_measure: Wgt
+                      price: null
+                      unit_cost: 13532136.136655027
+                      pos_updated_date: '2023-10-31T15:18:22.650Z'
+                      pos_updated_date_local: '2023-10-28T11:31:35.563Z'
+                      gc_created_date: '2023-02-28T14:01:33.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: []
+                      images: null
+                    - crb_id: AA801f80-ecDD-Cd74-36F9-b8dbfad1F55E
+                      id: 432bBeE5-eF6e-7D67-46D2-44cFC557eA2e
+                      pos_product_id: nisi mollit laborum in quis
+                      pos_type: IndicaOnline
+                      name: Hypnos Cartridge
+                      gc_product_category_name: plant
+                      pos_product_category_name: Infused Flower
+                      pos_product_subcategory_name: Topical-Dermal-Balm
+                      pos_strain_name: Kush Berry
+                      pos_brand_name: Lookah
+                      medicated: false
+                      sku: '12385689'
+                      description: A 20 pack of 5mg sativa gummies.
+                      gc_net_weight_grams: null
+                      pos_unit_of_measure: Wgt
+                      price: 31305303
+                      unit_cost: 81165954.95578116
+                      pos_updated_date: null
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-09-18T20:57:34.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: []
+                      images: null
+                    metadata:
+                      count: 1 - 100
+                      total: 86475544
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB products
+      tags:
+      - Products
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: 'Last updated from date: yyyy-MM-dd'
+        in: query
+        name: last_updated_from
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'Last updated to date: yyyy-MM-dd'
+        in: query
+        name: last_updated_to
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+  /crbs/{crb_id}/products-by-barcode/{barcode}:
+    get:
+      operationId: get-products-by-barcode
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Product'
+                type: array
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - crb_id: 8Ed5c3ed-18D8-abeA-C14F-aa5aAE3b8Bdf
+                      id: 1B3eF4eb-ca44-C1C8-DeE3-Da6B893Cfd60
+                      pos_product_id: do pariatur Lorem commodo
+                      pos_type: GrowFlow
+                      name: Rudeboi OG
+                      gc_product_category_name: extract
+                      pos_product_category_name: Edible
+                      pos_product_subcategory_name: Topical-Dermal-Balm
+                      pos_strain_name: Cherry Bang Bang
+                      pos_brand_name: Lookah
+                      medicated: null
+                      sku: '10563228'
+                      description: These pre-rolls are perfect for a portable smoking experience
+                      gc_net_weight_grams: 69517386.46189576
+                      pos_unit_of_measure: Qty
+                      price: null
+                      unit_cost: 8761151.729771521
+                      pos_updated_date: '2023-09-18T20:57:34.917Z'
+                      pos_updated_date_local: '2023-10-31T15:18:22.652Z'
+                      gc_created_date: '2023-10-31T15:18:22.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers:
+                      - tier_name: Bulk Flower Deals
+                        tier_price: 5824797
+                        pos_tier_type: Weight
+                        pos_tier_type_condition_value: Special Offer
+                        tier_valid_until_date: '2023-10-31T15:21:57.167Z'
+                        tier_valid_until_date_local: '2023-02-28T14:00:33.603Z'
+                      - tier_name: Bulk Flower Deals
+                        tier_price: 9430357
+                        pos_tier_type: Time Limited
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: null
+                        tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                      - tier_name: Weight Tiers
+                        tier_price: 4990149
+                        pos_tier_type: Time Limited
+                        pos_tier_type_condition_value: 3.5 - 7
+                        tier_valid_until_date: null
+                        tier_valid_until_date_local: '2023-10-31T15:21:57.167Z'
+                      images:
+                      - url: culpa
+                        description: null
+                      - url: laboris
+                        description: null
+                      - url: anim laboris voluptate Ut
+                        description: ullamco adipisicing
+                      - url: fugiat
+                        description: null
+                    - crb_id: e207Da9d-Efb0-E0B6-7840-32AcB87E01Ef
+                      id: 39FFba0C-0Dcd-57eb-bD4a-E1e5C57daff6
+                      pos_product_id: qui
+                      pos_type: Jane
+                      name: Preroll Bulk - GG2B
+                      gc_product_category_name: marijuana_product
+                      pos_product_category_name: Prerolls
+                      pos_product_subcategory_name: Candy Bar
+                      pos_strain_name: Purple Haze
+                      pos_brand_name: Trulieve
+                      medicated: true
+                      sku: '12894689'
+                      description: These pre-rolls are perfect for a portable smoking experience
+                      gc_net_weight_grams: 36999729.80599808
+                      pos_unit_of_measure: Wgt
+                      price: null
+                      unit_cost: 34347266.477119364
+                      pos_updated_date: '2023-02-28T14:00:33.603Z'
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-10-28T17:31:35.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: null
+                      images: null
+                    - crb_id: fc8e5B5E-ac95-79Fc-1f9B-8B4CBF54ceA8
+                      id: DB65DC2c-9f4C-3689-7Ea2-c6fB559F8eE5
+                      pos_product_id: in
+                      pos_type: Weave
+                      name: Blue Raspberry Gummies - 10 Pieces
+                      gc_product_category_name: null
+                      pos_product_category_name: Prerolls
+                      pos_product_subcategory_name: Candy Bar
+                      pos_strain_name: Rocket Pop
+                      pos_brand_name: Lookah
+                      medicated: false
+                      sku: '54389678'
+                      description: A 20 pack of 5mg sativa gummies.
+                      gc_net_weight_grams: null
+                      pos_unit_of_measure: Wgt
+                      price: null
+                      unit_cost: 13532136.136655027
+                      pos_updated_date: '2023-10-31T15:18:22.650Z'
+                      pos_updated_date_local: '2023-10-28T11:31:35.563Z'
+                      gc_created_date: '2023-02-28T14:01:33.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: []
+                      images: null
+                    - crb_id: AA801f80-ecDD-Cd74-36F9-b8dbfad1F55E
+                      id: 432bBeE5-eF6e-7D67-46D2-44cFC557eA2e
+                      pos_product_id: nisi mollit laborum in quis
+                      pos_type: IndicaOnline
+                      name: Hypnos Cartridge
+                      gc_product_category_name: plant
+                      pos_product_category_name: Infused Flower
+                      pos_product_subcategory_name: Topical-Dermal-Balm
+                      pos_strain_name: Kush Berry
+                      pos_brand_name: Lookah
+                      medicated: false
+                      sku: '12385689'
+                      description: A 20 pack of 5mg sativa gummies.
+                      gc_net_weight_grams: null
+                      pos_unit_of_measure: Wgt
+                      price: 31305303
+                      unit_cost: 81165954.95578116
+                      pos_updated_date: null
+                      pos_updated_date_local: null
+                      gc_created_date: '2023-09-18T20:57:34.000Z'
+                      gc_updated_date: '2023-10-28T17:31:35.000Z'
+                      price_tiers: []
+                      images: null
+                    metadata:
+                      count: 1 - 100
+                      total: 86475544
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB products by Barcode
+      tags:
+      - Products
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The Barcode
+        in: path
+        name: barcode
+        required: true
+        schema:
+          type: string
+  /crbs/{crb_id}/products/{product_id}:
+    get:
+      operationId: get-product-by-id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+              examples:
+                Example 1:
+                  value:
+                    crb_id: e9eEb5Df-d00d-DcE5-9012-e572B6d3B00c
+                    id: 5FcBc1A5-e0bA-bb1B-eB02-884Ee0d5AfFB
+                    pos_product_id: esse ex magna
+                    pos_type: Metrc S2S
+                    name: Blue Raspberry Gummies - 10 Pieces
+                    gc_product_category_name: edible
+                    pos_product_category_name: Non-Cannabis Retail
+                    pos_product_subcategory_name: Topical-Dermal-Balm
+                    pos_strain_name: Cherry Bang Bang
+                    pos_brand_name: Avexia
+                    medicated: null
+                    sku: '23895623'
+                    description: Night Rider is a hybrid strain created by Greenpoint Seeds.
+                    gc_net_weight_grams: null
+                    pos_unit_of_measure: Qty
+                    price: null
+                    unit_cost: 22422728.271413006
+                    pos_updated_date: '2023-09-18T20:57:34.917Z'
+                    pos_updated_date_local: '2023-10-28T11:31:35.563Z'
+                    gc_created_date: '2023-10-31T15:21:57.000Z'
+                    gc_updated_date: '2023-09-18T20:57:34.000Z'
+                    price_tiers: null
+                    images:
+                    - url: sit qui non est consequat
+                      description: occaecat in ea
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB product record by ID
+      tags:
+      - Products
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Product Id
+        in: path
+        name: product_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+components:
+  schemas:
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    NullableLocalDateTime:
+      type:
+      - string
+      - 'null'
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ProductImage:
+      properties:
+        url:
+          type: string
+          description: URL to the image file
+        description:
+          type:
+          - string
+          - 'null'
+          description: Any description provided by the POS like file name, dimensions, product description
+      required:
+      - url
+      - description
+      type: object
+      additionalProperties: false
+    UtcDateTime:
+      type: string
+      format: date-time
+    NullablePositiveDouble:
+      type:
+      - number
+      - 'null'
+      format: double
+      minimum: 0
+    PagedProducts:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    Product:
+      properties:
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB the product record belongs to.
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The unique ID of this product record.
+        pos_product_id:
+          type: string
+          description: Product ID in the POS system
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: The POS system that this data is sourced from.
+        name:
+          type: string
+          description: The name of the product.
+        gc_product_category_name:
+          $ref: '#/components/schemas/ProductCategoryType'
+          description: The Green Check standardized category. Null if we are unable to standardize
+        pos_product_category_name:
+          type:
+          - string
+          - 'null'
+          description: Category name as given by the POS.
+        pos_product_subcategory_name:
+          type:
+          - string
+          - 'null'
+          description: Subcategory name as given by the POS.
+        pos_strain_name:
+          type:
+          - string
+          - 'null'
+          description: Strain name as given by the POS.
+        pos_brand_name:
+          type:
+          - string
+          - 'null'
+          description: Brand name as given by the POS.
+        medicated:
+          type:
+          - boolean
+          - 'null'
+          description: True or false if this is a THC having marijuana product.
+        sku:
+          type:
+          - string
+          - 'null'
+          description: The SKU for the product.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Product description.
+        gc_net_weight_grams:
+          $ref: '#/components/schemas/NullablePositiveDouble'
+          description: Our calculated net weight of the product in grams.
+        pos_unit_of_measure:
+          type:
+          - string
+          - 'null'
+          description: The unit of measure of the product as sold by the POS (weight, quantity, etc).
+        price:
+          $ref: '#/components/schemas/NullablePositiveInteger'
+          description: Price of the product in cents. Can be null if priced by tiers only.
+        unit_cost:
+          $ref: '#/components/schemas/NullablePositiveDouble'
+          description: Unit cost of the product in cents. Can be null if not supplied by the POS.
+        pos_updated_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: The timestamp reported by the POS for the last update to this record in UTC.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        pos_updated_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: The timestamp reported by the POS for the last update to this record in the CRB local time.
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+        gc_created_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: The timestamp of this record's insertion in UTC.
+          type: string
+          format: date-time
+        gc_updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+        price_tiers:
+          items:
+            $ref: '#/components/schemas/ProductPriceTier'
+          type:
+          - array
+          - 'null'
+          description: Price tiers applied to this product. May or may not be provided by the POS system.
+        images:
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          type:
+          - array
+          - 'null'
+          description: A list of any images associated with this product.
+      required:
+      - crb_id
+      - id
+      - pos_product_id
+      - pos_type
+      - name
+      - gc_product_category_name
+      - pos_product_category_name
+      - pos_product_subcategory_name
+      - pos_strain_name
+      - pos_brand_name
+      - medicated
+      - sku
+      - description
+      - gc_net_weight_grams
+      - pos_unit_of_measure
+      - price
+      - unit_cost
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_created_date
+      - gc_updated_date
+      - price_tiers
+      - images
+      type: object
+      additionalProperties: false
+    ProductPriceTier:
+      properties:
+        tier_name:
+          type:
+          - string
+          - 'null'
+          description: Price Tier name, if any
+        tier_price:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Price of the product price tier in cents
+        pos_tier_type:
+          type: string
+          description: The type of tier condition from the pos system (like quantity or volume)
+        pos_tier_type_condition_value:
+          type: string
+          description: The condition(s) required (based on the tier type) to apply this tier on the product
+        tier_valid_until_date:
+          $ref: '#/components/schemas/NullableUtcDateTime'
+          description: Datetime that this tier stops being valid, if applicable
+          type:
+          - string
+          - 'null'
+          format: date-time
+        tier_valid_until_date_local:
+          $ref: '#/components/schemas/NullableLocalDateTime'
+          description: Datetime that this tier stops being valid in CRB’s local timezone, if applicable
+          type:
+          - string
+          - 'null'
+          pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1]\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9]([.][0-9]{1,3})?
+      required:
+      - tier_name
+      - tier_price
+      - pos_tier_type
+      - pos_tier_type_condition_value
+      - tier_valid_until_date
+      - tier_valid_until_date_local
+      type: object
+      additionalProperties: false
+    ProductCategoryType:
+      type:
+      - string
+      - 'null'
+      enum:
+      - flower
+      - oil/concentrate
+      - edible
+      - other
+      - seedling
+      - seed
+      - liquid
+      - solid
+      - extract
+      - plant
+      - accessory
+      - marijuana_product
+      - topical
+      - edible_liquid
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NullablePositiveInteger:
+      type:
+      - integer
+      - 'null'
+      format: int32
+      minimum: 0
+    NullableUtcDateTime:
+      type:
+      - string
+      - 'null'
+      format: date-time
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

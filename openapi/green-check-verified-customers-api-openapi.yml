@@ -1,0 +1,796 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access Customers API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: Customers
+paths:
+  /crbs/{crb_id}/customers:
+    get:
+      operationId: get-customers
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedCustomers'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                    - crb_id: 8b352f73-6f14-5C6C-F3B4-BAEEBd9a93Eb
+                      id: Ac379bE0-fDf0-9eDF-EAD2-23bDC674C9A1
+                      pos_type: Greenbits
+                      pos_customer_id: ut dolor deserunt
+                      first_name: non adipisicing anim
+                      last_name: null
+                      middle_name: reprehenderit in dolor laborum cupidatat
+                      dob: Excepteur reprehenderit eiusmod fugiat
+                      address_1: reprehenderit esse minim enim ex
+                      address_2: null
+                      city: null
+                      state: aliquip
+                      zip_code: null
+                      phone: deserunt sunt sit mollit in
+                      cell_phone: tempor
+                      email_address: null
+                      gender: Other
+                      pos_identification_type: null
+                      pos_customer_type: null
+                      gc_customer_type: null
+                      medical_id: ea
+                      medical_id_expiration_date: null
+                      drivers_license_id: null
+                      drivers_license_expiration_date: null
+                      other_id: non
+                      other_id_expiration_date: null
+                      caregiver: null
+                      loyalty_member: true
+                      loyalty_points: null
+                      anonymous: false
+                      pos_updated_date: fugiat velit aliqua
+                      pos_updated_date_local: null
+                      gc_updated_date: null
+                      gc_created_date: ad sed officia
+                    - crb_id: E5DB7F9D-7f1D-5cb0-Ae55-bF2db1078b8D
+                      id: 1FbA0A0B-cfbC-41B0-0eB7-b2FF52Cc6fad
+                      pos_type: Sweed
+                      pos_customer_id: commodo in do
+                      first_name: null
+                      last_name: null
+                      middle_name: minim
+                      dob: null
+                      address_1: fugiat dolor Lorem
+                      address_2: commodo sit eiusmod dolor
+                      city: null
+                      state: null
+                      zip_code: null
+                      phone: proident officia ad
+                      cell_phone: null
+                      email_address: elit esse
+                      gender: Female
+                      pos_identification_type: in nostrud Ut ad
+                      pos_customer_type: nulla dolor eiusmod non incididunt
+                      gc_customer_type: rec
+                      medical_id: sit sunt exercitation
+                      medical_id_expiration_date: null
+                      drivers_license_id: null
+                      drivers_license_expiration_date: non occaecat nostrud aliquip est
+                      other_id: null
+                      other_id_expiration_date: aliquip dolor in reprehenderit
+                      caregiver: null
+                      loyalty_member: null
+                      loyalty_points: -18166257.855527416
+                      anonymous: true
+                      pos_updated_date: null
+                      pos_updated_date_local: laborum amet mollit
+                      gc_updated_date: dolor minim occaecat elit non
+                      gc_created_date: null
+                    - crb_id: a8BaacC6-A0eD-BC52-bFE5-ec7A5cF4aEBA
+                      id: AA410fbe-9e6B-1C98-b663-dcCa6be38FEb
+                      pos_type: Sweed
+                      pos_customer_id: reprehenderit voluptate esse fugiat exercitation
+                      first_name: null
+                      last_name: null
+                      middle_name: null
+                      dob: null
+                      address_1: null
+                      address_2: mollit dolore eu consequat
+                      city: commodo ullamco exercitation Ut aliquip
+                      state: null
+                      zip_code: ut nulla quis
+                      phone: null
+                      cell_phone: enim dolor ullamco veniam do
+                      email_address: null
+                      gender: null
+                      pos_identification_type: null
+                      pos_customer_type: dolor officia consequat
+                      gc_customer_type: medical
+                      medical_id: nostrud aliqua sit Ut et
+                      medical_id_expiration_date: null
+                      drivers_license_id: mollit in dolore enim est
+                      drivers_license_expiration_date: consequat proident irure aute sint
+                      other_id: null
+                      other_id_expiration_date: ad ipsum et culpa
+                      caregiver: true
+                      loyalty_member: null
+                      loyalty_points: null
+                      anonymous: null
+                      pos_updated_date: null
+                      pos_updated_date_local: ex Ut sint exercitation
+                      gc_updated_date: est commodo
+                      gc_created_date: null
+                    metadata:
+                      count: 1 - 100
+                      total: 80223367
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB customers
+      tags:
+      - Customers
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: The page size
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 1000
+          format: int32
+          type: integer
+          minimum: 1
+          maximum: 1000
+      - description: The page offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+          minimum: 0
+      - description: 'Last updated from date: yyyy-MM-dd'
+        in: query
+        name: last_updated_from
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+      - description: 'Last updated to date: yyyy-MM-dd'
+        in: query
+        name: last_updated_to
+        required: false
+        schema:
+          type: string
+          pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
+  /crbs/{crb_id}/customers/{customer_id}:
+    get:
+      operationId: get-customer-by-id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+              examples:
+                Example 1:
+                  value:
+                    crb_id: 8F9A2C62-8058-f7DA-cFfc-CFBe27b66BFe
+                    id: bd3BB6EA-B99B-2eF4-EceF-EEBa975E61cd
+                    pos_type: Green Bits Test Account
+                    pos_customer_id: laboris
+                    first_name: null
+                    last_name: null
+                    middle_name: null
+                    dob: null
+                    address_1: anim voluptate laborum nulla consectetur
+                    address_2: laboris dolore
+                    city: et Duis
+                    state: enim laborum consectetur
+                    zip_code: null
+                    phone: aliqua sed ipsum ex aute
+                    cell_phone: Ut sit adipisicing
+                    email_address: null
+                    gender: null
+                    pos_identification_type: null
+                    pos_customer_type: null
+                    gc_customer_type: rec
+                    medical_id: null
+                    medical_id_expiration_date: null
+                    drivers_license_id: voluptate cupidatat dolor ut
+                    drivers_license_expiration_date: null
+                    other_id: enim
+                    other_id_expiration_date: null
+                    caregiver: null
+                    loyalty_member: null
+                    loyalty_points: null
+                    anonymous: true
+                    pos_updated_date: nisi labore Lorem consectetur
+                    pos_updated_date_local: null
+                    gc_updated_date: exercitation voluptate nulla
+                    gc_created_date: null
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB customer record by ID
+      tags:
+      - Customers
+      security:
+      - access_auth:
+        - point-of-sale:read
+        - admin
+      parameters:
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Customer Id
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+components:
+  schemas:
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    Gender:
+      enum:
+      - Male
+      - Female
+      - Other
+      type: string
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
+    Customer:
+      properties:
+        crb_id:
+          $ref: '#/components/schemas/UUID'
+          description: ID of the CRB the customer record belongs to.
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: The unique ID of this customer record.
+        pos_type:
+          $ref: '#/components/schemas/FriendlyPosName'
+          description: the PosType the customer record is sourced from
+        pos_customer_id:
+          type: string
+          description: ID of the customer in the POS
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: Hashed first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Hashed last name
+        middle_name:
+          type:
+          - string
+          - 'null'
+          description: Hashed middle name
+        dob:
+          type:
+          - string
+          - 'null'
+          description: Plain date field for customer date of birth
+        address_1:
+          type:
+          - string
+          - 'null'
+          description: Customer address
+        address_2:
+          type:
+          - string
+          - 'null'
+          description: Additional Customer address
+        city:
+          type:
+          - string
+          - 'null'
+          description: City
+        state:
+          type:
+          - string
+          - 'null'
+          description: State
+        zip_code:
+          type:
+          - string
+          - 'null'
+          description: Zip code
+        phone:
+          type:
+          - string
+          - 'null'
+          description: Hashed phone number
+        cell_phone:
+          type:
+          - string
+          - 'null'
+          description: Hashed cell phone number
+        email_address:
+          type:
+          - string
+          - 'null'
+          description: Hashed email address
+        gender:
+          allOf:
+          - $ref: '#/components/schemas/Gender'
+          description: Gender
+          type:
+          - string
+          - 'null'
+        pos_identification_type:
+          type:
+          - string
+          - 'null'
+          description: Main form of identification used by the customer
+        pos_customer_type:
+          type:
+          - string
+          - 'null'
+          description: Raw POS value for customer type, used to determine if medical or recreational
+        gc_customer_type:
+          allOf:
+          - $ref: '#/components/schemas/MedicalOrRec'
+          description: Customer type determined by GCV, Medical or Recreational
+          type:
+          - string
+          - 'null'
+        medical_id:
+          type:
+          - string
+          - 'null'
+          description: Hashed medical ID
+        medical_id_expiration_date:
+          type:
+          - string
+          - 'null'
+          description: Medical ID expiration date
+        drivers_license_id:
+          type:
+          - string
+          - 'null'
+          description: Hashed drivers license ID
+        drivers_license_expiration_date:
+          type:
+          - string
+          - 'null'
+          description: Drivers license expiration date
+        other_id:
+          type:
+          - string
+          - 'null'
+          description: Hashed other license ID
+        other_id_expiration_date:
+          type:
+          - string
+          - 'null'
+          description: Other ID expiration
+        caregiver:
+          type:
+          - boolean
+          - 'null'
+          description: True if this customer is a caregiver
+        loyalty_member:
+          type:
+          - boolean
+          - 'null'
+          description: True if this customer is a loyalty member
+        loyalty_points:
+          allOf:
+          - $ref: '#/components/schemas/PositiveDouble'
+          description: Number of accrued loyalty points
+          type:
+          - string
+          - 'null'
+        anonymous:
+          type:
+          - boolean
+          - 'null'
+          description: True if this is an anonymous customer, can depend on the state
+        pos_updated_date:
+          type:
+          - string
+          - 'null'
+          description: the timestamp reported by the pos for the last update to this record in UTC
+        pos_updated_date_local:
+          type:
+          - string
+          - 'null'
+          description: the timestamp reported by the pos for the last update to this record in the crb local time
+        gc_updated_date:
+          type:
+          - string
+          - 'null'
+          description: the timestamp of this records insertion/updates in UTC
+        gc_created_date:
+          type:
+          - string
+          - 'null'
+      required:
+      - crb_id
+      - id
+      - pos_type
+      - pos_customer_id
+      - first_name
+      - last_name
+      - middle_name
+      - dob
+      - address_1
+      - address_2
+      - city
+      - state
+      - zip_code
+      - phone
+      - cell_phone
+      - email_address
+      - gender
+      - pos_identification_type
+      - pos_customer_type
+      - gc_customer_type
+      - medical_id
+      - medical_id_expiration_date
+      - drivers_license_id
+      - drivers_license_expiration_date
+      - other_id
+      - other_id_expiration_date
+      - caregiver
+      - loyalty_member
+      - loyalty_points
+      - anonymous
+      - pos_updated_date
+      - pos_updated_date_local
+      - gc_updated_date
+      - gc_created_date
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PagedCustomers:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/Customer'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PositiveDouble:
+      type: number
+      format: double
+      minimum: 0
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'

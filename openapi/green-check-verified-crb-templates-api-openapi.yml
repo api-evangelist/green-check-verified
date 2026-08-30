@@ -1,0 +1,941 @@
+openapi: 3.2.0
+info:
+  title: Green Check Access CRB Templates API
+  version: 1.0.0
+  description: Green Check Access
+  contact: {}
+servers:
+- url: https://sandbox-api.greencheckverified.com
+  description: Sandbox server
+- url: https://prod-api.greencheckverified.com
+  description: Production server
+tags:
+- name: CRB Templates
+paths:
+  /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template:
+    get:
+      operationId: get-crb-onboarding-template
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingTemplateResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Get CRB's onboarding template for service provider
+      tags:
+      - CRB Templates
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+  /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents:
+    put:
+      operationId: put-crb-onboarding-document
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddDocumentToOnboardingTemplateResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      description: "Add a document to a requirement in a CRB's onboarding template response.\n\nNote - Only documents up to 5MB are supported\n\nYou always must include:\n   - file_name - Full file name, including the file extension (ex: \"statment.pdf\")\n   - file_type - File mime type, to ensure only allowed types are uploaded. See AllowedS3FileMimeTypes\n   - base64 - A base 64 encoded string of the file contents."
+      summary: Add a new or existing document to a requirement in a CRB's onboarding template response
+      tags:
+      - CRB Templates
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Requirement Id
+        in: path
+        name: requirement_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: PutCrbOnboardingTemplateDocumentRequestBody
+              anyOf:
+              - $ref: '#/components/schemas/AddDocumentToOnboardingTemplateRequest'
+              - $ref: '#/components/schemas/AddExistingDocumentToOnboardingTemplateRequest'
+  /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents/{document_id}:
+    put:
+      operationId: update-crb-onboarding-document
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentRequirementResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Update a document's status
+      tags:
+      - CRB Templates
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Requirement Id
+        in: path
+        name: requirement_id
+        required: true
+        schema:
+          type: string
+      - description: Document Id
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDocumentRequest'
+    delete:
+      operationId: delete-crb-onboarding-document
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentRequirementResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateError'
+      summary: Delete a document from an onboarding requirement
+      tags:
+      - CRB Templates
+      security:
+      - access_auth:
+        - service-provider:read
+        - admin
+      parameters:
+      - description: Service Provider Id
+        in: path
+        name: sp_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: CRB Id
+        in: path
+        name: crb_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      - description: Requirement Id
+        in: path
+        name: requirement_id
+        required: true
+        schema:
+          type: string
+      - description: Document Id
+        in: path
+        name: document_id
+        required: true
+        schema:
+          type: string
+          pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+components:
+  schemas:
+    AddDocumentToOnboardingTemplateResponse:
+      properties:
+        document_id:
+          type: string
+        updated_requirement_response:
+          $ref: '#/components/schemas/DocumentRequirementResponse'
+      required:
+      - document_id
+      - updated_requirement_response
+      type: object
+      additionalProperties: false
+    TribalNationLicenseType:
+      enum:
+      - Cultivator
+      - Processor
+      - Lab
+      - Dispensary (Adult / Medical)
+      - Social Consumption / Events
+      - Delivery / Transport
+      - Combined License
+      - Other
+      type: string
+    CRBLicenseStatus:
+      description: 'This enum is used within our UI to display the license status.
+
+        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
+      enum:
+      - Active
+      - Approved/Pending
+      - Inactive
+      - Pre-License
+      - Unknown
+      - Unlicensed
+      - Unmatched
+      type: string
+    DocumentRequirementResponse:
+      properties:
+        requirement_id:
+          type: string
+          description: Requirement ID
+        date_updated:
+          type: string
+          description: Date Updated
+        date_created:
+          type: string
+          description: Date Created
+        requirement_version:
+          type: string
+          description: Requirement Version
+        status:
+          type: string
+          description: Status
+        documents:
+          items:
+            $ref: '#/components/schemas/RequirementDocumentResponse'
+          type: array
+          description: Custom field data
+        name:
+          type: string
+          description: Requirement Name
+        description:
+          type: string
+          description: Requirement Description
+        category:
+          type: string
+          description: Category
+        archived:
+          type: boolean
+          description: Archived
+        required:
+          type: boolean
+          description: Required
+      required:
+      - name
+      type: object
+      additionalProperties: false
+    RequirementDocumentResponse:
+      properties:
+        id:
+          type: string
+          description: Document ID
+        internal_note:
+          type: string
+          description: Service provider Internal Note
+        friendly_name:
+          type: string
+          description: Service provider friendly file name
+        expiration_date:
+          type: string
+          description: Expiration Date
+        license_name:
+          type: string
+          description: License Name
+        license_number:
+          type: string
+          description: License Number
+        state:
+          $ref: '#/components/schemas/USStates'
+          description: State
+        reviewed_by:
+          $ref: '#/components/schemas/UUID'
+          description: Reviewed By
+        review_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Review Date
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/DueDiligenceDocumentStatus'
+          description: Due Diligence Document Status
+        file_name:
+          type: string
+          description: File Name
+        uploaded_by:
+          type: string
+          description: Uploaded By
+        upload_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          description: Uploaded Date
+          type: string
+          format: date-time
+        tribal_nation:
+          $ref: '#/components/schemas/TribalNation'
+          description: Tribal Nation
+        tribal_nation_license_type:
+          $ref: '#/components/schemas/TribalNationLicenseType'
+          description: Tribal Nation licenses type
+        license_status:
+          $ref: '#/components/schemas/CRBLicenseStatus'
+          description: License status for CRB Monitor, only for business licenses
+        date_verified:
+          type: string
+          description: Date that GCV Verified the license in CRB Monitor
+        verified_expiration_date:
+          type: string
+          description: Confirmed expiration date from CRB Monitor data
+        business_name:
+          type: string
+          description: Legal business name on the license from CRB Monitor data
+        licensing_authority:
+          type: string
+          description: Licensing Authority of the license from CRB Monitor data
+        license_identifier:
+          type: string
+          description: License Number in CRB Monitor
+        uniform_license_type_description:
+          $ref: '#/components/schemas/CRBMUniformLicenseTypeDescription'
+          description: License type
+        reported_license_type_description:
+          type: string
+          description: Reported license type description
+        licensing_authority_state:
+          type: string
+          description: State of the Licensing Authority
+      required:
+      - id
+      - status
+      - uploaded_by
+      - upload_date
+      type: object
+      additionalProperties: false
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    OnboardingTemplateResponse:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: Record ID
+        org_id:
+          $ref: '#/components/schemas/UUID'
+          description: Crb Organization ID
+        template_id:
+          $ref: '#/components/schemas/UUID'
+          description: Template ID
+        template_version:
+          type: string
+          description: Template Version
+        name:
+          type: string
+          description: Template Name
+        description:
+          type: string
+          description: Template Description
+        last_updated:
+          type: string
+          description: Last Updated
+        start_date:
+          type: string
+          description: Start Date
+        submitted_date:
+          type: string
+          description: Submitted Date
+        submitted_by:
+          $ref: '#/components/schemas/UUID'
+          description: Submitted By
+        status:
+          $ref: '#/components/schemas/DueDiligenceStatus'
+          description: Due Diligence Status
+        reviewed_by:
+          $ref: '#/components/schemas/UUID'
+          description: Reviewed By
+        review_start_date:
+          type:
+          - string
+          - 'null'
+          description: Review Start Date
+        review_date:
+          type: string
+          description: Review Date
+        disconnected_on:
+          type:
+          - string
+          - 'null'
+          description: Disconnected On
+        standard_requirements:
+          items:
+            $ref: '#/components/schemas/DocumentRequirementResponse'
+          type: array
+          description: All Onboarding template document data
+        custom_requirements:
+          items:
+            $ref: '#/components/schemas/CustomRequirementResponse'
+          type: array
+          description: Custom field data
+      required:
+      - id
+      - org_id
+      - template_id
+      - template_version
+      - name
+      - last_updated
+      - status
+      - review_start_date
+      - disconnected_on
+      - standard_requirements
+      - custom_requirements
+      type: object
+      additionalProperties: false
+    CustomRequirementResponse:
+      properties:
+        id:
+          type: string
+          description: Field ID
+        label:
+          type: string
+          description: Custom Field Name
+        value:
+          type:
+          - string
+          - 'null'
+          description: Custom Field Value
+        doc_metadata:
+          items:
+            properties:
+              upload_date:
+                type:
+                - string
+                - 'null'
+              file_name:
+                type:
+                - string
+                - 'null'
+              id:
+                type: string
+            required:
+            - upload_date
+            - file_name
+            - id
+            type: object
+          type: array
+          description: Additional metadata about documents uploaded
+      required:
+      - id
+      - label
+      - value
+      type: object
+      additionalProperties: false
+    DueDiligenceStatus:
+      enum:
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
+      type: string
+    UpdateDocumentRequest:
+      properties:
+        status:
+          $ref: '#/components/schemas/DueDiligenceDocumentStatus'
+      required:
+      - status
+      type: object
+      additionalProperties: false
+    DueDiligenceDocumentStatus:
+      enum:
+      - approved
+      - archived
+      - pending
+      type: string
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    AddDocumentToOnboardingTemplateRequest:
+      properties:
+        file_name:
+          type: string
+          description: Full file name, including the file extension
+          pattern: ^[^./\\]+\.(csv|docx?|gif|jpe?g|json|odp|ods|odt|png|pdf|pptx?|rtf|svg|tiff?|txt|vsd|xlsx?|xml)$
+        file_type:
+          $ref: '#/components/schemas/AllowedS3FileMimeTypes'
+          description: File mime type, to ensure only allowed types are uploaded
+        base64:
+          type: string
+          description: A base 64 encoded string of the file contents.
+      required:
+      - file_name
+      - file_type
+      - base64
+      type: object
+      additionalProperties: false
+    TribalNation:
+      type: string
+    AddExistingDocumentToOnboardingTemplateRequest:
+      properties:
+        document_id:
+          type: string
+      required:
+      - document_id
+      type: object
+      additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    CRBMUniformLicenseTypeDescription:
+      enum:
+      - Caregiver
+      - CBD
+      - Corporate Officer
+      - Cultivation
+      - Delivery/Transporter
+      - Event Organizer
+      - Hemp
+      - Illicit Establishment
+      - Management Company
+      - Manufacturer/Processor
+      - Owner/Investor
+      - Research
+      - Retail/Dispensary
+      - Senior Manager
+      - Social Use Club
+      - Storage
+      - Testing
+      - Unknown
+      - Vertically Integrated
+      - Waste Disposal
+      - Wholesale/Distribution
+      type: string
+    USStates:
+      description: Enumeration of all of the United States
+      enum:
+      - AL
+      - AK
+      - AZ
+      - AR
+      - AS
+      - CA
+      - CO
+      - CT
+      - DE
+      - DC
+      - FM
+      - FL
+      - GA
+      - GU
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MH
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - MP
+      - OH
+      - OK
+      - OR
+      - PW
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UM
+      - UT
+      - VT
+      - VA
+      - VI
+      - WA
+      - WV
+      - WI
+      - WY
+      - AA
+      - AE
+      - AP
+      type: string
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    AllowedS3FileMimeTypes:
+      enum:
+      - text/csv
+      - application/msword
+      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      - image/gif
+      - image/jpeg
+      - application/json
+      - application/vnd.oasis.opendocument.presentation
+      - application/vnd.oasis.opendocument.spreadsheet
+      - application/vnd.oasis.opendocument.text
+      - image/png
+      - application/pdf
+      - application/vnd.ms-powerpoint
+      - application/vnd.openxmlformats-officedocument.presentationml.presentation
+      - application/rtf
+      - image/svg+xml
+      - image/tiff
+      - text/plain
+      - application/vnd.visio
+      - application/vnd.ms-excel
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      - application/xml
+      - text/xml
+      type: string
+    UtcDateTime:
+      type: string
+      format: date-time
+  securitySchemes:
+    access_auth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: custom
+      x-amazon-apigateway-authorizer:
+        type: request
+        identitySource: method.request.header.Authorization
+        authorizerUri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AccessAuthorizerLambda.Arn}/invocations
+        authorizerCredentials:
+          Fn::Sub: ${AccessApiGatewayRole.Arn}
+        authorizerResultTtlInSeconds: 60
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params:
+    validateRequestBody: true
+    validateRequestParameters: true
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+x-amazon-apigateway-api-key-source: AUTHORIZER
+x-tagGroups:
+- name: ''
+  tags:
+  - Authentication
+- name: Service Provider
+  tags:
+  - Service Provider
+  - CRB Info
+  - CRB Customers
+  - CRB Documents
+  - CRB Inventory
+  - CRB Inventory Locations
+  - CRB Products
+  - CRB Sales
+  - CRB Templates
+- name: CRB
+  tags:
+  - CRB
+  - Customers
+  - Documents
+  - Inventory
+  - Inventory Locations
+  - Products
+  - Sales
+x-amazon-apigateway-gateway-responses:
+  ACCESS_DENIED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.authorizer.context.messageString"}'
+  EXPIRED_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"EXPIRED_TOKEN"}'
+  INVALID_API_KEY:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_API_KEY"}'
+  INVALID_SIGNATURE:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"INVALID_SIGNATURE"}'
+  MISSING_AUTHENTICATION_TOKEN:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"Missing Authentication Header", "details":"MISSING_AUTHENTICATION_TOKEN"}'
+  QUOTA_EXCEEDED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"QUOTA_EXCEEDED"}'
+  REQUEST_TOO_LARGE:
+    statusCode: '413'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"REQUEST_TOO_LARGE"}'
+  RESOURCE_NOT_FOUND:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"RESOURCE_NOT_FOUND"}'
+  THROTTLED:
+    statusCode: '429'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"THROTTLED"}'
+  UNAUTHORIZED:
+    statusCode: '401'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNAUTHORIZED"}'
+  UNSUPPORTED_MEDIA_TYPE:
+    statusCode: '415'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"UNSUPPORTED_MEDIA_TYPE"}'
+  DEFAULT_4XX:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"The requested URL is invalid"}'
+  INTEGRATION_FAILURE:
+    statusCode: '404'
+    responseTemplates:
+      application/json: '{"message":"Request too long. Ensure any request body or file you are sending is less than 5MB"}'
+  WAF_FILTERED:
+    statusCode: '403'
+    responseTemplates:
+      application/json: '{"message":"$context.error.message", "details":"FORBIDDEN"}'
