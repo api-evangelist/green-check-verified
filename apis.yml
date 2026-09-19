@@ -56,7 +56,7 @@ tags:
 - Point-of-Sale
 - Onboarding
 - Due Diligence
-- Know Your Customer
+- KYC
 - Data Aggregation
 tags_raw:
 - Company
@@ -275,6 +275,8 @@ apis:
   humanURL: https://developer.greencheckverified.com/apis/swagger
   baseURL: https://prod-api.greencheckverified.com
   tags:
+  - Service Providers
+  tags_raw:
   - Service Provider
   properties:
   - type: OpenAPI
