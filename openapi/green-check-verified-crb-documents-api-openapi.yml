@@ -101,11 +101,11 @@ components:
       - fields
       type: object
       additionalProperties: false
-    NotFoundError:
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Not Found
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -113,27 +113,7 @@ components:
         status:
           type: number
           format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
+          default: 401
         data: {}
       required:
       - name
@@ -176,6 +156,26 @@ components:
       - expires_at
       type: object
       additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     FieldErrors:
       properties: {}
       type: object
@@ -187,11 +187,11 @@ components:
         required:
         - message
         type: object
-    UnauthorizedError:
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Unauthorized
+          default: Forbidden
         message:
           type: string
         stack:
@@ -199,7 +199,7 @@ components:
         status:
           type: number
           format: double
-          default: 401
+          default: 403
         data: {}
       required:
       - name

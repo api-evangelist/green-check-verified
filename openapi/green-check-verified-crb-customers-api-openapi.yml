@@ -537,6 +537,11 @@ paths:
           type: string
 components:
   schemas:
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
     ValidateError:
       properties:
         name:
@@ -560,21 +565,6 @@ components:
       - fields
       type: object
       additionalProperties: false
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    Gender:
-      enum:
-      - Male
-      - Female
-      - Other
-      type: string
-    MedicalOrRec:
-      enum:
-      - medical
-      - rec
-      type: string
     Customer:
       properties:
         crb_id:
@@ -781,11 +771,21 @@ components:
       - gc_created_date
       type: object
       additionalProperties: false
-    ForbiddenError:
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    Gender:
+      enum:
+      - Male
+      - Female
+      - Other
+      type: string
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Forbidden
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -793,7 +793,7 @@ components:
         status:
           type: number
           format: double
-          default: 403
+          default: 401
         data: {}
       required:
       - name
@@ -801,6 +801,10 @@ components:
       - status
       type: object
       additionalProperties: false
+    PositiveDouble:
+      type: number
+      format: double
+      minimum: 0
     NotFoundError:
       properties:
         name:
@@ -821,10 +825,6 @@ components:
       - status
       type: object
       additionalProperties: false
-    Customers:
-      items:
-        $ref: '#/components/schemas/Customer'
-      type: array
     PagedCustomers:
       properties:
         metadata:
@@ -847,10 +847,6 @@ components:
       - data
       type: object
       additionalProperties: false
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
     FieldErrors:
       properties: {}
       type: object
@@ -862,6 +858,34 @@ components:
         required:
         - message
         type: object
+    Customers:
+      items:
+        $ref: '#/components/schemas/Customer'
+      type: array
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
     FriendlyPosName:
       type: string
       enum:
@@ -907,30 +931,6 @@ components:
       - Unsupported
       - CRBMonitor
       - Plaid
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    PositiveDouble:
-      type: number
-      format: double
-      minimum: 0
   securitySchemes:
     access_auth:
       type: apiKey

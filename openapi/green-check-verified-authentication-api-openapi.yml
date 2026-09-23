@@ -83,6 +83,40 @@ components:
       - fields
       type: object
       additionalProperties: false
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    AccessScopes:
+      enum:
+      - service-provider:read
+      - service-provider:write
+      - crb:read
+      - point-of-sale:read
+      - point-of-sale:write
+      - trace
+      - admin
+      - ein:read
+      - crb-id-request:read
+      - create-crb-api-key:write
+      - connect-crb-to-sp:write
+      type: string
     AuthResponse:
       properties:
         access_token:
@@ -118,10 +152,6 @@ components:
       - issued_at
       type: object
       additionalProperties: false
-    AccessGrantType:
-      enum:
-      - client_credentials
-      type: string
     NotFoundError:
       properties:
         name:
@@ -142,6 +172,21 @@ components:
       - status
       type: object
       additionalProperties: false
+    AccessGrantType:
+      enum:
+      - client_credentials
+      type: string
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     ForbiddenError:
       properties:
         name:
@@ -155,37 +200,6 @@ components:
           type: number
           format: double
           default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
         data: {}
       required:
       - name
@@ -211,20 +225,6 @@ components:
       - grant_type
       type: object
       additionalProperties: false
-    AccessScopes:
-      enum:
-      - service-provider:read
-      - service-provider:write
-      - crb:read
-      - point-of-sale:read
-      - point-of-sale:write
-      - trace
-      - admin
-      - ein:read
-      - crb-id-request:read
-      - create-crb-api-key:write
-      - connect-crb-to-sp:write
-      type: string
   securitySchemes:
     access_auth:
       type: apiKey

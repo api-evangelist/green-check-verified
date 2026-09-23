@@ -260,82 +260,111 @@ paths:
           pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
 components:
   schemas:
-    IDType:
-      enum:
-      - drivers
-      - medical
-      - ssn
-      - passport
-      - medical_with_rec
-      - medical_with_state_card
-      - caregiver
-      - minor_medical
-      - temporary_minor_medical
-      - temporary_adult
-      type: string
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
-    SalePayment:
+    SaleLineItem:
       properties:
-        type:
-          $ref: '#/components/schemas/PaymentType'
-          description: Payment Type
-        amount_paid:
-          type: number
+        product_id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          description: The unique ID of the product, can be accessed with /product endpoints
+          type:
+          - string
+          - 'null'
+        pos_product_id:
+          type:
+          - string
+          - 'null'
+          description: The product ID in the POS system
+        product_name:
+          type:
+          - string
+          - 'null'
+          description: Name in POS system
+        num_units:
+          type:
+          - number
+          - 'null'
           format: double
-          description: Amount in cents for this payment type
+          description: Number of units bought
+        price_per_unit:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Price per individual unit
+        grams:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Weight of product in grams
+        product_type:
+          allOf:
+          - $ref: '#/components/schemas/ProductCategoryType'
+          description: GCV mapped product type
+          type:
+          - string
+          - 'null'
+        cannabis_product:
+          type:
+          - boolean
+          - 'null'
+          description: Whether product contains cannabis
+        line_item_discounts:
+          items:
+            $ref: '#/components/schemas/SaleDiscount'
+          type: array
+          description: Line item specific discounts
+        line_item_taxes:
+          items:
+            $ref: '#/components/schemas/SaleTax'
+          type: array
+          description: Line item specific taxes
+        line_item_fees:
+          items:
+            $ref: '#/components/schemas/SaleFee'
+          type: array
+          description: Line item specific fees
       required:
-      - type
-      - amount_paid
+      - product_id
+      - pos_product_id
+      - product_name
+      - num_units
+      - price_per_unit
+      - grams
+      - product_type
+      - cannabis_product
+      - line_item_discounts
+      - line_item_taxes
+      - line_item_fees
       type: object
       additionalProperties: false
-    SaleTypeWholesale:
-      enum:
-      - wholesale
+    UUID:
       type: string
-    ValidateError:
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    SaleTax:
       properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
+        flat_amount:
+          type:
+          - number
+          - 'null'
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
+          description: Tax amount in cents
+        pct_amount:
+          type:
+          - number
+          - 'null'
           format: double
-          default: 404
-        data: {}
+          description: Tax percentage as a real number
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of tax
       required:
+      - flat_amount
+      - pct_amount
       - name
-      - message
-      - status
       type: object
       additionalProperties: false
     RetailSale:
@@ -486,12 +515,18 @@ components:
       - compliance_warnings
       type: object
       additionalProperties: false
-    ComplianceStatus:
+    IDType:
       enum:
-      - unchecked
-      - red_flag
-      - green_checked
-      - warning
+      - drivers
+      - medical
+      - ssn
+      - passport
+      - medical_with_rec
+      - medical_with_state_card
+      - caregiver
+      - minor_medical
+      - temporary_minor_medical
+      - temporary_adult
       type: string
     PaymentType:
       enum:
@@ -505,6 +540,168 @@ components:
       - other
       - unknown
       type: string
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
+    SalePayment:
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentType'
+          description: Payment Type
+        amount_paid:
+          type: number
+          format: double
+          description: Amount in cents for this payment type
+      required:
+      - type
+      - amount_paid
+      type: object
+      additionalProperties: false
+    LocalDateTime:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    SaleDiscount:
+      properties:
+        flat_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Discount amount in cents
+        pct_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Discount percentage as a real number
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of discount
+      required:
+      - flat_amount
+      - pct_amount
+      - name
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    SaleTypeWholesale:
+      enum:
+      - wholesale
+      type: string
+    ComplianceStatus:
+      enum:
+      - unchecked
+      - red_flag
+      - green_checked
+      - warning
+      type: string
+    SaleCustomer:
+      properties:
+        customer_id:
+          allOf:
+          - $ref: '#/components/schemas/UUID'
+          description: Green Check Customer ID
+          type:
+          - string
+          - 'null'
+        pos_customer_id:
+          type:
+          - string
+          - 'null'
+          description: The customer ID in the POS system
+        type:
+          allOf:
+          - $ref: '#/components/schemas/MedicalOrRec'
+          description: Is Sale Medical or Adult Use
+          type:
+          - string
+          - 'null'
+        dob:
+          type:
+          - string
+          - 'null'
+          description: Customer Date of Birth yyyy-MM-dd
+        id_type:
+          allOf:
+          - $ref: '#/components/schemas/IDType'
+          description: Customer ID Type
+          type:
+          - string
+          - 'null'
+        id_expiration_date:
+          type:
+          - string
+          - 'null'
+          description: Customer ID Expiration Date
+      required:
+      - customer_id
+      - pos_customer_id
+      - type
+      - dob
+      - id_type
+      - id_expiration_date
+      type: object
+      additionalProperties: false
+    UtcDateTime:
+      type: string
+      format: date-time
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     ProductCategoryType:
       type:
       - string
@@ -524,29 +721,55 @@ components:
       - marijuana_product
       - topical
       - edible_liquid
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    LocalDateTime:
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    FriendlyPosName:
       type: string
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
     SaleFee:
       properties:
         fee_name:
@@ -602,202 +825,56 @@ components:
       - data
       type: object
       additionalProperties: false
-    SaleDiscount:
-      properties:
-        flat_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Discount amount in cents
-        pct_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Discount percentage as a real number
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of discount
-      required:
-      - flat_amount
-      - pct_amount
-      - name
-      type: object
-      additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
     TransactionType:
       enum:
       - sale
       - return
       - adjustment
       type: string
-    SaleTax:
+    UnauthorizedError:
       properties:
-        flat_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Tax amount in cents
-        pct_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Tax percentage as a real number
         name:
-          type:
-          - string
-          - 'null'
-          description: Name of tax
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
       required:
-      - flat_amount
-      - pct_amount
       - name
+      - message
+      - status
       type: object
       additionalProperties: false
-    SaleCustomer:
+    NotFoundError:
       properties:
-        customer_id:
-          allOf:
-          - $ref: '#/components/schemas/UUID'
-          description: Green Check Customer ID
-          type:
-          - string
-          - 'null'
-        pos_customer_id:
-          type:
-          - string
-          - 'null'
-          description: The customer ID in the POS system
-        type:
-          allOf:
-          - $ref: '#/components/schemas/MedicalOrRec'
-          description: Is Sale Medical or Adult Use
-          type:
-          - string
-          - 'null'
-        dob:
-          type:
-          - string
-          - 'null'
-          description: Customer Date of Birth yyyy-MM-dd
-        id_type:
-          allOf:
-          - $ref: '#/components/schemas/IDType'
-          description: Customer ID Type
-          type:
-          - string
-          - 'null'
-        id_expiration_date:
-          type:
-          - string
-          - 'null'
-          description: Customer ID Expiration Date
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
       required:
-      - customer_id
-      - pos_customer_id
-      - type
-      - dob
-      - id_type
-      - id_expiration_date
+      - name
+      - message
+      - status
       type: object
       additionalProperties: false
-    UUID:
+    SaleTypeRetail:
+      enum:
+      - retail
       type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    SaleLineItem:
-      properties:
-        product_id:
-          allOf:
-          - $ref: '#/components/schemas/UUID'
-          description: The unique ID of the product, can be accessed with /product endpoints
-          type:
-          - string
-          - 'null'
-        pos_product_id:
-          type:
-          - string
-          - 'null'
-          description: The product ID in the POS system
-        product_name:
-          type:
-          - string
-          - 'null'
-          description: Name in POS system
-        num_units:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Number of units bought
-        price_per_unit:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Price per individual unit
-        grams:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Weight of product in grams
-        product_type:
-          allOf:
-          - $ref: '#/components/schemas/ProductCategoryType'
-          description: GCV mapped product type
-          type:
-          - string
-          - 'null'
-        cannabis_product:
-          type:
-          - boolean
-          - 'null'
-          description: Whether product contains cannabis
-        line_item_discounts:
-          items:
-            $ref: '#/components/schemas/SaleDiscount'
-          type: array
-          description: Line item specific discounts
-        line_item_taxes:
-          items:
-            $ref: '#/components/schemas/SaleTax'
-          type: array
-          description: Line item specific taxes
-        line_item_fees:
-          items:
-            $ref: '#/components/schemas/SaleFee'
-          type: array
-          description: Line item specific fees
-      required:
-      - product_id
-      - pos_product_id
-      - product_name
-      - num_units
-      - price_per_unit
-      - grams
-      - product_type
-      - cannabis_product
-      - line_item_discounts
-      - line_item_taxes
-      - line_item_fees
-      type: object
-      additionalProperties: false
     WholesaleSale:
       properties:
         id:
@@ -963,83 +1040,6 @@ components:
       - invoice
       type: object
       additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    MedicalOrRec:
-      enum:
-      - medical
-      - rec
-      type: string
-    UtcDateTime:
-      type: string
-      format: date-time
-    FriendlyPosName:
-      type: string
-      enum:
-      - Alleaves
-      - Dutchie
-      - Dutchie Wholesale
-      - Cova
-      - Meadow
-      - MJ Freeway
-      - MJ Freeway Wholesale
-      - Greenbits
-      - GrowFlow
-      - GrowFlow Wholesale
-      - Portal42
-      - Metrc S2S
-      - Metrc S2S Wholesale
-      - Flourish
-      - Flourish Wholesale
-      - Flowhub
-      - BioTrack
-      - BioTrack Wholesale
-      - Treez
-      - Blaze
-      - Quickbooks
-      - Sage Intacct
-      - Canix
-      - Brytemap
-      - POSaBIT
-      - Proteus420
-      - IndicaOnline
-      - Sweed
-      - Weave
-      - Jane
-      - Manual Upload Wholesale
-      - Cova Test Account
-      - Leaf Logix Test Account
-      - BioTrack Test Account
-      - Mj Freeway Test Account
-      - Treez IO Test Account
-      - Green Bits Test Account
-      - Manual Upload Retail
-      - Not Configured
-      - Unsupported
-      - CRBMonitor
-      - Plaid
-    SaleTypeRetail:
-      enum:
-      - retail
-      type: string
   securitySchemes:
     access_auth:
       type: apiKey

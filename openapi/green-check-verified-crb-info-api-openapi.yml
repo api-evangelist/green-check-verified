@@ -175,7 +175,7 @@ paths:
       description: 'Generates GCV Access credentials on behalf of the CRB, allowing the Service Provider to operate their document
 
         management API calls.'
-      summary: Generate GCV Access credentials on behalf of a CRB.
+      summary: Generate GCV Access credentials on behalf of a CRB
       tags:
       - CRB Info
       security:
@@ -199,13 +199,15 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    PosConnectionStatus:
+    DispensaryBusinessType:
       type: string
       enum:
-      - Connected
-      - Not Connected
-      - Needs Attention
-      - Pending
+      - retail
+      - wholesale
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     IANATimezones:
       enum:
       - America/New_York
@@ -247,20 +249,20 @@ components:
       - Pacific/Kwajalein
       - Pacific/Saipan
       type: string
-    EntityType:
+    DueDiligenceStatus:
       enum:
-      - sole
-      - partnership
-      - corporation
-      - llc
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
       type: string
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
-    ShortDate:
-      type: string
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
     Countries:
       type: string
       enum:
@@ -492,196 +494,14 @@ components:
       - Zambia
       - Zimbabwe
       description: Enumeration of all of the countries on Earth
-    OrganizationType:
-      enum:
-      - bank
-      - dispensary
-      - gcv
-      - transport_vendor
-      - muo
-      - data_integrator_client
-      type: string
-    ValidateError:
-      properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    DueDiligenceStatus:
-      enum:
-      - bank_disconnected
-      - bank_approved
-      - bank_review_in_progress
-      - bank_awaiting_review
-      - bank_in_progress
-      - bank_pending
-      - gcv_approved
-      - gcv_awaiting_review
-      - gcv_in_progress
-      - gcv_pending
-      - update_required
-      type: string
     EIN:
       type: string
       description: 'EIN (Employer Identification Number) - ##-#######'
       pattern: ^\d{2}-\d{7}$
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    UpdateCrbInput:
-      properties:
-        timezone:
-          $ref: '#/components/schemas/IANATimezones'
-          description: Defaults to default for state
-        street_address:
-          type: string
-          description: Street Address
-        street_address_2:
-          type: string
-          description: Street Address 2
-        city:
-          $ref: '#/components/schemas/City'
-          description: City
-        postal_code:
-          $ref: '#/components/schemas/PostalCode'
-          description: Postal Cod
-        country:
-          $ref: '#/components/schemas/Countries'
-          description: Country
-        mailing_street_address:
-          type: string
-          description: Mailing Street Address
-        mailing_city:
-          $ref: '#/components/schemas/City'
-          description: Mailing City
-        mailing_state:
-          $ref: '#/components/schemas/USStates'
-          description: Mailing State
-        mailing_postal_code:
-          $ref: '#/components/schemas/PostalCode'
-          description: Mailing Postal Code
-        ein:
-          $ref: '#/components/schemas/EIN'
-          description: 'EIN (Employer Identification Number) - ##-#######'
-        phone_number:
-          $ref: '#/components/schemas/PhoneNumber'
-          description: 'Phone Number - (###) ####-####'
-        website:
-          $ref: '#/components/schemas/Website'
-          description: Website
-        established_date:
-          $ref: '#/components/schemas/ShortDate'
-          description: Established Date
-        ftEmployees:
-          $ref: '#/components/schemas/PositiveInteger'
-          description: Full-time Employees
-        ptEmployees:
-          $ref: '#/components/schemas/PositiveInteger'
-          description: Part-time Employees
-        entityType:
-          $ref: '#/components/schemas/EntityType'
-          description: Entity Type
-        dba:
-          type: string
-          description: DBA (Doing Business As)
-        monthlySales:
-          $ref: '#/components/schemas/PositiveInteger'
-          description: Monthly Sales
-        monthlyCustomers:
-          $ref: '#/components/schemas/PositiveInteger'
-          description: Monthly Customers
-      type: object
-      additionalProperties: false
-    City:
-      type: string
-      description: City
-      pattern: ^[a-zA-Z\s.-]+$
     PostalCode:
       type: string
       description: Postal Code
       pattern: ^\d{5}(?:[-\s]?\d{4})?$
-    PhoneNumber:
-      type: string
-      description: 'Phone Number - (###) ####-####'
-      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    Website:
-      type: string
-      description: Website
-      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    DispensaryBusinessType:
-      type: string
-      enum:
-      - retail
-      - wholesale
     USStates:
       description: Enumeration of all of the United States
       enum:
@@ -749,6 +569,17 @@ components:
       - AE
       - AP
       type: string
+    Website:
+      type: string
+      description: Website
+      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
+    PhoneNumber:
+      type: string
+      description: 'Phone Number - (###) ####-####'
+      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
+    ShortDate:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
     ForbiddenError:
       properties:
         name:
@@ -769,9 +600,123 @@ components:
       - status
       type: object
       additionalProperties: false
-    UtcDateTime:
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    AccessPosConfig:
+      properties:
+        name:
+          $ref: '#/components/schemas/FriendlyPosName'
+        status:
+          $ref: '#/components/schemas/PosConnectionStatus'
+        updated_date:
+          $ref: '#/components/schemas/UtcDateTime'
+          type: string
+          format: date-time
+      required:
+      - name
+      - updated_date
+      type: object
+      additionalProperties: false
+    UpdateCrbInput:
+      properties:
+        timezone:
+          $ref: '#/components/schemas/IANATimezones'
+          description: Defaults to default for state
+        street_address:
+          type: string
+          description: Street Address
+        street_address_2:
+          type: string
+          description: Street Address 2
+        city:
+          $ref: '#/components/schemas/City'
+          description: City
+        postal_code:
+          $ref: '#/components/schemas/PostalCode'
+          description: Postal Cod
+        country:
+          $ref: '#/components/schemas/Countries'
+          description: Country
+        mailing_street_address:
+          type: string
+          description: Mailing Street Address
+        mailing_city:
+          $ref: '#/components/schemas/City'
+          description: Mailing City
+        mailing_state:
+          $ref: '#/components/schemas/USStates'
+          description: Mailing State
+        mailing_postal_code:
+          $ref: '#/components/schemas/PostalCode'
+          description: Mailing Postal Code
+        ein:
+          $ref: '#/components/schemas/EIN'
+          description: 'EIN (Employer Identification Number) - ##-#######'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+          description: 'Phone Number - (###) ####-####'
+        website:
+          $ref: '#/components/schemas/Website'
+          description: Website
+        established_date:
+          $ref: '#/components/schemas/ShortDate'
+          description: Established Date
+        ftEmployees:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Full-time Employees
+        ptEmployees:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Part-time Employees
+        entityType:
+          $ref: '#/components/schemas/EntityType'
+          description: Entity Type
+        dba:
+          type: string
+          description: DBA (Doing Business As)
+        monthlySales:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Monthly Sales
+        monthlyCustomers:
+          $ref: '#/components/schemas/PositiveInteger'
+          description: Monthly Customers
+      type: object
+      additionalProperties: false
+    OrganizationType:
+      enum:
+      - bank
+      - dispensary
+      - gcv
+      - transport_vendor
+      - muo
+      - data_integrator_client
       type: string
-      format: date-time
+    NullablePositiveInteger:
+      type:
+      - integer
+      - 'null'
+      format: int32
+      minimum: 0
     ServiceProviderCRB:
       properties:
         id:
@@ -947,21 +892,24 @@ components:
       - pos_configs
       type: object
       additionalProperties: false
-    AccessPosConfig:
-      properties:
-        name:
-          $ref: '#/components/schemas/FriendlyPosName'
-        status:
-          $ref: '#/components/schemas/PosConnectionStatus'
-        updated_date:
-          $ref: '#/components/schemas/UtcDateTime'
-          type: string
-          format: date-time
-      required:
-      - name
-      - updated_date
+    UtcDateTime:
+      type: string
+      format: date-time
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
     FriendlyPosName:
       type: string
       enum:
@@ -1007,12 +955,64 @@ components:
       - Unsupported
       - CRBMonitor
       - Plaid
-    NullablePositiveInteger:
-      type:
-      - integer
-      - 'null'
-      format: int32
-      minimum: 0
+    PosConnectionStatus:
+      type: string
+      enum:
+      - Connected
+      - Not Connected
+      - Needs Attention
+      - Pending
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    City:
+      type: string
+      description: City
+      pattern: ^[a-zA-Z\s.-]+$
+    EntityType:
+      enum:
+      - sole
+      - partnership
+      - corporation
+      - llc
+      type: string
   securitySchemes:
     access_auth:
       type: apiKey

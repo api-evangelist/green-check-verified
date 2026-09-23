@@ -182,6 +182,15 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
+    NullableLocalDateTime:
+      type:
+      - string
+      - 'null'
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     ValidateError:
       properties:
         name:
@@ -205,15 +214,53 @@ components:
       - fields
       type: object
       additionalProperties: false
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    NullableLocalDateTime:
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PagedLocations:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/Location'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    NullableUtcDateTime:
       type:
       - string
       - 'null'
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+      format: date-time
     NotFoundError:
       properties:
         name:
@@ -234,6 +281,86 @@ components:
       - status
       type: object
       additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
     Location:
       properties:
         id:
@@ -297,133 +424,6 @@ components:
       - gc_created_date_local
       type: object
       additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
-    PagedLocations:
-      properties:
-        metadata:
-          properties:
-            total:
-              $ref: '#/components/schemas/PositiveInteger'
-            count:
-              type: string
-              description: Range of items returned
-          required:
-          - total
-          - count
-          type: object
-        data:
-          items:
-            $ref: '#/components/schemas/Location'
-          type: array
-      required:
-      - metadata
-      - data
-      type: object
-      additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    FriendlyPosName:
-      type: string
-      enum:
-      - Alleaves
-      - Dutchie
-      - Dutchie Wholesale
-      - Cova
-      - Meadow
-      - MJ Freeway
-      - MJ Freeway Wholesale
-      - Greenbits
-      - GrowFlow
-      - GrowFlow Wholesale
-      - Portal42
-      - Metrc S2S
-      - Metrc S2S Wholesale
-      - Flourish
-      - Flourish Wholesale
-      - Flowhub
-      - BioTrack
-      - BioTrack Wholesale
-      - Treez
-      - Blaze
-      - Quickbooks
-      - Sage Intacct
-      - Canix
-      - Brytemap
-      - POSaBIT
-      - Proteus420
-      - IndicaOnline
-      - Sweed
-      - Weave
-      - Jane
-      - Manual Upload Wholesale
-      - Cova Test Account
-      - Leaf Logix Test Account
-      - BioTrack Test Account
-      - Mj Freeway Test Account
-      - Treez IO Test Account
-      - Green Bits Test Account
-      - Manual Upload Retail
-      - Not Configured
-      - Unsupported
-      - CRBMonitor
-      - Plaid
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    NullableUtcDateTime:
-      type:
-      - string
-      - 'null'
-      format: date-time
   securitySchemes:
     access_auth:
       type: apiKey

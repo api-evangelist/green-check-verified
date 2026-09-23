@@ -63,6 +63,14 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
+    Website:
+      type: string
+      description: Website
+      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     ValidateError:
       properties:
         name:
@@ -127,10 +135,61 @@ components:
       - Pacific/Kwajalein
       - Pacific/Saipan
       type: string
-    UUID:
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    PhoneNumber:
       type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      description: 'Phone Number - (###) ####-####'
+      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
+    ShortDate:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
+    EIN:
+      type: string
+      description: 'EIN (Employer Identification Number) - ##-#######'
+      pattern: ^\d{2}-\d{7}$
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    City:
+      type: string
+      description: City
+      pattern: ^[a-zA-Z\s.-]+$
     NullablePositiveInteger:
       type:
       - integer
@@ -284,26 +343,6 @@ components:
       - monthlyCustomers
       type: object
       additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
     ForbiddenError:
       properties:
         name:
@@ -324,6 +363,28 @@ components:
       - status
       type: object
       additionalProperties: false
+    EntityType:
+      enum:
+      - sole
+      - partnership
+      - corporation
+      - llc
+      type: string
+    PostalCode:
+      type: string
+      description: Postal Code
+      pattern: ^\d{5}(?:[-\s]?\d{4})?$
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     USStates:
       description: Enumeration of all of the United States
       enum:
@@ -391,67 +452,6 @@ components:
       - AE
       - AP
       type: string
-    EntityType:
-      enum:
-      - sole
-      - partnership
-      - corporation
-      - llc
-      type: string
-    PostalCode:
-      type: string
-      description: Postal Code
-      pattern: ^\d{5}(?:[-\s]?\d{4})?$
-    PhoneNumber:
-      type: string
-      description: 'Phone Number - (###) ####-####'
-      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
-    ShortDate:
-      type: string
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    Website:
-      type: string
-      description: Website
-      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
-    EIN:
-      type: string
-      description: 'EIN (Employer Identification Number) - ##-#######'
-      pattern: ^\d{2}-\d{7}$
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    City:
-      type: string
-      description: City
-      pattern: ^[a-zA-Z\s.-]+$
   securitySchemes:
     access_auth:
       type: apiKey
