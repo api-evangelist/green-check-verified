@@ -537,16 +537,33 @@ paths:
           type: string
 components:
   schemas:
-    MedicalOrRec:
-      enum:
-      - medical
-      - rec
-      type: string
-    ValidateError:
+    PagedCustomers:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/Customer'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -554,17 +571,89 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 401
         data: {}
       required:
       - name
       - message
       - status
-      - fields
       type: object
       additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    Gender:
+      enum:
+      - Male
+      - Female
+      - Other
+      type: string
     Customer:
       properties:
         crb_id:
@@ -771,40 +860,34 @@ components:
       - gc_created_date
       type: object
       additionalProperties: false
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    Gender:
-      enum:
-      - Male
-      - Female
-      - Other
-      type: string
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
     PositiveDouble:
       type: number
       format: double
       minimum: 0
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
+    Customers:
+      items:
+        $ref: '#/components/schemas/Customer'
+      type: array
     NotFoundError:
       properties:
         name:
@@ -825,48 +908,11 @@ components:
       - status
       type: object
       additionalProperties: false
-    PagedCustomers:
-      properties:
-        metadata:
-          properties:
-            total:
-              $ref: '#/components/schemas/PositiveInteger'
-            count:
-              type: string
-              description: Range of items returned
-          required:
-          - total
-          - count
-          type: object
-        data:
-          items:
-            $ref: '#/components/schemas/Customer'
-          type: array
-      required:
-      - metadata
-      - data
-      type: object
-      additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    Customers:
-      items:
-        $ref: '#/components/schemas/Customer'
-      type: array
-    ForbiddenError:
+    ValidateError:
       properties:
         name:
           type: string
-          default: Forbidden
+          default: Validation Failed
         message:
           type: string
         stack:
@@ -874,63 +920,17 @@ components:
         status:
           type: number
           format: double
-          default: 403
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
         data: {}
       required:
       - name
       - message
       - status
+      - fields
       type: object
       additionalProperties: false
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
-    FriendlyPosName:
-      type: string
-      enum:
-      - Alleaves
-      - Dutchie
-      - Dutchie Wholesale
-      - Cova
-      - Meadow
-      - MJ Freeway
-      - MJ Freeway Wholesale
-      - Greenbits
-      - GrowFlow
-      - GrowFlow Wholesale
-      - Portal42
-      - Metrc S2S
-      - Metrc S2S Wholesale
-      - Flourish
-      - Flourish Wholesale
-      - Flowhub
-      - BioTrack
-      - BioTrack Wholesale
-      - Treez
-      - Blaze
-      - Quickbooks
-      - Sage Intacct
-      - Canix
-      - Brytemap
-      - POSaBIT
-      - Proteus420
-      - IndicaOnline
-      - Sweed
-      - Weave
-      - Jane
-      - Manual Upload Wholesale
-      - Cova Test Account
-      - Leaf Logix Test Account
-      - BioTrack Test Account
-      - Mj Freeway Test Account
-      - Treez IO Test Account
-      - Green Bits Test Account
-      - Manual Upload Retail
-      - Not Configured
-      - Unsupported
-      - CRBMonitor
-      - Plaid
   securitySchemes:
     access_auth:
       type: apiKey

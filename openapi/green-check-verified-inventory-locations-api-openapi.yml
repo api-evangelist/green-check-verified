@@ -173,53 +173,6 @@ components:
       - string
       - 'null'
       pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    ValidateError:
-      properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
-      type: object
-      additionalProperties: false
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
     PagedLocations:
       properties:
         metadata:
@@ -242,16 +195,11 @@ components:
       - data
       type: object
       additionalProperties: false
-    NullableUtcDateTime:
-      type:
-      - string
-      - 'null'
-      format: date-time
-    NotFoundError:
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Not Found
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -259,7 +207,7 @@ components:
         status:
           type: number
           format: double
-          default: 404
+          default: 401
         data: {}
       required:
       - name
@@ -267,17 +215,10 @@ components:
       - status
       type: object
       additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     ForbiddenError:
       properties:
         name:
@@ -298,10 +239,6 @@ components:
       - status
       type: object
       additionalProperties: false
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
     FriendlyPosName:
       type: string
       enum:
@@ -347,6 +284,10 @@ components:
       - Unsupported
       - CRBMonitor
       - Plaid
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
     Location:
       properties:
         id:
@@ -408,6 +349,65 @@ components:
       - pos_updated_date_local
       - gc_created_date
       - gc_created_date_local
+      type: object
+      additionalProperties: false
+    NullableUtcDateTime:
+      type:
+      - string
+      - 'null'
+      format: date-time
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
       type: object
       additionalProperties: false
   securitySchemes:

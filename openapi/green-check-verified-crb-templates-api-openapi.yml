@@ -297,83 +297,24 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    DueDiligenceStatus:
-      enum:
-      - bank_disconnected
-      - bank_approved
-      - bank_review_in_progress
-      - bank_awaiting_review
-      - bank_in_progress
-      - bank_pending
-      - gcv_approved
-      - gcv_awaiting_review
-      - gcv_in_progress
-      - gcv_pending
-      - update_required
-      type: string
-    AddDocumentToOnboardingTemplateRequest:
+    ForbiddenError:
       properties:
-        file_name:
+        name:
           type: string
-          description: Full file name, including the file extension
-          pattern: ^[^./\\]+\.(csv|docx?|gif|jpe?g|json|odp|ods|odt|png|pdf|pptx?|rtf|svg|tiff?|txt|vsd|xlsx?|xml)$
-        file_type:
-          $ref: '#/components/schemas/AllowedS3FileMimeTypes'
-          description: File mime type, to ensure only allowed types are uploaded
-        base64:
+          default: Forbidden
+        message:
           type: string
-          description: A base 64 encoded string of the file contents.
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
       required:
-      - file_name
-      - file_type
-      - base64
-      type: object
-      additionalProperties: false
-    AddExistingDocumentToOnboardingTemplateRequest:
-      properties:
-        document_id:
-          type: string
-      required:
-      - document_id
-      type: object
-      additionalProperties: false
-    CRBMUniformLicenseTypeDescription:
-      enum:
-      - Caregiver
-      - CBD
-      - Corporate Officer
-      - Cultivation
-      - Delivery/Transporter
-      - Event Organizer
-      - Hemp
-      - Illicit Establishment
-      - Management Company
-      - Manufacturer/Processor
-      - Owner/Investor
-      - Research
-      - Retail/Dispensary
-      - Senior Manager
-      - Social Use Club
-      - Storage
-      - Testing
-      - Unknown
-      - Vertically Integrated
-      - Waste Disposal
-      - Wholesale/Distribution
-      type: string
-    AddDocumentToOnboardingTemplateResponse:
-      properties:
-        document_id:
-          type: string
-        updated_requirement_response:
-          $ref: '#/components/schemas/DocumentRequirementResponse'
-      required:
-      - document_id
-      - updated_requirement_response
+      - name
+      - message
+      - status
       type: object
       additionalProperties: false
     USStates:
@@ -443,71 +384,49 @@ components:
       - AE
       - AP
       type: string
-    CRBLicenseStatus:
-      description: 'This enum is used within our UI to display the license status.
-
-        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
-      enum:
-      - Active
-      - Approved/Pending
-      - Inactive
-      - Pre-License
-      - Unknown
-      - Unlicensed
-      - Unmatched
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    AddDocumentToOnboardingTemplateRequest:
+      properties:
+        file_name:
+          type: string
+          description: Full file name, including the file extension
+          pattern: ^[^./\\]+\.(csv|docx?|gif|jpe?g|json|odp|ods|odt|png|pdf|pptx?|rtf|svg|tiff?|txt|vsd|xlsx?|xml)$
+        file_type:
+          $ref: '#/components/schemas/AllowedS3FileMimeTypes'
+          description: File mime type, to ensure only allowed types are uploaded
+        base64:
+          type: string
+          description: A base 64 encoded string of the file contents.
+      required:
+      - file_name
+      - file_type
+      - base64
+      type: object
+      additionalProperties: false
+    UtcDateTime:
       type: string
+      format: date-time
     DueDiligenceDocumentStatus:
       enum:
       - approved
       - archived
       - pending
       type: string
-    DocumentRequirementResponse:
-      properties:
-        requirement_id:
-          type: string
-          description: Requirement ID
-        date_updated:
-          type: string
-          description: Date Updated
-        date_created:
-          type: string
-          description: Date Created
-        requirement_version:
-          type: string
-          description: Requirement Version
-        status:
-          type: string
-          description: Status
-        documents:
-          items:
-            $ref: '#/components/schemas/RequirementDocumentResponse'
-          type: array
-          description: Custom field data
-        name:
-          type: string
-          description: Requirement Name
-        description:
-          type: string
-          description: Requirement Description
-        category:
-          type: string
-          description: Category
-        archived:
-          type: boolean
-          description: Archived
-        required:
-          type: boolean
-          description: Required
-      required:
-      - name
-      type: object
-      additionalProperties: false
-    ForbiddenError:
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Forbidden
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -515,12 +434,20 @@ components:
         status:
           type: number
           format: double
-          default: 403
+          default: 401
         data: {}
       required:
       - name
       - message
       - status
+      type: object
+      additionalProperties: false
+    AddExistingDocumentToOnboardingTemplateRequest:
+      properties:
+        document_id:
+          type: string
+      required:
+      - document_id
       type: object
       additionalProperties: false
     UpdateDocumentRequest:
@@ -529,6 +456,69 @@ components:
           $ref: '#/components/schemas/DueDiligenceDocumentStatus'
       required:
       - status
+      type: object
+      additionalProperties: false
+    CRBMUniformLicenseTypeDescription:
+      enum:
+      - Caregiver
+      - CBD
+      - Corporate Officer
+      - Cultivation
+      - Delivery/Transporter
+      - Event Organizer
+      - Hemp
+      - Illicit Establishment
+      - Management Company
+      - Manufacturer/Processor
+      - Owner/Investor
+      - Research
+      - Retail/Dispensary
+      - Senior Manager
+      - Social Use Club
+      - Storage
+      - Testing
+      - Unknown
+      - Vertically Integrated
+      - Waste Disposal
+      - Wholesale/Distribution
+      type: string
+    CustomRequirementResponse:
+      properties:
+        id:
+          type: string
+          description: Field ID
+        label:
+          type: string
+          description: Custom Field Name
+        value:
+          type:
+          - string
+          - 'null'
+          description: Custom Field Value
+        doc_metadata:
+          items:
+            properties:
+              upload_date:
+                type:
+                - string
+                - 'null'
+              file_name:
+                type:
+                - string
+                - 'null'
+              id:
+                type: string
+            required:
+            - upload_date
+            - file_name
+            - id
+            type: object
+          type: array
+          description: Additional metadata about documents uploaded
+      required:
+      - id
+      - label
+      - value
       type: object
       additionalProperties: false
     AllowedS3FileMimeTypes:
@@ -631,11 +621,11 @@ components:
       - custom_requirements
       type: object
       additionalProperties: false
-    ValidateError:
+    NotFoundError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Not Found
         message:
           type: string
         stack:
@@ -643,42 +633,45 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 404
         data: {}
       required:
       - name
       - message
       - status
-      - fields
       type: object
       additionalProperties: false
-    TribalNationLicenseType:
+    DueDiligenceStatus:
       enum:
-      - Cultivator
-      - Processor
-      - Lab
-      - Dispensary (Adult / Medical)
-      - Social Consumption / Events
-      - Delivery / Transport
-      - Combined License
-      - Other
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
       type: string
-    UtcDateTime:
+    CRBLicenseStatus:
+      description: 'This enum is used within our UI to display the license status.
+
+        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
+      enum:
+      - Active
+      - Approved/Pending
+      - Inactive
+      - Pre-License
+      - Unknown
+      - Unlicensed
+      - Unmatched
       type: string
-      format: date-time
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     RequirementDocumentResponse:
       properties:
         id:
@@ -764,86 +757,93 @@ components:
       - upload_date
       type: object
       additionalProperties: false
-    UnauthorizedError:
+    AddDocumentToOnboardingTemplateResponse:
       properties:
-        name:
+        document_id:
           type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
+        updated_requirement_response:
+          $ref: '#/components/schemas/DocumentRequirementResponse'
       required:
-      - name
-      - message
-      - status
+      - document_id
+      - updated_requirement_response
       type: object
       additionalProperties: false
-    CustomRequirementResponse:
+    DocumentRequirementResponse:
       properties:
-        id:
+        requirement_id:
           type: string
-          description: Field ID
-        label:
+          description: Requirement ID
+        date_updated:
           type: string
-          description: Custom Field Name
-        value:
-          type:
-          - string
-          - 'null'
-          description: Custom Field Value
-        doc_metadata:
+          description: Date Updated
+        date_created:
+          type: string
+          description: Date Created
+        requirement_version:
+          type: string
+          description: Requirement Version
+        status:
+          type: string
+          description: Status
+        documents:
           items:
-            properties:
-              upload_date:
-                type:
-                - string
-                - 'null'
-              file_name:
-                type:
-                - string
-                - 'null'
-              id:
-                type: string
-            required:
-            - upload_date
-            - file_name
-            - id
-            type: object
+            $ref: '#/components/schemas/RequirementDocumentResponse'
           type: array
-          description: Additional metadata about documents uploaded
-      required:
-      - id
-      - label
-      - value
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
+          description: Custom field data
         name:
           type: string
-          default: Not Found
-        message:
+          description: Requirement Name
+        description:
           type: string
-        stack:
+          description: Requirement Description
+        category:
           type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
+          description: Category
+        archived:
+          type: boolean
+          description: Archived
+        required:
+          type: boolean
+          description: Required
       required:
       - name
-      - message
-      - status
       type: object
       additionalProperties: false
     TribalNation:
+      type: string
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    TribalNationLicenseType:
+      enum:
+      - Cultivator
+      - Processor
+      - Lab
+      - Dispensary (Adult / Medical)
+      - Social Consumption / Events
+      - Delivery / Transport
+      - Combined License
+      - Other
       type: string
   securitySchemes:
     access_auth:
