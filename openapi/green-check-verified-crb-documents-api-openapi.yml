@@ -78,11 +78,11 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    UnauthorizedError:
+    ValidateError:
       properties:
         name:
           type: string
-          default: Unauthorized
+          default: Validation Failed
         message:
           type: string
         stack:
@@ -90,32 +90,15 @@ components:
         status:
           type: number
           format: double
-          default: 401
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
         data: {}
       required:
       - name
       - message
       - status
-      type: object
-      additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
+      - fields
       type: object
       additionalProperties: false
     DocumentDownload:
@@ -164,6 +147,26 @@ components:
         required:
         - message
         type: object
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     NotFoundError:
       properties:
         name:
@@ -184,11 +187,11 @@ components:
       - status
       type: object
       additionalProperties: false
-    ValidateError:
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Forbidden
         message:
           type: string
         stack:
@@ -196,15 +199,12 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 403
         data: {}
       required:
       - name
       - message
       - status
-      - fields
       type: object
       additionalProperties: false
   securitySchemes:

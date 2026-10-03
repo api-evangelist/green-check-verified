@@ -297,104 +297,21 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    USStates:
-      description: Enumeration of all of the United States
+    CRBLicenseStatus:
+      description: 'This enum is used within our UI to display the license status.
+
+        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
       enum:
-      - AL
-      - AK
-      - AZ
-      - AR
-      - AS
-      - CA
-      - CO
-      - CT
-      - DE
-      - DC
-      - FM
-      - FL
-      - GA
-      - GU
-      - HI
-      - ID
-      - IL
-      - IN
-      - IA
-      - KS
-      - KY
-      - LA
-      - ME
-      - MD
-      - MA
-      - MH
-      - MI
-      - MN
-      - MS
-      - MO
-      - MT
-      - NE
-      - NV
-      - NH
-      - NJ
-      - NM
-      - NY
-      - NC
-      - ND
-      - MP
-      - OH
-      - OK
-      - OR
-      - PW
-      - PA
-      - PR
-      - RI
-      - SC
-      - SD
-      - TN
-      - TX
-      - UM
-      - UT
-      - VT
-      - VA
-      - VI
-      - WA
-      - WV
-      - WI
-      - WY
-      - AA
-      - AE
-      - AP
+      - Active
+      - Approved/Pending
+      - Inactive
+      - Pre-License
+      - Unknown
+      - Unlicensed
+      - Unmatched
       type: string
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
+    TribalNation:
+      type: string
     AddDocumentToOnboardingTemplateRequest:
       properties:
         file_name:
@@ -422,256 +339,17 @@ components:
       - archived
       - pending
       type: string
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
-    AddExistingDocumentToOnboardingTemplateRequest:
-      properties:
-        document_id:
-          type: string
-      required:
-      - document_id
-      type: object
-      additionalProperties: false
-    UpdateDocumentRequest:
-      properties:
-        status:
-          $ref: '#/components/schemas/DueDiligenceDocumentStatus'
-      required:
-      - status
-      type: object
-      additionalProperties: false
-    CRBMUniformLicenseTypeDescription:
-      enum:
-      - Caregiver
-      - CBD
-      - Corporate Officer
-      - Cultivation
-      - Delivery/Transporter
-      - Event Organizer
-      - Hemp
-      - Illicit Establishment
-      - Management Company
-      - Manufacturer/Processor
-      - Owner/Investor
-      - Research
-      - Retail/Dispensary
-      - Senior Manager
-      - Social Use Club
-      - Storage
-      - Testing
-      - Unknown
-      - Vertically Integrated
-      - Waste Disposal
-      - Wholesale/Distribution
-      type: string
-    CustomRequirementResponse:
-      properties:
-        id:
-          type: string
-          description: Field ID
-        label:
-          type: string
-          description: Custom Field Name
-        value:
-          type:
-          - string
-          - 'null'
-          description: Custom Field Value
-        doc_metadata:
-          items:
-            properties:
-              upload_date:
-                type:
-                - string
-                - 'null'
-              file_name:
-                type:
-                - string
-                - 'null'
-              id:
-                type: string
-            required:
-            - upload_date
-            - file_name
-            - id
-            type: object
-          type: array
-          description: Additional metadata about documents uploaded
-      required:
-      - id
-      - label
-      - value
-      type: object
-      additionalProperties: false
-    AllowedS3FileMimeTypes:
-      enum:
-      - text/csv
-      - application/msword
-      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
-      - image/gif
-      - image/jpeg
-      - application/json
-      - application/vnd.oasis.opendocument.presentation
-      - application/vnd.oasis.opendocument.spreadsheet
-      - application/vnd.oasis.opendocument.text
-      - image/png
-      - application/pdf
-      - application/vnd.ms-powerpoint
-      - application/vnd.openxmlformats-officedocument.presentationml.presentation
-      - application/rtf
-      - image/svg+xml
-      - image/tiff
-      - text/plain
-      - application/vnd.visio
-      - application/vnd.ms-excel
-      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-      - application/xml
-      - text/xml
-      type: string
-    OnboardingTemplateResponse:
-      properties:
-        id:
-          $ref: '#/components/schemas/UUID'
-          description: Record ID
-        org_id:
-          $ref: '#/components/schemas/UUID'
-          description: Crb Organization ID
-        template_id:
-          $ref: '#/components/schemas/UUID'
-          description: Template ID
-        template_version:
-          type: string
-          description: Template Version
-        name:
-          type: string
-          description: Template Name
-        description:
-          type: string
-          description: Template Description
-        last_updated:
-          type: string
-          description: Last Updated
-        start_date:
-          type: string
-          description: Start Date
-        submitted_date:
-          type: string
-          description: Submitted Date
-        submitted_by:
-          $ref: '#/components/schemas/UUID'
-          description: Submitted By
-        status:
-          $ref: '#/components/schemas/DueDiligenceStatus'
-          description: Due Diligence Status
-        reviewed_by:
-          $ref: '#/components/schemas/UUID'
-          description: Reviewed By
-        review_start_date:
-          type:
-          - string
-          - 'null'
-          description: Review Start Date
-        review_date:
-          type: string
-          description: Review Date
-        disconnected_on:
-          type:
-          - string
-          - 'null'
-          description: Disconnected On
-        standard_requirements:
-          items:
-            $ref: '#/components/schemas/DocumentRequirementResponse'
-          type: array
-          description: All Onboarding template document data
-        custom_requirements:
-          items:
-            $ref: '#/components/schemas/CustomRequirementResponse'
-          type: array
-          description: Custom field data
-      required:
-      - id
-      - org_id
-      - template_id
-      - template_version
-      - name
-      - last_updated
-      - status
-      - review_start_date
-      - disconnected_on
-      - standard_requirements
-      - custom_requirements
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    DueDiligenceStatus:
-      enum:
-      - bank_disconnected
-      - bank_approved
-      - bank_review_in_progress
-      - bank_awaiting_review
-      - bank_in_progress
-      - bank_pending
-      - gcv_approved
-      - gcv_awaiting_review
-      - gcv_in_progress
-      - gcv_pending
-      - update_required
-      type: string
-    CRBLicenseStatus:
-      description: 'This enum is used within our UI to display the license status.
-
-        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
-      enum:
-      - Active
-      - Approved/Pending
-      - Inactive
-      - Pre-License
-      - Unknown
-      - Unlicensed
-      - Unmatched
-      type: string
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     RequirementDocumentResponse:
       properties:
         id:
@@ -757,6 +435,198 @@ components:
       - upload_date
       type: object
       additionalProperties: false
+    AllowedS3FileMimeTypes:
+      enum:
+      - text/csv
+      - application/msword
+      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      - image/gif
+      - image/jpeg
+      - application/json
+      - application/vnd.oasis.opendocument.presentation
+      - application/vnd.oasis.opendocument.spreadsheet
+      - application/vnd.oasis.opendocument.text
+      - image/png
+      - application/pdf
+      - application/vnd.ms-powerpoint
+      - application/vnd.openxmlformats-officedocument.presentationml.presentation
+      - application/rtf
+      - image/svg+xml
+      - image/tiff
+      - text/plain
+      - application/vnd.visio
+      - application/vnd.ms-excel
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      - application/xml
+      - text/xml
+      type: string
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    OnboardingTemplateResponse:
+      properties:
+        id:
+          $ref: '#/components/schemas/UUID'
+          description: Record ID
+        org_id:
+          $ref: '#/components/schemas/UUID'
+          description: Crb Organization ID
+        template_id:
+          $ref: '#/components/schemas/UUID'
+          description: Template ID
+        template_version:
+          type: string
+          description: Template Version
+        name:
+          type: string
+          description: Template Name
+        description:
+          type: string
+          description: Template Description
+        last_updated:
+          type: string
+          description: Last Updated
+        start_date:
+          type: string
+          description: Start Date
+        submitted_date:
+          type: string
+          description: Submitted Date
+        submitted_by:
+          $ref: '#/components/schemas/UUID'
+          description: Submitted By
+        status:
+          $ref: '#/components/schemas/DueDiligenceStatus'
+          description: Due Diligence Status
+        reviewed_by:
+          $ref: '#/components/schemas/UUID'
+          description: Reviewed By
+        review_start_date:
+          type:
+          - string
+          - 'null'
+          description: Review Start Date
+        review_date:
+          type: string
+          description: Review Date
+        disconnected_on:
+          type:
+          - string
+          - 'null'
+          description: Disconnected On
+        standard_requirements:
+          items:
+            $ref: '#/components/schemas/DocumentRequirementResponse'
+          type: array
+          description: All Onboarding template document data
+        custom_requirements:
+          items:
+            $ref: '#/components/schemas/CustomRequirementResponse'
+          type: array
+          description: Custom field data
+      required:
+      - id
+      - org_id
+      - template_id
+      - template_version
+      - name
+      - last_updated
+      - status
+      - review_start_date
+      - disconnected_on
+      - standard_requirements
+      - custom_requirements
+      type: object
+      additionalProperties: false
+    TribalNationLicenseType:
+      enum:
+      - Cultivator
+      - Processor
+      - Lab
+      - Dispensary (Adult / Medical)
+      - Social Consumption / Events
+      - Delivery / Transport
+      - Combined License
+      - Other
+      type: string
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    DueDiligenceStatus:
+      enum:
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
+      type: string
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     AddDocumentToOnboardingTemplateResponse:
       properties:
         document_id:
@@ -809,13 +679,157 @@ components:
       - name
       type: object
       additionalProperties: false
-    TribalNation:
+    CustomRequirementResponse:
+      properties:
+        id:
+          type: string
+          description: Field ID
+        label:
+          type: string
+          description: Custom Field Name
+        value:
+          type:
+          - string
+          - 'null'
+          description: Custom Field Value
+        doc_metadata:
+          items:
+            properties:
+              upload_date:
+                type:
+                - string
+                - 'null'
+              file_name:
+                type:
+                - string
+                - 'null'
+              id:
+                type: string
+            required:
+            - upload_date
+            - file_name
+            - id
+            type: object
+          type: array
+          description: Additional metadata about documents uploaded
+      required:
+      - id
+      - label
+      - value
+      type: object
+      additionalProperties: false
+    UpdateDocumentRequest:
+      properties:
+        status:
+          $ref: '#/components/schemas/DueDiligenceDocumentStatus'
+      required:
+      - status
+      type: object
+      additionalProperties: false
+    AddExistingDocumentToOnboardingTemplateRequest:
+      properties:
+        document_id:
+          type: string
+      required:
+      - document_id
+      type: object
+      additionalProperties: false
+    CRBMUniformLicenseTypeDescription:
+      enum:
+      - Caregiver
+      - CBD
+      - Corporate Officer
+      - Cultivation
+      - Delivery/Transporter
+      - Event Organizer
+      - Hemp
+      - Illicit Establishment
+      - Management Company
+      - Manufacturer/Processor
+      - Owner/Investor
+      - Research
+      - Retail/Dispensary
+      - Senior Manager
+      - Social Use Club
+      - Storage
+      - Testing
+      - Unknown
+      - Vertically Integrated
+      - Waste Disposal
+      - Wholesale/Distribution
       type: string
-    ValidateError:
+    USStates:
+      description: Enumeration of all of the United States
+      enum:
+      - AL
+      - AK
+      - AZ
+      - AR
+      - AS
+      - CA
+      - CO
+      - CT
+      - DE
+      - DC
+      - FM
+      - FL
+      - GA
+      - GU
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MH
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - MP
+      - OH
+      - OK
+      - OR
+      - PW
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UM
+      - UT
+      - VT
+      - VA
+      - VI
+      - WA
+      - WV
+      - WI
+      - WY
+      - AA
+      - AE
+      - AP
+      type: string
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Forbidden
         message:
           type: string
         stack:
@@ -823,28 +837,14 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 403
         data: {}
       required:
       - name
       - message
       - status
-      - fields
       type: object
       additionalProperties: false
-    TribalNationLicenseType:
-      enum:
-      - Cultivator
-      - Processor
-      - Lab
-      - Dispensary (Adult / Medical)
-      - Social Consumption / Events
-      - Delivery / Transport
-      - Combined License
-      - Other
-      type: string
   securitySchemes:
     access_auth:
       type: apiKey

@@ -255,6 +255,40 @@ paths:
       parameters: []
 components:
   schemas:
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     UnauthorizedError:
       properties:
         name:
@@ -268,6 +302,26 @@ components:
           type: number
           format: double
           default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
         data: {}
       required:
       - name
@@ -293,60 +347,6 @@ components:
       - name
       - message
       - status
-      type: object
-      additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    ValidateError:
-      properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
       type: object
       additionalProperties: false
   securitySchemes:

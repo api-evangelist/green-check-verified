@@ -60,6 +60,33 @@ paths:
               $ref: '#/components/schemas/TokenRequestBody'
 components:
   schemas:
+    AccessGrantType:
+      enum:
+      - client_credentials
+      type: string
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
     TokenRequestBody:
       properties:
         client_id:
@@ -78,6 +105,17 @@ components:
       - grant_type
       type: object
       additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
     UnauthorizedError:
       properties:
         name:
@@ -98,41 +136,6 @@ components:
       - status
       type: object
       additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    AccessGrantType:
-      enum:
-      - client_credentials
-      type: string
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
     AuthResponse:
       properties:
         access_token:
@@ -188,29 +191,6 @@ components:
       - status
       type: object
       additionalProperties: false
-    ValidateError:
-      properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
-      type: object
-      additionalProperties: false
     AccessScopes:
       enum:
       - service-provider:read
@@ -225,6 +205,26 @@ components:
       - create-crb-api-key:write
       - connect-crb-to-sp:write
       type: string
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
   securitySchemes:
     access_auth:
       type: apiKey
