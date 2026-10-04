@@ -182,6 +182,46 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     ValidateError:
       properties:
         name:
@@ -205,6 +245,61 @@ components:
       - fields
       type: object
       additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    PagedLocations:
+      properties:
+        metadata:
+          properties:
+            total:
+              $ref: '#/components/schemas/PositiveInteger'
+            count:
+              type: string
+              description: Range of items returned
+          required:
+          - total
+          - count
+          type: object
+        data:
+          items:
+            $ref: '#/components/schemas/Location'
+          type: array
+      required:
+      - metadata
+      - data
+      type: object
+      additionalProperties: false
+    UnauthorizedError:
+      properties:
+        name:
+          type: string
+          default: Unauthorized
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 401
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    NullableLocalDateTime:
+      type:
+      - string
+      - 'null'
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
     Location:
       properties:
         id:
@@ -268,6 +363,11 @@ components:
       - gc_created_date_local
       type: object
       additionalProperties: false
+    NullableUtcDateTime:
+      type:
+      - string
+      - 'null'
+      format: date-time
     FieldErrors:
       properties: {}
       type: object
@@ -279,82 +379,6 @@ components:
         required:
         - message
         type: object
-    PagedLocations:
-      properties:
-        metadata:
-          properties:
-            total:
-              $ref: '#/components/schemas/PositiveInteger'
-            count:
-              type: string
-              description: Range of items returned
-          required:
-          - total
-          - count
-          type: object
-        data:
-          items:
-            $ref: '#/components/schemas/Location'
-          type: array
-      required:
-      - metadata
-      - data
-      type: object
-      additionalProperties: false
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    NullableUtcDateTime:
-      type:
-      - string
-      - 'null'
-      format: date-time
-    NullableLocalDateTime:
-      type:
-      - string
-      - 'null'
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
     FriendlyPosName:
       type: string
       enum:
@@ -400,30 +424,6 @@ components:
       - Unsupported
       - CRBMonitor
       - Plaid
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
   securitySchemes:
     access_auth:
       type: apiKey

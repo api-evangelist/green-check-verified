@@ -78,11 +78,11 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    ValidateError:
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Forbidden
         message:
           type: string
         stack:
@@ -90,15 +90,12 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 403
         data: {}
       required:
       - name
       - message
       - status
-      - fields
       type: object
       additionalProperties: false
     DocumentDownload:
@@ -136,17 +133,29 @@ components:
       - expires_at
       type: object
       additionalProperties: false
-    FieldErrors:
-      properties: {}
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
       type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
+      additionalProperties: false
     UnauthorizedError:
       properties:
         name:
@@ -187,26 +196,17 @@ components:
       - status
       type: object
       additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
   securitySchemes:
     access_auth:
       type: apiKey

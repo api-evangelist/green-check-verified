@@ -255,6 +255,26 @@ paths:
       parameters: []
 components:
   schemas:
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     ValidateError:
       properties:
         name:
@@ -278,17 +298,6 @@ components:
       - fields
       type: object
       additionalProperties: false
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
     UnauthorizedError:
       properties:
         name:
@@ -329,26 +338,17 @@ components:
       - status
       type: object
       additionalProperties: false
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
   securitySchemes:
     access_auth:
       type: apiKey

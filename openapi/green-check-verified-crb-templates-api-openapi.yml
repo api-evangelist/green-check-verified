@@ -297,20 +297,105 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    CRBLicenseStatus:
-      description: 'This enum is used within our UI to display the license status.
-
-        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
-      enum:
-      - Active
-      - Approved/Pending
-      - Inactive
-      - Pre-License
-      - Unknown
-      - Unlicensed
-      - Unmatched
-      type: string
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     TribalNation:
+      type: string
+    USStates:
+      description: Enumeration of all of the United States
+      enum:
+      - AL
+      - AK
+      - AZ
+      - AR
+      - AS
+      - CA
+      - CO
+      - CT
+      - DE
+      - DC
+      - FM
+      - FL
+      - GA
+      - GU
+      - HI
+      - ID
+      - IL
+      - IN
+      - IA
+      - KS
+      - KY
+      - LA
+      - ME
+      - MD
+      - MA
+      - MH
+      - MI
+      - MN
+      - MS
+      - MO
+      - MT
+      - NE
+      - NV
+      - NH
+      - NJ
+      - NM
+      - NY
+      - NC
+      - ND
+      - MP
+      - OH
+      - OK
+      - OR
+      - PW
+      - PA
+      - PR
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UM
+      - UT
+      - VT
+      - VA
+      - VI
+      - WA
+      - WV
+      - WI
+      - WY
+      - AA
+      - AE
+      - AP
+      type: string
+    TribalNationLicenseType:
+      enum:
+      - Cultivator
+      - Processor
+      - Lab
+      - Dispensary (Adult / Medical)
+      - Social Consumption / Events
+      - Delivery / Transport
+      - Combined License
+      - Other
       type: string
     AddDocumentToOnboardingTemplateRequest:
       properties:
@@ -330,26 +415,6 @@ components:
       - base64
       type: object
       additionalProperties: false
-    UtcDateTime:
-      type: string
-      format: date-time
-    DueDiligenceDocumentStatus:
-      enum:
-      - approved
-      - archived
-      - pending
-      type: string
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
     RequirementDocumentResponse:
       properties:
         id:
@@ -435,36 +500,48 @@ components:
       - upload_date
       type: object
       additionalProperties: false
-    AllowedS3FileMimeTypes:
-      enum:
-      - text/csv
-      - application/msword
-      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
-      - image/gif
-      - image/jpeg
-      - application/json
-      - application/vnd.oasis.opendocument.presentation
-      - application/vnd.oasis.opendocument.spreadsheet
-      - application/vnd.oasis.opendocument.text
-      - image/png
-      - application/pdf
-      - application/vnd.ms-powerpoint
-      - application/vnd.openxmlformats-officedocument.presentationml.presentation
-      - application/rtf
-      - image/svg+xml
-      - image/tiff
-      - text/plain
-      - application/vnd.visio
-      - application/vnd.ms-excel
-      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-      - application/xml
-      - text/xml
+    UUID:
       type: string
-    ValidateError:
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    UtcDateTime:
+      type: string
+      format: date-time
+    CRBMUniformLicenseTypeDescription:
+      enum:
+      - Caregiver
+      - CBD
+      - Corporate Officer
+      - Cultivation
+      - Delivery/Transporter
+      - Event Organizer
+      - Hemp
+      - Illicit Establishment
+      - Management Company
+      - Manufacturer/Processor
+      - Owner/Investor
+      - Research
+      - Retail/Dispensary
+      - Senior Manager
+      - Social Use Club
+      - Storage
+      - Testing
+      - Unknown
+      - Vertically Integrated
+      - Waste Disposal
+      - Wholesale/Distribution
+      type: string
+    DueDiligenceDocumentStatus:
+      enum:
+      - approved
+      - archived
+      - pending
+      type: string
+    UnauthorizedError:
       properties:
         name:
           type: string
-          default: Validation Failed
+          default: Unauthorized
         message:
           type: string
         stack:
@@ -472,15 +549,20 @@ components:
         status:
           type: number
           format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
+          default: 401
         data: {}
       required:
       - name
       - message
       - status
-      - fields
+      type: object
+      additionalProperties: false
+    AddExistingDocumentToOnboardingTemplateRequest:
+      properties:
+        document_id:
+          type: string
+      required:
+      - document_id
       type: object
       additionalProperties: false
     OnboardingTemplateResponse:
@@ -558,86 +640,6 @@ components:
       - custom_requirements
       type: object
       additionalProperties: false
-    TribalNationLicenseType:
-      enum:
-      - Cultivator
-      - Processor
-      - Lab
-      - Dispensary (Adult / Medical)
-      - Social Consumption / Events
-      - Delivery / Transport
-      - Combined License
-      - Other
-      type: string
-    UnauthorizedError:
-      properties:
-        name:
-          type: string
-          default: Unauthorized
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 401
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    NotFoundError:
-      properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 404
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    DueDiligenceStatus:
-      enum:
-      - bank_disconnected
-      - bank_approved
-      - bank_review_in_progress
-      - bank_awaiting_review
-      - bank_in_progress
-      - bank_pending
-      - gcv_approved
-      - gcv_awaiting_review
-      - gcv_in_progress
-      - gcv_pending
-      - update_required
-      type: string
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    AddDocumentToOnboardingTemplateResponse:
-      properties:
-        document_id:
-          type: string
-        updated_requirement_response:
-          $ref: '#/components/schemas/DocumentRequirementResponse'
-      required:
-      - document_id
-      - updated_requirement_response
-      type: object
-      additionalProperties: false
     DocumentRequirementResponse:
       properties:
         requirement_id:
@@ -679,6 +681,19 @@ components:
       - name
       type: object
       additionalProperties: false
+    CRBLicenseStatus:
+      description: 'This enum is used within our UI to display the license status.
+
+        1:1 with CRBMUniformLicenseStatusDescription + Unchecked'
+      enum:
+      - Active
+      - Approved/Pending
+      - Inactive
+      - Pre-License
+      - Unknown
+      - Unlicensed
+      - Unmatched
+      type: string
     CustomRequirementResponse:
       properties:
         id:
@@ -718,6 +733,20 @@ components:
       - value
       type: object
       additionalProperties: false
+    DueDiligenceStatus:
+      enum:
+      - bank_disconnected
+      - bank_approved
+      - bank_review_in_progress
+      - bank_awaiting_review
+      - bank_in_progress
+      - bank_pending
+      - gcv_approved
+      - gcv_awaiting_review
+      - gcv_in_progress
+      - gcv_pending
+      - update_required
+      type: string
     UpdateDocumentRequest:
       properties:
         status:
@@ -726,110 +755,11 @@ components:
       - status
       type: object
       additionalProperties: false
-    AddExistingDocumentToOnboardingTemplateRequest:
-      properties:
-        document_id:
-          type: string
-      required:
-      - document_id
-      type: object
-      additionalProperties: false
-    CRBMUniformLicenseTypeDescription:
-      enum:
-      - Caregiver
-      - CBD
-      - Corporate Officer
-      - Cultivation
-      - Delivery/Transporter
-      - Event Organizer
-      - Hemp
-      - Illicit Establishment
-      - Management Company
-      - Manufacturer/Processor
-      - Owner/Investor
-      - Research
-      - Retail/Dispensary
-      - Senior Manager
-      - Social Use Club
-      - Storage
-      - Testing
-      - Unknown
-      - Vertically Integrated
-      - Waste Disposal
-      - Wholesale/Distribution
-      type: string
-    USStates:
-      description: Enumeration of all of the United States
-      enum:
-      - AL
-      - AK
-      - AZ
-      - AR
-      - AS
-      - CA
-      - CO
-      - CT
-      - DE
-      - DC
-      - FM
-      - FL
-      - GA
-      - GU
-      - HI
-      - ID
-      - IL
-      - IN
-      - IA
-      - KS
-      - KY
-      - LA
-      - ME
-      - MD
-      - MA
-      - MH
-      - MI
-      - MN
-      - MS
-      - MO
-      - MT
-      - NE
-      - NV
-      - NH
-      - NJ
-      - NM
-      - NY
-      - NC
-      - ND
-      - MP
-      - OH
-      - OK
-      - OR
-      - PW
-      - PA
-      - PR
-      - RI
-      - SC
-      - SD
-      - TN
-      - TX
-      - UM
-      - UT
-      - VT
-      - VA
-      - VI
-      - WA
-      - WV
-      - WI
-      - WY
-      - AA
-      - AE
-      - AP
-      type: string
-    ForbiddenError:
+    ValidateError:
       properties:
         name:
           type: string
-          default: Forbidden
+          default: Validation Failed
         message:
           type: string
         stack:
@@ -837,7 +767,66 @@ components:
         status:
           type: number
           format: double
-          default: 403
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    AllowedS3FileMimeTypes:
+      enum:
+      - text/csv
+      - application/msword
+      - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+      - image/gif
+      - image/jpeg
+      - application/json
+      - application/vnd.oasis.opendocument.presentation
+      - application/vnd.oasis.opendocument.spreadsheet
+      - application/vnd.oasis.opendocument.text
+      - image/png
+      - application/pdf
+      - application/vnd.ms-powerpoint
+      - application/vnd.openxmlformats-officedocument.presentationml.presentation
+      - application/rtf
+      - image/svg+xml
+      - image/tiff
+      - text/plain
+      - application/vnd.visio
+      - application/vnd.ms-excel
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      - application/xml
+      - text/xml
+      type: string
+    AddDocumentToOnboardingTemplateResponse:
+      properties:
+        document_id:
+          type: string
+        updated_requirement_response:
+          $ref: '#/components/schemas/DocumentRequirementResponse'
+      required:
+      - document_id
+      - updated_requirement_response
+      type: object
+      additionalProperties: false
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
         data: {}
       required:
       - name
@@ -845,6 +834,17 @@ components:
       - status
       type: object
       additionalProperties: false
+    FieldErrors:
+      properties: {}
+      type: object
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
   securitySchemes:
     access_auth:
       type: apiKey

@@ -253,111 +253,37 @@ paths:
           pattern: ^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$
 components:
   schemas:
-    ComplianceStatus:
-      enum:
-      - unchecked
-      - red_flag
-      - green_checked
-      - warning
-      type: string
-    TransactionType:
-      enum:
-      - sale
-      - return
-      - adjustment
-      type: string
-    SaleTax:
+    SaleFee:
       properties:
+        fee_name:
+          type:
+          - string
+          - 'null'
+          description: Name of the fee
+        percent_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Fee percentage as a real number
         flat_amount:
           type:
           - number
           - 'null'
           format: double
-          description: Tax amount in cents
-        pct_amount:
+          description: Flat amount of fee in cents
+        included_in_subtotal:
           type:
-          - number
+          - boolean
           - 'null'
-          format: double
-          description: Tax percentage as a real number
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of tax
+          description: True if this fee's calculation is included in the subtotal
       required:
+      - fee_name
+      - percent_amount
       - flat_amount
-      - pct_amount
-      - name
+      - included_in_subtotal
       type: object
       additionalProperties: false
-    PositiveInteger:
-      type: integer
-      format: int32
-      minimum: 0
-    FriendlyPosName:
-      type: string
-      enum:
-      - Alleaves
-      - Dutchie
-      - Dutchie Wholesale
-      - Cova
-      - Meadow
-      - MJ Freeway
-      - MJ Freeway Wholesale
-      - Greenbits
-      - GrowFlow
-      - GrowFlow Wholesale
-      - Portal42
-      - Metrc S2S
-      - Metrc S2S Wholesale
-      - Flourish
-      - Flourish Wholesale
-      - Flowhub
-      - BioTrack
-      - BioTrack Wholesale
-      - Treez
-      - Blaze
-      - Quickbooks
-      - Sage Intacct
-      - Canix
-      - Brytemap
-      - POSaBIT
-      - Proteus420
-      - IndicaOnline
-      - Sweed
-      - Weave
-      - Jane
-      - Manual Upload Wholesale
-      - Cova Test Account
-      - Leaf Logix Test Account
-      - BioTrack Test Account
-      - Mj Freeway Test Account
-      - Treez IO Test Account
-      - Green Bits Test Account
-      - Manual Upload Retail
-      - Not Configured
-      - Unsupported
-      - CRBMonitor
-      - Plaid
-    SaleTypeRetail:
-      enum:
-      - retail
-      type: string
-    UtcDateTime:
-      type: string
-      format: date-time
-    FieldErrors:
-      properties: {}
-      type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
     IDType:
       enum:
       - drivers
@@ -371,6 +297,26 @@ components:
       - temporary_minor_medical
       - temporary_adult
       type: string
+    ForbiddenError:
+      properties:
+        name:
+          type: string
+          default: Forbidden
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 403
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
     SaleDiscount:
       properties:
         flat_amount:
@@ -396,11 +342,25 @@ components:
       - name
       type: object
       additionalProperties: false
-    MedicalOrRec:
+    PaymentType:
       enum:
-      - medical
-      - rec
+      - cash
+      - check
+      - debit
+      - credit
+      - multiple
+      - ach
+      - wire
+      - other
+      - unknown
       type: string
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    UtcDateTime:
+      type: string
+      format: date-time
     WholesaleSale:
       properties:
         id:
@@ -566,41 +526,6 @@ components:
       - invoice
       type: object
       additionalProperties: false
-    PaymentType:
-      enum:
-      - cash
-      - check
-      - debit
-      - credit
-      - multiple
-      - ach
-      - wire
-      - other
-      - unknown
-      type: string
-    ValidateError:
-      properties:
-        name:
-          type: string
-          default: Validation Failed
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 422
-        fields:
-          $ref: '#/components/schemas/FieldErrors'
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      - fields
-      type: object
-      additionalProperties: false
     SaleCustomer:
       properties:
         customer_id:
@@ -648,37 +573,29 @@ components:
       - id_expiration_date
       type: object
       additionalProperties: false
-    SaleFee:
-      properties:
-        fee_name:
-          type:
-          - string
-          - 'null'
-          description: Name of the fee
-        percent_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Fee percentage as a real number
-        flat_amount:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: Flat amount of fee in cents
-        included_in_subtotal:
-          type:
-          - boolean
-          - 'null'
-          description: True if this fee's calculation is included in the subtotal
-      required:
-      - fee_name
-      - percent_amount
-      - flat_amount
-      - included_in_subtotal
-      type: object
-      additionalProperties: false
+    SaleTypeRetail:
+      enum:
+      - retail
+      type: string
+    ProductCategoryType:
+      type:
+      - string
+      - 'null'
+      enum:
+      - flower
+      - oil/concentrate
+      - edible
+      - other
+      - seedling
+      - seed
+      - liquid
+      - solid
+      - extract
+      - plant
+      - accessory
+      - marijuana_product
+      - topical
+      - edible_liquid
     UnauthorizedError:
       properties:
         name:
@@ -699,26 +616,41 @@ components:
       - status
       type: object
       additionalProperties: false
-    NotFoundError:
+    SaleTax:
       properties:
-        name:
-          type: string
-          default: Not Found
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
+        flat_amount:
+          type:
+          - number
+          - 'null'
           format: double
-          default: 404
-        data: {}
+          description: Tax amount in cents
+        pct_amount:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: Tax percentage as a real number
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of tax
       required:
+      - flat_amount
+      - pct_amount
       - name
-      - message
-      - status
       type: object
       additionalProperties: false
+    ComplianceStatus:
+      enum:
+      - unchecked
+      - red_flag
+      - green_checked
+      - warning
+      type: string
+    LocalDateTime:
+      type: string
+      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
     PagedSales:
       properties:
         metadata:
@@ -743,6 +675,101 @@ components:
       - data
       type: object
       additionalProperties: false
+    SalePayment:
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentType'
+          description: Payment Type
+        amount_paid:
+          type: number
+          format: double
+          description: Amount in cents for this payment type
+      required:
+      - type
+      - amount_paid
+      type: object
+      additionalProperties: false
+    FriendlyPosName:
+      type: string
+      enum:
+      - Alleaves
+      - Dutchie
+      - Dutchie Wholesale
+      - Cova
+      - Meadow
+      - MJ Freeway
+      - MJ Freeway Wholesale
+      - Greenbits
+      - GrowFlow
+      - GrowFlow Wholesale
+      - Portal42
+      - Metrc S2S
+      - Metrc S2S Wholesale
+      - Flourish
+      - Flourish Wholesale
+      - Flowhub
+      - BioTrack
+      - BioTrack Wholesale
+      - Treez
+      - Blaze
+      - Quickbooks
+      - Sage Intacct
+      - Canix
+      - Brytemap
+      - POSaBIT
+      - Proteus420
+      - IndicaOnline
+      - Sweed
+      - Weave
+      - Jane
+      - Manual Upload Wholesale
+      - Cova Test Account
+      - Leaf Logix Test Account
+      - BioTrack Test Account
+      - Mj Freeway Test Account
+      - Treez IO Test Account
+      - Green Bits Test Account
+      - Manual Upload Retail
+      - Not Configured
+      - Unsupported
+      - CRBMonitor
+      - Plaid
+    MedicalOrRec:
+      enum:
+      - medical
+      - rec
+      type: string
+    ValidateError:
+      properties:
+        name:
+          type: string
+          default: Validation Failed
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 422
+        fields:
+          $ref: '#/components/schemas/FieldErrors'
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      - fields
+      type: object
+      additionalProperties: false
+    PositiveInteger:
+      type: integer
+      format: int32
+      minimum: 0
+    SaleTypeWholesale:
+      enum:
+      - wholesale
+      type: string
     RetailSale:
       properties:
         id:
@@ -891,44 +918,24 @@ components:
       - compliance_warnings
       type: object
       additionalProperties: false
-    LocalDateTime:
-      type: string
-      pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])\s([0-1][0-9]|[2][0-3])[:][0-5][0-9][:][0-5][0-9][.][0-9]{3}
-    UUID:
-      type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    ProductCategoryType:
-      type:
-      - string
-      - 'null'
-      enum:
-      - flower
-      - oil/concentrate
-      - edible
-      - other
-      - seedling
-      - seed
-      - liquid
-      - solid
-      - extract
-      - plant
-      - accessory
-      - marijuana_product
-      - topical
-      - edible_liquid
-    SalePayment:
+    NotFoundError:
       properties:
-        type:
-          $ref: '#/components/schemas/PaymentType'
-          description: Payment Type
-        amount_paid:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
           type: number
           format: double
-          description: Amount in cents for this payment type
+          default: 404
+        data: {}
       required:
-      - type
-      - amount_paid
+      - name
+      - message
+      - status
       type: object
       additionalProperties: false
     SaleLineItem:
@@ -1009,30 +1016,23 @@ components:
       - line_item_fees
       type: object
       additionalProperties: false
-    SaleTypeWholesale:
-      enum:
-      - wholesale
-      type: string
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    TransactionType:
+      enum:
+      - sale
+      - return
+      - adjustment
+      type: string
   securitySchemes:
     access_auth:
       type: apiKey
