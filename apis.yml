@@ -45,6 +45,9 @@ x-source: harvest:secondary-market
 specificationVersion: '0.20'
 created: '2026-08-22'
 modified: '2026-08-22'
+x-docs-platform: redocly
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
 - Company
 - Cannabis
