@@ -121,37 +121,22 @@ paths:
           pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
 components:
   schemas:
-    Document:
-      properties:
-        id:
-          type: string
-        org_id:
-          type: string
-        s3_key:
-          type: string
-        file_name:
-          type: string
-        uploaded_by:
-          type: string
-        upload_date:
-          type: string
-        deleted:
-          type: boolean
-      required:
-      - id
-      - org_id
-      - s3_key
-      - file_name
-      - uploaded_by
-      - upload_date
-      - deleted
+    FieldErrors:
+      properties: {}
       type: object
-      additionalProperties: false
-    ForbiddenError:
+      additionalProperties:
+        properties:
+          value: {}
+          message:
+            type: string
+        required:
+        - message
+        type: object
+    NotFoundError:
       properties:
         name:
           type: string
-          default: Forbidden
+          default: Not Found
         message:
           type: string
         stack:
@@ -159,7 +144,7 @@ components:
         status:
           type: number
           format: double
-          default: 403
+          default: 404
         data: {}
       required:
       - name
@@ -210,11 +195,11 @@ components:
       - status
       type: object
       additionalProperties: false
-    NotFoundError:
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Not Found
+          default: Forbidden
         message:
           type: string
         stack:
@@ -222,7 +207,7 @@ components:
         status:
           type: number
           format: double
-          default: 404
+          default: 403
         data: {}
       required:
       - name
@@ -230,17 +215,32 @@ components:
       - status
       type: object
       additionalProperties: false
-    FieldErrors:
-      properties: {}
+    Document:
+      properties:
+        id:
+          type: string
+        org_id:
+          type: string
+        s3_key:
+          type: string
+        file_name:
+          type: string
+        uploaded_by:
+          type: string
+        upload_date:
+          type: string
+        deleted:
+          type: boolean
+      required:
+      - id
+      - org_id
+      - s3_key
+      - file_name
+      - uploaded_by
+      - upload_date
+      - deleted
       type: object
-      additionalProperties:
-        properties:
-          value: {}
-          message:
-            type: string
-        required:
-        - message
-        type: object
+      additionalProperties: false
   securitySchemes:
     access_auth:
       type: apiKey

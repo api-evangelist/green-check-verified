@@ -74,73 +74,6 @@ components:
         required:
         - message
         type: object
-    NullablePositiveInteger:
-      type:
-      - integer
-      - 'null'
-      format: int32
-      minimum: 0
-    ForbiddenError:
-      properties:
-        name:
-          type: string
-          default: Forbidden
-        message:
-          type: string
-        stack:
-          type: string
-        status:
-          type: number
-          format: double
-          default: 403
-        data: {}
-      required:
-      - name
-      - message
-      - status
-      type: object
-      additionalProperties: false
-    IANATimezones:
-      enum:
-      - America/New_York
-      - America/Detroit
-      - America/Kentucky/Louisville
-      - America/Kentucky/Monticello
-      - America/Indiana/Indianapolis
-      - America/Indiana/Vincennes
-      - America/Indiana/Winamac
-      - America/Indiana/Marengo
-      - America/Indiana/Petersburg
-      - America/Indiana/Vevay
-      - America/Chicago
-      - America/Indiana/Tell_City
-      - America/Indiana/Knox
-      - America/Menominee
-      - America/North_Dakota/Center
-      - America/North_Dakota/New_Salem
-      - America/North_Dakota/Beulah
-      - America/Denver
-      - America/Boise
-      - America/Phoenix
-      - America/Los_Angeles
-      - America/Anchorage
-      - America/Juneau
-      - America/Puerto_Rico
-      - America/Sitka
-      - America/St_Thomas
-      - America/Metlakatla
-      - America/Yakutat
-      - America/Nome
-      - America/Adak
-      - Pacific/Honolulu
-      - Pacific/Guam
-      - Pacific/Kosrae
-      - Pacific/Midway
-      - Pacific/Pago_Pago
-      - Pacific/Palau
-      - Pacific/Kwajalein
-      - Pacific/Saipan
-      type: string
     USStates:
       description: Enumeration of all of the United States
       enum:
@@ -208,6 +141,38 @@ components:
       - AE
       - AP
       type: string
+    NotFoundError:
+      properties:
+        name:
+          type: string
+          default: Not Found
+        message:
+          type: string
+        stack:
+          type: string
+        status:
+          type: number
+          format: double
+          default: 404
+        data: {}
+      required:
+      - name
+      - message
+      - status
+      type: object
+      additionalProperties: false
+    UUID:
+      type: string
+      format: uuid
+      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+    PhoneNumber:
+      type: string
+      description: 'Phone Number - (###) ####-####'
+      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
+    Website:
+      type: string
+      description: Website
+      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
     ValidateError:
       properties:
         name:
@@ -231,10 +196,6 @@ components:
       - fields
       type: object
       additionalProperties: false
-    PhoneNumber:
-      type: string
-      description: 'Phone Number - (###) ####-####'
-      pattern: ^\(\d{3}\)\s\d{3}-\d{4}$
     ShortDate:
       type: string
       pattern: ^[2][0][0-9]{2}[-]([0][0-9]|[1][0-2])[-]([0-2][0-9]|[3][0-1])
@@ -242,10 +203,6 @@ components:
       type: string
       description: Postal Code
       pattern: ^\d{5}(?:[-\s]?\d{4})?$
-    City:
-      type: string
-      description: City
-      pattern: ^[a-zA-Z\s.-]+$
     UnauthorizedError:
       properties:
         name:
@@ -266,15 +223,15 @@ components:
       - status
       type: object
       additionalProperties: false
-    UUID:
+    City:
       type: string
-      format: uuid
-      pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
-    NotFoundError:
+      description: City
+      pattern: ^[a-zA-Z\s.-]+$
+    ForbiddenError:
       properties:
         name:
           type: string
-          default: Not Found
+          default: Forbidden
         message:
           type: string
         stack:
@@ -282,7 +239,7 @@ components:
         status:
           type: number
           format: double
-          default: 404
+          default: 403
         data: {}
       required:
       - name
@@ -294,6 +251,54 @@ components:
       type: string
       description: 'EIN (Employer Identification Number) - ##-#######'
       pattern: ^\d{2}-\d{7}$
+    IANATimezones:
+      enum:
+      - America/New_York
+      - America/Detroit
+      - America/Kentucky/Louisville
+      - America/Kentucky/Monticello
+      - America/Indiana/Indianapolis
+      - America/Indiana/Vincennes
+      - America/Indiana/Winamac
+      - America/Indiana/Marengo
+      - America/Indiana/Petersburg
+      - America/Indiana/Vevay
+      - America/Chicago
+      - America/Indiana/Tell_City
+      - America/Indiana/Knox
+      - America/Menominee
+      - America/North_Dakota/Center
+      - America/North_Dakota/New_Salem
+      - America/North_Dakota/Beulah
+      - America/Denver
+      - America/Boise
+      - America/Phoenix
+      - America/Los_Angeles
+      - America/Anchorage
+      - America/Juneau
+      - America/Puerto_Rico
+      - America/Sitka
+      - America/St_Thomas
+      - America/Metlakatla
+      - America/Yakutat
+      - America/Nome
+      - America/Adak
+      - Pacific/Honolulu
+      - Pacific/Guam
+      - Pacific/Kosrae
+      - Pacific/Midway
+      - Pacific/Pago_Pago
+      - Pacific/Palau
+      - Pacific/Kwajalein
+      - Pacific/Saipan
+      type: string
+    EntityType:
+      enum:
+      - sole
+      - partnership
+      - corporation
+      - llc
+      type: string
     CRB:
       properties:
         id:
@@ -441,17 +446,12 @@ components:
       - monthlyCustomers
       type: object
       additionalProperties: false
-    Website:
-      type: string
-      description: Website
-      pattern: ^(https?:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&=]*)
-    EntityType:
-      enum:
-      - sole
-      - partnership
-      - corporation
-      - llc
-      type: string
+    NullablePositiveInteger:
+      type:
+      - integer
+      - 'null'
+      format: int32
+      minimum: 0
   securitySchemes:
     access_auth:
       type: apiKey
