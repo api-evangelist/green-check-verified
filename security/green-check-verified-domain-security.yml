@@ -1,16 +1,16 @@
-generated: '2026-08-22'
+generated: '2026-10-20'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: greencheckverified.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Oct 22 15:15:19 2026 GMT
+  cert_expires: Jan  4 21:08:48 2027 GMT
   hsts: false
 - host: developer.greencheckverified.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 24 06:05:32 2026 GMT
+  cert_expires: Nov 22 11:20:46 2026 GMT
   hsts: false
 - host: prod-api.greencheckverified.com
   https: true
@@ -21,9 +21,10 @@ domains:
 - domain: greencheckverified.com
   dnssec: false
   caa:
-  - 0 issue "letsencrypt.org"
-  - 0 issue "amazon.com"
   - 0 issue "godaddy.com"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog"
+  - 0 issue "amazon.com"
   spf: true
   dmarc: true
   dmarc_policy: quarantine

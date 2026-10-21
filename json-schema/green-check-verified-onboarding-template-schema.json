@@ -1,0 +1,326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-onboarding-template-schema.json",
+  "title": "OnboardingTemplate",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-service-provider-api-openapi.yml#/components/schemas/OnboardingTemplate",
+  "properties": {
+    "template_id": {
+      "type": "string",
+      "description": "ID of this template"
+    },
+    "date_created": {
+      "type": "string"
+    },
+    "date_updated": {
+      "type": "string"
+    },
+    "updated_by": {
+      "type": "string"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "published_date": {
+      "type": "string"
+    },
+    "published_by": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "description": "Current template version. Will be \"draft\" if unpublished changes"
+    },
+    "name": {
+      "type": "string",
+      "description": "Template name. Internal only"
+    },
+    "description": {
+      "type": "string",
+      "description": "Template description. Internal only"
+    },
+    "custom_field_sections": {
+      "items": {
+        "properties": {
+          "smart_rule": {
+            "$ref": "#/$defs/SmartRule"
+          },
+          "fields": {
+            "items": {
+              "properties": {
+                "attachments": {
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "file_name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "file_name"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "description": "List of file names and document IDs of files attached to this field. Used in File and Display Content fields"
+                },
+                "paragraph": {
+                  "type": "string",
+                  "description": "Paragraph of text. Used in Display Content"
+                },
+                "smart_rule": {
+                  "$ref": "#/$defs/SmartRule"
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "Set to true if this field should be required in the form"
+                },
+                "helpText": {
+                  "type": "string",
+                  "description": "Tooltip text"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "type": {
+                  "$ref": "#/$defs/CustomFieldType"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "label",
+                "type",
+                "id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "order": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "section_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fields",
+          "order",
+          "label",
+          "section_id"
+        ],
+        "type": "object"
+      },
+      "type": "array",
+      "description": "Custom fields array. These are a list of freeform questions to collect any information from your clients."
+    },
+    "document_requirements": {
+      "items": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RequirementTypeBankCustom"
+              },
+              {
+                "$ref": "#/$defs/RequirementTypeBusinessLicense"
+              },
+              {
+                "$ref": "#/$defs/RequirementTypeEmployeeLicense"
+              },
+              {
+                "$ref": "#/$defs/RequirementTypeGcvStandard"
+              }
+            ]
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "attachments": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "file_name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "file_name"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "category": {
+            "$ref": "#/$defs/RequirementCategory"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "requirement_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "required",
+          "category",
+          "description",
+          "name",
+          "requirement_id"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "template_id",
+    "date_created",
+    "date_updated",
+    "updated_by",
+    "created_by",
+    "version",
+    "name",
+    "description",
+    "custom_field_sections",
+    "document_requirements"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "CustomFieldType": {
+      "enum": [
+        "textSingleLine",
+        "textMultiLine",
+        "radio",
+        "select",
+        "checkbox",
+        "date",
+        "file",
+        "fileDownload",
+        "displayContent",
+        "hyperlink"
+      ],
+      "type": "string"
+    },
+    "RequirementCategory": {
+      "enum": [
+        "financial",
+        "insurance",
+        "legal",
+        "license",
+        "operational"
+      ],
+      "type": "string"
+    },
+    "RequirementTypeBankCustom": {
+      "enum": [
+        "bank_custom"
+      ],
+      "type": "string"
+    },
+    "RequirementTypeBusinessLicense": {
+      "enum": [
+        "business_license"
+      ],
+      "type": "string"
+    },
+    "RequirementTypeEmployeeLicense": {
+      "enum": [
+        "employee_license"
+      ],
+      "type": "string"
+    },
+    "RequirementTypeGcvStandard": {
+      "enum": [
+        "gcv_standard"
+      ],
+      "type": "string"
+    },
+    "SmartRule": {
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/SmartRuleAction",
+          "description": "The resulting action to take on the field if all conditions are true"
+        },
+        "conditions": {
+          "items": {
+            "$ref": "#/$defs/SmartRuleConditionStatement"
+          },
+          "type": "array",
+          "description": "Array of conditions that must all be met in order for the rule to evaluate true. Currently limited to one condition but using an array to make it easier to extend"
+        }
+      },
+      "required": [
+        "action",
+        "conditions"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "SmartRuleAction": {
+      "description": "The desired action to take on the field if all conditions are true",
+      "enum": [
+        "Show",
+        "Hide"
+      ],
+      "type": "string"
+    },
+    "SmartRuleConditionStatement": {
+      "properties": {
+        "operator": {
+          "$ref": "#/$defs/SmartRuleOperator",
+          "description": "The logical operator being applied (is equal to, is not equal to, etc)"
+        },
+        "targetFieldId": {
+          "type": "string",
+          "description": "The field to check the value of against the target value"
+        },
+        "targetValue": {
+          "type": "string",
+          "description": "The value upon which the operator checks against the target field's value"
+        }
+      },
+      "required": [
+        "operator",
+        "targetFieldId"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "SmartRuleOperator": {
+      "description": "The different condition operators to use",
+      "enum": [
+        "Is Equal To",
+        "Is Not Equal To",
+        "Is Empty",
+        "Is Filled"
+      ],
+      "type": "string"
+    }
+  }
+}

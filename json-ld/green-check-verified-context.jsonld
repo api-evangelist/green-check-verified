@@ -1,0 +1,1223 @@
+{
+  "@context": {
+    "@vocab": "https://greencheckverified.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "green": "https://greencheckverified.com/schema#",
+    "NotFoundError": "green:NotFoundError",
+    "name": {
+      "@id": "green:name",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "green:message",
+      "@type": "xsd:string"
+    },
+    "stack": {
+      "@id": "green:stack",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "green:status",
+      "@type": "xsd:decimal"
+    },
+    "data": {
+      "@id": "green:data"
+    },
+    "AccessScopes": "green:AccessScopes",
+    "AccessGrantType": "green:AccessGrantType",
+    "UnauthorizedError": "green:UnauthorizedError",
+    "AuthResponse": "green:AuthResponse",
+    "access_token": {
+      "@id": "green:access_token",
+      "@type": "xsd:string"
+    },
+    "token_type": {
+      "@id": "green:token_type",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "green:scope",
+      "@container": "@list"
+    },
+    "expires_at": {
+      "@id": "green:expires_at",
+      "@type": "xsd:decimal"
+    },
+    "client_id": {
+      "@id": "green:client_id",
+      "@type": "xsd:string"
+    },
+    "issued_at": {
+      "@id": "green:issued_at",
+      "@type": "xsd:decimal"
+    },
+    "ForbiddenError": "green:ForbiddenError",
+    "TokenRequestBody": "green:TokenRequestBody",
+    "client_secret": {
+      "@id": "green:client_secret",
+      "@type": "xsd:string"
+    },
+    "grant_type": {
+      "@id": "green:grant_type",
+      "@type": "@id"
+    },
+    "ValidateError": "green:ValidateError",
+    "fields": {
+      "@id": "green:fields",
+      "@type": "@id"
+    },
+    "USStates": "green:USStates",
+    "IANATimezones": "green:IANATimezones",
+    "EntityType": "green:EntityType",
+    "CRB": "green:CRB",
+    "id": {
+      "@id": "green:id",
+      "@type": "@id"
+    },
+    "street_address": {
+      "@id": "green:street_address",
+      "@type": "xsd:string"
+    },
+    "street_address_2": {
+      "@id": "green:street_address_2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "green:city",
+      "@type": "xsd:string"
+    },
+    "ein": {
+      "@id": "green:ein",
+      "@type": "xsd:string"
+    },
+    "phone_number": {
+      "@id": "green:phone_number",
+      "@type": "xsd:string"
+    },
+    "postal_code": {
+      "@id": "green:postal_code",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "green:country",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "green:state",
+      "@type": "@id"
+    },
+    "website": {
+      "@id": "green:website",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "green:timezone",
+      "@type": "@id"
+    },
+    "mailing_street_address": {
+      "@id": "green:mailing_street_address",
+      "@type": "xsd:string"
+    },
+    "mailing_city": {
+      "@id": "green:mailing_city",
+      "@type": "xsd:string"
+    },
+    "mailing_state": {
+      "@id": "green:mailing_state",
+      "@type": "xsd:string"
+    },
+    "mailing_postal_code": {
+      "@id": "green:mailing_postal_code",
+      "@type": "xsd:string"
+    },
+    "established_date": {
+      "@id": "green:established_date",
+      "@type": "xsd:string"
+    },
+    "ftEmployees": {
+      "@id": "green:ftEmployees",
+      "@type": "@id"
+    },
+    "ptEmployees": {
+      "@id": "green:ptEmployees",
+      "@type": "@id"
+    },
+    "entityType": {
+      "@id": "green:entityType",
+      "@type": "xsd:string"
+    },
+    "dba": {
+      "@id": "green:dba",
+      "@type": "xsd:string"
+    },
+    "monthlySales": {
+      "@id": "green:monthlySales",
+      "@type": "xsd:string"
+    },
+    "monthlyCustomers": {
+      "@id": "green:monthlyCustomers",
+      "@type": "@id"
+    },
+    "MedicalOrRec": "green:MedicalOrRec",
+    "Customer": "green:Customer",
+    "crb_id": {
+      "@id": "green:crb_id",
+      "@type": "@id"
+    },
+    "pos_type": {
+      "@id": "green:pos_type",
+      "@type": "@id"
+    },
+    "pos_customer_id": {
+      "@id": "green:pos_customer_id",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "green:first_name",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "green:last_name",
+      "@type": "xsd:string"
+    },
+    "middle_name": {
+      "@id": "green:middle_name",
+      "@type": "xsd:string"
+    },
+    "dob": {
+      "@id": "green:dob",
+      "@type": "xsd:string"
+    },
+    "address_1": {
+      "@id": "green:address_1",
+      "@type": "xsd:string"
+    },
+    "address_2": {
+      "@id": "green:address_2",
+      "@type": "xsd:string"
+    },
+    "zip_code": {
+      "@id": "green:zip_code",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "green:phone",
+      "@type": "xsd:string"
+    },
+    "cell_phone": {
+      "@id": "green:cell_phone",
+      "@type": "xsd:string"
+    },
+    "email_address": {
+      "@id": "green:email_address",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "green:gender",
+      "@type": "xsd:string"
+    },
+    "pos_identification_type": {
+      "@id": "green:pos_identification_type",
+      "@type": "xsd:string"
+    },
+    "pos_customer_type": {
+      "@id": "green:pos_customer_type",
+      "@type": "xsd:string"
+    },
+    "gc_customer_type": {
+      "@id": "green:gc_customer_type",
+      "@type": "xsd:string"
+    },
+    "medical_id": {
+      "@id": "green:medical_id",
+      "@type": "xsd:string"
+    },
+    "medical_id_expiration_date": {
+      "@id": "green:medical_id_expiration_date",
+      "@type": "xsd:string"
+    },
+    "drivers_license_id": {
+      "@id": "green:drivers_license_id",
+      "@type": "xsd:string"
+    },
+    "drivers_license_expiration_date": {
+      "@id": "green:drivers_license_expiration_date",
+      "@type": "xsd:string"
+    },
+    "other_id": {
+      "@id": "green:other_id",
+      "@type": "xsd:string"
+    },
+    "other_id_expiration_date": {
+      "@id": "green:other_id_expiration_date",
+      "@type": "xsd:string"
+    },
+    "caregiver": {
+      "@id": "green:caregiver",
+      "@type": "xsd:boolean"
+    },
+    "loyalty_member": {
+      "@id": "green:loyalty_member",
+      "@type": "xsd:boolean"
+    },
+    "loyalty_points": {
+      "@id": "green:loyalty_points",
+      "@type": "xsd:string"
+    },
+    "anonymous": {
+      "@id": "green:anonymous",
+      "@type": "xsd:boolean"
+    },
+    "pos_updated_date": {
+      "@id": "green:pos_updated_date",
+      "@type": "xsd:string"
+    },
+    "pos_updated_date_local": {
+      "@id": "green:pos_updated_date_local",
+      "@type": "xsd:string"
+    },
+    "gc_updated_date": {
+      "@id": "green:gc_updated_date",
+      "@type": "xsd:string"
+    },
+    "gc_created_date": {
+      "@id": "green:gc_created_date",
+      "@type": "xsd:string"
+    },
+    "Gender": "green:Gender",
+    "PagedCustomers": "green:PagedCustomers",
+    "metadata": {
+      "@id": "green:metadata"
+    },
+    "FriendlyPosName": "green:FriendlyPosName",
+    "DocumentDownload": "green:DocumentDownload",
+    "org_id": {
+      "@id": "green:org_id",
+      "@type": "xsd:string"
+    },
+    "s3_key": {
+      "@id": "green:s3_key",
+      "@type": "xsd:string"
+    },
+    "file_name": {
+      "@id": "green:file_name",
+      "@type": "xsd:string"
+    },
+    "uploaded_by": {
+      "@id": "green:uploaded_by",
+      "@type": "xsd:string"
+    },
+    "upload_date": {
+      "@id": "green:upload_date",
+      "@type": "xsd:string"
+    },
+    "deleted": {
+      "@id": "green:deleted",
+      "@type": "xsd:boolean"
+    },
+    "download_link": {
+      "@id": "green:download_link",
+      "@type": "xsd:string"
+    },
+    "Countries": "green:Countries",
+    "ServiceProviderCRB": "green:ServiceProviderCRB",
+    "org_type": {
+      "@id": "green:org_type",
+      "@type": "@id"
+    },
+    "business_type": {
+      "@id": "green:business_type",
+      "@type": "xsd:string"
+    },
+    "template_id": {
+      "@id": "green:template_id",
+      "@type": "@id"
+    },
+    "template_result_id": {
+      "@id": "green:template_result_id",
+      "@type": "@id"
+    },
+    "pos_configs": {
+      "@id": "green:pos_configs",
+      "@container": "@list"
+    },
+    "OrganizationType": "green:OrganizationType",
+    "DispensaryBusinessType": "green:DispensaryBusinessType",
+    "PosConnectionStatus": "green:PosConnectionStatus",
+    "AccessPosConfig": "green:AccessPosConfig",
+    "updated_date": {
+      "@id": "green:updated_date",
+      "@type": "@id"
+    },
+    "DueDiligenceStatus": "green:DueDiligenceStatus",
+    "UpdateCrbInput": "green:UpdateCrbInput",
+    "Inventory": "green:Inventory",
+    "product_id": {
+      "@id": "green:product_id",
+      "@type": "@id"
+    },
+    "sku": {
+      "@id": "green:sku",
+      "@type": "xsd:string"
+    },
+    "barcode": {
+      "@id": "green:barcode",
+      "@type": "xsd:string"
+    },
+    "total_quantity": {
+      "@id": "green:total_quantity",
+      "@type": "@id"
+    },
+    "location_data": {
+      "@id": "green:location_data",
+      "@container": "@list"
+    },
+    "ProductCategoryType": "green:ProductCategoryType",
+    "PagedInventory": "green:PagedInventory",
+    "Product": "green:Product",
+    "pos_product_id": {
+      "@id": "green:pos_product_id",
+      "@type": "xsd:string"
+    },
+    "gc_product_category_name": {
+      "@id": "green:gc_product_category_name",
+      "@type": "@id"
+    },
+    "pos_product_category_name": {
+      "@id": "green:pos_product_category_name",
+      "@type": "xsd:string"
+    },
+    "pos_product_subcategory_name": {
+      "@id": "green:pos_product_subcategory_name",
+      "@type": "xsd:string"
+    },
+    "pos_strain_name": {
+      "@id": "green:pos_strain_name",
+      "@type": "xsd:string"
+    },
+    "pos_brand_name": {
+      "@id": "green:pos_brand_name",
+      "@type": "xsd:string"
+    },
+    "medicated": {
+      "@id": "green:medicated",
+      "@type": "xsd:boolean"
+    },
+    "description": {
+      "@id": "green:description",
+      "@type": "xsd:string"
+    },
+    "gc_net_weight_grams": {
+      "@id": "green:gc_net_weight_grams",
+      "@type": "@id"
+    },
+    "pos_unit_of_measure": {
+      "@id": "green:pos_unit_of_measure",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "green:price",
+      "@type": "@id"
+    },
+    "unit_cost": {
+      "@id": "green:unit_cost",
+      "@type": "@id"
+    },
+    "price_tiers": {
+      "@id": "green:price_tiers",
+      "@container": "@list"
+    },
+    "images": {
+      "@id": "green:images",
+      "@container": "@list"
+    },
+    "PagedLocationInventory": "green:PagedLocationInventory",
+    "InventoryByLocation": "green:InventoryByLocation",
+    "quantity": {
+      "@id": "green:quantity",
+      "@type": "@id"
+    },
+    "ProductImage": "green:ProductImage",
+    "url": {
+      "@id": "green:url",
+      "@type": "xsd:string"
+    },
+    "ProductPriceTier": "green:ProductPriceTier",
+    "tier_name": {
+      "@id": "green:tier_name",
+      "@type": "xsd:string"
+    },
+    "tier_price": {
+      "@id": "green:tier_price",
+      "@type": "@id"
+    },
+    "pos_tier_type": {
+      "@id": "green:pos_tier_type",
+      "@type": "xsd:string"
+    },
+    "pos_tier_type_condition_value": {
+      "@id": "green:pos_tier_type_condition_value",
+      "@type": "xsd:string"
+    },
+    "tier_valid_until_date": {
+      "@id": "green:tier_valid_until_date",
+      "@type": "@id"
+    },
+    "tier_valid_until_date_local": {
+      "@id": "green:tier_valid_until_date_local",
+      "@type": "@id"
+    },
+    "ExpandedInventory": "green:ExpandedInventory",
+    "product": {
+      "@id": "green:product",
+      "@type": "xsd:string"
+    },
+    "LocationInventory": "green:LocationInventory",
+    "location_id": {
+      "@id": "green:location_id",
+      "@type": "@id"
+    },
+    "pos_location_type": {
+      "@id": "green:pos_location_type",
+      "@type": "xsd:string"
+    },
+    "ExpandedInventoryByLocation": "green:ExpandedInventoryByLocation",
+    "Location": "green:Location",
+    "pos_location_id": {
+      "@id": "green:pos_location_id",
+      "@type": "xsd:string"
+    },
+    "gc_created_date_local": {
+      "@id": "green:gc_created_date_local",
+      "@type": "@id"
+    },
+    "PagedLocations": "green:PagedLocations",
+    "PagedProducts": "green:PagedProducts",
+    "SaleLineItem": "green:SaleLineItem",
+    "product_name": {
+      "@id": "green:product_name",
+      "@type": "xsd:string"
+    },
+    "num_units": {
+      "@id": "green:num_units",
+      "@type": "xsd:decimal"
+    },
+    "price_per_unit": {
+      "@id": "green:price_per_unit",
+      "@type": "xsd:decimal"
+    },
+    "grams": {
+      "@id": "green:grams",
+      "@type": "xsd:decimal"
+    },
+    "product_type": {
+      "@id": "green:product_type",
+      "@type": "xsd:string"
+    },
+    "cannabis_product": {
+      "@id": "green:cannabis_product",
+      "@type": "xsd:boolean"
+    },
+    "line_item_discounts": {
+      "@id": "green:line_item_discounts",
+      "@container": "@list"
+    },
+    "line_item_taxes": {
+      "@id": "green:line_item_taxes",
+      "@container": "@list"
+    },
+    "line_item_fees": {
+      "@id": "green:line_item_fees",
+      "@container": "@list"
+    },
+    "SalePayment": "green:SalePayment",
+    "type": {
+      "@id": "green:type",
+      "@type": "@id"
+    },
+    "amount_paid": {
+      "@id": "green:amount_paid",
+      "@type": "xsd:decimal"
+    },
+    "SaleTypeWholesale": "green:SaleTypeWholesale",
+    "SaleTax": "green:SaleTax",
+    "flat_amount": {
+      "@id": "green:flat_amount",
+      "@type": "xsd:decimal"
+    },
+    "pct_amount": {
+      "@id": "green:pct_amount",
+      "@type": "xsd:decimal"
+    },
+    "SaleFee": "green:SaleFee",
+    "fee_name": {
+      "@id": "green:fee_name",
+      "@type": "xsd:string"
+    },
+    "percent_amount": {
+      "@id": "green:percent_amount",
+      "@type": "xsd:decimal"
+    },
+    "included_in_subtotal": {
+      "@id": "green:included_in_subtotal",
+      "@type": "xsd:boolean"
+    },
+    "IDType": "green:IDType",
+    "PagedSales": "green:PagedSales",
+    "RetailSale": "green:RetailSale",
+    "pos_sale_id": {
+      "@id": "green:pos_sale_id",
+      "@type": "xsd:string"
+    },
+    "subtotal": {
+      "@id": "green:subtotal",
+      "@type": "xsd:decimal"
+    },
+    "total_discounts": {
+      "@id": "green:total_discounts",
+      "@type": "xsd:decimal"
+    },
+    "tax_paid": {
+      "@id": "green:tax_paid",
+      "@type": "xsd:decimal"
+    },
+    "total_paid": {
+      "@id": "green:total_paid",
+      "@type": "xsd:decimal"
+    },
+    "date": {
+      "@id": "green:date",
+      "@type": "@id"
+    },
+    "local_date": {
+      "@id": "green:local_date",
+      "@type": "@id"
+    },
+    "transaction_type": {
+      "@id": "green:transaction_type",
+      "@type": "xsd:string"
+    },
+    "pos_name": {
+      "@id": "green:pos_name",
+      "@type": "@id"
+    },
+    "employee_id": {
+      "@id": "green:employee_id",
+      "@type": "xsd:string"
+    },
+    "line_items": {
+      "@id": "green:line_items",
+      "@container": "@list"
+    },
+    "discounts": {
+      "@id": "green:discounts",
+      "@container": "@list"
+    },
+    "taxes": {
+      "@id": "green:taxes",
+      "@container": "@list"
+    },
+    "payments": {
+      "@id": "green:payments",
+      "@container": "@list"
+    },
+    "customer": {
+      "@id": "green:customer",
+      "@type": "@id"
+    },
+    "fees": {
+      "@id": "green:fees",
+      "@container": "@list"
+    },
+    "compliance_status": {
+      "@id": "green:compliance_status",
+      "@type": "xsd:string"
+    },
+    "compliance_exceptions": {
+      "@id": "green:compliance_exceptions",
+      "@container": "@list"
+    },
+    "compliance_warnings": {
+      "@id": "green:compliance_warnings",
+      "@container": "@list"
+    },
+    "SaleCustomer": "green:SaleCustomer",
+    "customer_id": {
+      "@id": "green:customer_id",
+      "@type": "xsd:string"
+    },
+    "id_type": {
+      "@id": "green:id_type",
+      "@type": "xsd:string"
+    },
+    "id_expiration_date": {
+      "@id": "green:id_expiration_date",
+      "@type": "xsd:string"
+    },
+    "TransactionType": "green:TransactionType",
+    "ComplianceStatus": "green:ComplianceStatus",
+    "SaleTypeRetail": "green:SaleTypeRetail",
+    "PaymentType": "green:PaymentType",
+    "SaleDiscount": "green:SaleDiscount",
+    "WholesaleSale": "green:WholesaleSale",
+    "invoice": {
+      "@id": "green:invoice"
+    },
+    "CRBMUniformLicenseTypeDescription": "green:CRBMUniformLicenseTypeDescription",
+    "DocumentRequirementResponse": "green:DocumentRequirementResponse",
+    "requirement_id": {
+      "@id": "green:requirement_id",
+      "@type": "xsd:string"
+    },
+    "date_updated": {
+      "@id": "green:date_updated",
+      "@type": "xsd:string"
+    },
+    "date_created": {
+      "@id": "green:date_created",
+      "@type": "xsd:string"
+    },
+    "requirement_version": {
+      "@id": "green:requirement_version",
+      "@type": "xsd:string"
+    },
+    "documents": {
+      "@id": "green:documents",
+      "@container": "@list"
+    },
+    "category": {
+      "@id": "green:category",
+      "@type": "xsd:string"
+    },
+    "archived": {
+      "@id": "green:archived",
+      "@type": "xsd:boolean"
+    },
+    "required": {
+      "@id": "green:required",
+      "@type": "xsd:boolean"
+    },
+    "UpdateDocumentRequest": "green:UpdateDocumentRequest",
+    "CustomRequirementResponse": "green:CustomRequirementResponse",
+    "label": {
+      "@id": "green:label",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "green:value",
+      "@type": "xsd:string"
+    },
+    "doc_metadata": {
+      "@id": "green:doc_metadata",
+      "@container": "@list"
+    },
+    "OnboardingTemplateResponse": "green:OnboardingTemplateResponse",
+    "template_version": {
+      "@id": "green:template_version",
+      "@type": "xsd:string"
+    },
+    "last_updated": {
+      "@id": "green:last_updated",
+      "@type": "xsd:string"
+    },
+    "start_date": {
+      "@id": "green:start_date",
+      "@type": "xsd:string"
+    },
+    "submitted_date": {
+      "@id": "green:submitted_date",
+      "@type": "xsd:string"
+    },
+    "submitted_by": {
+      "@id": "green:submitted_by",
+      "@type": "@id"
+    },
+    "reviewed_by": {
+      "@id": "green:reviewed_by",
+      "@type": "@id"
+    },
+    "review_start_date": {
+      "@id": "green:review_start_date",
+      "@type": "xsd:string"
+    },
+    "review_date": {
+      "@id": "green:review_date",
+      "@type": "xsd:string"
+    },
+    "disconnected_on": {
+      "@id": "green:disconnected_on",
+      "@type": "xsd:string"
+    },
+    "standard_requirements": {
+      "@id": "green:standard_requirements",
+      "@container": "@list"
+    },
+    "custom_requirements": {
+      "@id": "green:custom_requirements",
+      "@container": "@list"
+    },
+    "AddDocumentToOnboardingTemplateRequest": "green:AddDocumentToOnboardingTemplateRequest",
+    "file_type": {
+      "@id": "green:file_type",
+      "@type": "@id"
+    },
+    "base64": {
+      "@id": "green:base64",
+      "@type": "xsd:string"
+    },
+    "RequirementDocumentResponse": "green:RequirementDocumentResponse",
+    "internal_note": {
+      "@id": "green:internal_note",
+      "@type": "xsd:string"
+    },
+    "friendly_name": {
+      "@id": "green:friendly_name",
+      "@type": "xsd:string"
+    },
+    "expiration_date": {
+      "@id": "green:expiration_date",
+      "@type": "xsd:string"
+    },
+    "license_name": {
+      "@id": "green:license_name",
+      "@type": "xsd:string"
+    },
+    "license_number": {
+      "@id": "green:license_number",
+      "@type": "xsd:string"
+    },
+    "tribal_nation": {
+      "@id": "green:tribal_nation",
+      "@type": "@id"
+    },
+    "tribal_nation_license_type": {
+      "@id": "green:tribal_nation_license_type",
+      "@type": "@id"
+    },
+    "license_status": {
+      "@id": "green:license_status",
+      "@type": "@id"
+    },
+    "date_verified": {
+      "@id": "green:date_verified",
+      "@type": "xsd:string"
+    },
+    "verified_expiration_date": {
+      "@id": "green:verified_expiration_date",
+      "@type": "xsd:string"
+    },
+    "business_name": {
+      "@id": "green:business_name",
+      "@type": "xsd:string"
+    },
+    "licensing_authority": {
+      "@id": "green:licensing_authority",
+      "@type": "xsd:string"
+    },
+    "license_identifier": {
+      "@id": "green:license_identifier",
+      "@type": "xsd:string"
+    },
+    "uniform_license_type_description": {
+      "@id": "green:uniform_license_type_description",
+      "@type": "@id"
+    },
+    "reported_license_type_description": {
+      "@id": "green:reported_license_type_description",
+      "@type": "xsd:string"
+    },
+    "licensing_authority_state": {
+      "@id": "green:licensing_authority_state",
+      "@type": "xsd:string"
+    },
+    "CRBLicenseStatus": "green:CRBLicenseStatus",
+    "AddDocumentToOnboardingTemplateResponse": "green:AddDocumentToOnboardingTemplateResponse",
+    "document_id": {
+      "@id": "green:document_id",
+      "@type": "xsd:string"
+    },
+    "updated_requirement_response": {
+      "@id": "green:updated_requirement_response",
+      "@type": "@id"
+    },
+    "AllowedS3FileMimeTypes": "green:AllowedS3FileMimeTypes",
+    "AddExistingDocumentToOnboardingTemplateRequest": "green:AddExistingDocumentToOnboardingTemplateRequest",
+    "TribalNationLicenseType": "green:TribalNationLicenseType",
+    "DueDiligenceDocumentStatus": "green:DueDiligenceDocumentStatus",
+    "Document": "green:Document",
+    "WeaveTestAuth": "green:WeaveTestAuth",
+    "apiKey": {
+      "@id": "green:apiKey",
+      "@type": "xsd:string"
+    },
+    "SmartRuleAction": "green:SmartRuleAction",
+    "CustomFieldType": "green:CustomFieldType",
+    "BiotrackTestAuth": "green:BiotrackTestAuth",
+    "username": {
+      "@id": "green:username",
+      "@type": "xsd:string"
+    },
+    "password": {
+      "@id": "green:password",
+      "@type": "xsd:string"
+    },
+    "server_ip": {
+      "@id": "green:server_ip",
+      "@type": "xsd:string"
+    },
+    "port": {
+      "@id": "green:port",
+      "@type": "xsd:decimal"
+    },
+    "database_name": {
+      "@id": "green:database_name",
+      "@type": "xsd:string"
+    },
+    "RequirementTypeEmployeeLicense": "green:RequirementTypeEmployeeLicense",
+    "RequirementTypeBusinessLicense": "green:RequirementTypeBusinessLicense",
+    "ThinCrbInfo": "green:ThinCrbInfo",
+    "mailingstreetaddress": {
+      "@id": "green:mailingstreetaddress",
+      "@type": "xsd:string"
+    },
+    "mailingstate": {
+      "@id": "green:mailingstate",
+      "@type": "xsd:string"
+    },
+    "mailingpostalcode": {
+      "@id": "green:mailingpostalcode",
+      "@type": "xsd:string"
+    },
+    "mailingcity": {
+      "@id": "green:mailingcity",
+      "@type": "xsd:string"
+    },
+    "streetaddress": {
+      "@id": "green:streetaddress",
+      "@type": "xsd:string"
+    },
+    "postalcode": {
+      "@id": "green:postalcode",
+      "@type": "xsd:string"
+    },
+    "SmartRuleConditionStatement": "green:SmartRuleConditionStatement",
+    "operator": {
+      "@id": "green:operator",
+      "@type": "@id"
+    },
+    "targetFieldId": {
+      "@id": "green:targetFieldId",
+      "@type": "xsd:string"
+    },
+    "targetValue": {
+      "@id": "green:targetValue",
+      "@type": "xsd:string"
+    },
+    "DutchieTestAuth": "green:DutchieTestAuth",
+    "medApiKey": {
+      "@id": "green:medApiKey",
+      "@type": "xsd:string"
+    },
+    "recApiKey": {
+      "@id": "green:recApiKey",
+      "@type": "xsd:string"
+    },
+    "ConnectCrbParams": "green:ConnectCrbParams",
+    "IndicaOnlineTestAuth": "green:IndicaOnlineTestAuth",
+    "officeId": {
+      "@id": "green:officeId",
+      "@type": "xsd:decimal"
+    },
+    "AvailablePosTypes": "green:AvailablePosTypes",
+    "MjFreewayTestAuth": "green:MjFreewayTestAuth",
+    "facilityId": {
+      "@id": "green:facilityId",
+      "@type": "xsd:string"
+    },
+    "orgId": {
+      "@id": "green:orgId",
+      "@type": "xsd:string"
+    },
+    "userId": {
+      "@id": "green:userId",
+      "@type": "xsd:string"
+    },
+    "CanixTestAuth": "green:CanixTestAuth",
+    "key": {
+      "@id": "green:key",
+      "@type": "xsd:string"
+    },
+    "AlleavesTestAuth": "green:AlleavesTestAuth",
+    "ConflictError": "green:ConflictError",
+    "OnboardingTemplate": "green:OnboardingTemplate",
+    "updated_by": {
+      "@id": "green:updated_by",
+      "@type": "xsd:string"
+    },
+    "created_by": {
+      "@id": "green:created_by",
+      "@type": "xsd:string"
+    },
+    "published_date": {
+      "@id": "green:published_date",
+      "@type": "xsd:string"
+    },
+    "published_by": {
+      "@id": "green:published_by",
+      "@type": "xsd:string"
+    },
+    "version": {
+      "@id": "green:version",
+      "@type": "xsd:string"
+    },
+    "custom_field_sections": {
+      "@id": "green:custom_field_sections",
+      "@container": "@list"
+    },
+    "document_requirements": {
+      "@id": "green:document_requirements",
+      "@container": "@list"
+    },
+    "RequirementTypeBankCustom": "green:RequirementTypeBankCustom",
+    "SmartRule": "green:SmartRule",
+    "action": {
+      "@id": "green:action",
+      "@type": "@id"
+    },
+    "conditions": {
+      "@id": "green:conditions",
+      "@container": "@list"
+    },
+    "GrowFlowWholesaleTestAuth": "green:GrowFlowWholesaleTestAuth",
+    "RequirementTypeGcvStandard": "green:RequirementTypeGcvStandard",
+    "BlazeTestAuth": "green:BlazeTestAuth",
+    "Authorization": {
+      "@id": "green:Authorization",
+      "@type": "xsd:string"
+    },
+    "AccessCrb": "green:AccessCrb",
+    "MeadowTestAuth": "green:MeadowTestAuth",
+    "clientKey": {
+      "@id": "green:clientKey",
+      "@type": "xsd:string"
+    },
+    "CRBMMedRecClassification": "green:CRBMMedRecClassification",
+    "BrytemapTestAuth": "green:BrytemapTestAuth",
+    "client_key": {
+      "@id": "green:client_key",
+      "@type": "xsd:string"
+    },
+    "CRBMLicensingAuthorityTier": "green:CRBMLicensingAuthorityTier",
+    "PagedBusinessLicenseResponse": "green:PagedBusinessLicenseResponse",
+    "BusinessLicense": "green:BusinessLicense",
+    "licensee": {
+      "@id": "green:licensee",
+      "@type": "xsd:string"
+    },
+    "med_rec_classification": {
+      "@id": "green:med_rec_classification",
+      "@type": "xsd:string"
+    },
+    "locality": {
+      "@id": "green:locality",
+      "@type": "xsd:string"
+    },
+    "licensing_authority_name": {
+      "@id": "green:licensing_authority_name",
+      "@type": "xsd:string"
+    },
+    "licensing_authority_tier": {
+      "@id": "green:licensing_authority_tier",
+      "@type": "@id"
+    },
+    "licensing_authority_address": {
+      "@id": "green:licensing_authority_address"
+    },
+    "state_license_class_description": {
+      "@id": "green:state_license_class_description",
+      "@type": "xsd:string"
+    },
+    "state_license_status_description": {
+      "@id": "green:state_license_status_description",
+      "@type": "xsd:string"
+    },
+    "state_license_sub_class_description": {
+      "@id": "green:state_license_sub_class_description",
+      "@type": "xsd:string"
+    },
+    "reported_license_status": {
+      "@id": "green:reported_license_status",
+      "@type": "xsd:string"
+    },
+    "reported_license_sub_type": {
+      "@id": "green:reported_license_sub_type",
+      "@type": "xsd:string"
+    },
+    "uniform_license_status_description": {
+      "@id": "green:uniform_license_status_description",
+      "@type": "@id"
+    },
+    "status_date": {
+      "@id": "green:status_date",
+      "@type": "xsd:string"
+    },
+    "created_at": {
+      "@id": "green:created_at",
+      "@type": "xsd:string"
+    },
+    "updated_at": {
+      "@id": "green:updated_at",
+      "@type": "xsd:string"
+    },
+    "edited_at": {
+      "@id": "green:edited_at",
+      "@type": "xsd:string"
+    },
+    "businesses": {
+      "@id": "green:businesses",
+      "@container": "@list"
+    },
+    "individuals": {
+      "@id": "green:individuals",
+      "@container": "@list"
+    },
+    "FlowhubTestAuth": "green:FlowhubTestAuth",
+    "clientId": {
+      "@id": "green:clientId",
+      "@type": "xsd:string"
+    },
+    "CredentialsSchema": "green:CredentialsSchema",
+    "credentials_name": {
+      "@id": "green:credentials_name",
+      "@type": "xsd:string"
+    },
+    "credentials_description": {
+      "@id": "green:credentials_description",
+      "@type": "xsd:string"
+    },
+    "credentials_properties": {
+      "@id": "green:credentials_properties"
+    },
+    "required_properties": {
+      "@id": "green:required_properties",
+      "@container": "@list"
+    },
+    "GrowFlowTestAuth": "green:GrowFlowTestAuth",
+    "client_id_name": {
+      "@id": "green:client_id_name",
+      "@type": "xsd:string"
+    },
+    "POSaBITTestAuth": "green:POSaBITTestAuth",
+    "apiToken": {
+      "@id": "green:apiToken",
+      "@type": "xsd:string"
+    },
+    "FlourishTestAuth": "green:FlourishTestAuth",
+    "api_key": {
+      "@id": "green:api_key",
+      "@type": "xsd:string"
+    },
+    "IntacctTestAuth": "green:IntacctTestAuth",
+    "company_id": {
+      "@id": "green:company_id",
+      "@type": "xsd:string"
+    },
+    "user_id": {
+      "@id": "green:user_id",
+      "@type": "xsd:string"
+    },
+    "user_password": {
+      "@id": "green:user_password",
+      "@type": "xsd:string"
+    },
+    "SmartRuleOperator": "green:SmartRuleOperator",
+    "CovaTestAuth": "green:CovaTestAuth",
+    "CRBMUniformLicenseStatusDescription": "green:CRBMUniformLicenseStatusDescription",
+    "TreezTestAuth": "green:TreezTestAuth",
+    "dispensaryName": {
+      "@id": "green:dispensaryName",
+      "@type": "xsd:string"
+    },
+    "Proteus420TestAuth": "green:Proteus420TestAuth",
+    "clientName": {
+      "@id": "green:clientName",
+      "@type": "xsd:string"
+    },
+    "CrbCreationParams": "green:CrbCreationParams",
+    "org": {
+      "@id": "green:org"
+    },
+    "pos_info": {
+      "@id": "green:pos_info"
+    },
+    "users": {
+      "@id": "green:users",
+      "@container": "@list"
+    },
+    "options": {
+      "@id": "green:options"
+    },
+    "RequirementCategory": "green:RequirementCategory",
+    "GreenbitsTestAuth": "green:GreenbitsTestAuth",
+    "ServiceProvider": "green:ServiceProvider",
+    "primary_point_of_contact": {
+      "@id": "green:primary_point_of_contact"
+    },
+    "PosCredentialInformation": "green:PosCredentialInformation",
+    "Alleaves": {
+      "@id": "green:Alleaves"
+    },
+    "Dutchie": {
+      "@id": "green:Dutchie"
+    },
+    "Meadow": {
+      "@id": "green:Meadow"
+    },
+    "Greenbits": {
+      "@id": "green:Greenbits"
+    },
+    "GrowFlow": {
+      "@id": "green:GrowFlow"
+    },
+    "Flowhub": {
+      "@id": "green:Flowhub"
+    },
+    "BioTrack": {
+      "@id": "green:BioTrack"
+    },
+    "Treez": {
+      "@id": "green:Treez"
+    },
+    "Blaze": {
+      "@id": "green:Blaze"
+    },
+    "Canix": {
+      "@id": "green:Canix"
+    },
+    "POSaBIT": {
+      "@id": "green:POSaBIT"
+    },
+    "Proteus420": {
+      "@id": "green:Proteus420"
+    },
+    "IndicaOnline": {
+      "@id": "green:IndicaOnline"
+    },
+    "Weave": {
+      "@id": "green:Weave"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Green Check Verified API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Green Check Verified's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-20) from openapi/green-check-verified-authentication-api-openapi.yml, openapi/green-check-verified-crb-api-openapi.yml, openapi/green-check-verified-crb-customers-api-openapi.yml.",
+  "dcterms:created": "2026-10-20",
+  "dcterms:source": [
+    "openapi/green-check-verified-authentication-api-openapi.yml",
+    "openapi/green-check-verified-crb-api-openapi.yml",
+    "openapi/green-check-verified-crb-customers-api-openapi.yml",
+    "openapi/green-check-verified-crb-documents-api-openapi.yml",
+    "openapi/green-check-verified-crb-info-api-openapi.yml"
+  ]
+}

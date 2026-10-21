@@ -1,16 +1,18 @@
 aid: green-check-verified
+
 name: Green Check Verified
-description: 'Green Check Verified (Green Check) is a New Haven, Connecticut specialty-banking compliance
-  platform founded in 2017 that sits between financial institutions and the cannabis and other cash-intensive
-  businesses they serve. Banks and credit unions use it to onboard cannabis-related businesses (CRBs),
-  collect and review due-diligence documentation, validate that deposits trace to legally licensed sales,
-  monitor licenses and negative news, and produce the BSA/AML oversight reporting examiners require. Its
-  public developer product, Green Check Access, is a REST API suite that normalizes compliance, company
-  and transactional data across more than twenty point-of-sale and seed-to-sale systems — Dutchie, Treez,
-  Flowhub, Biotrack, Metrc, Cova, Canix, Greenbits and others — so service providers such as payroll
-  companies, CRMs, lenders and fintechs can programmatically create and onboard CRBs and read their sales,
-  products, inventory, customer and document data through one contract instead of one integration per POS.'
+
+description: Green Check Verified (Green Check) is a New Haven, Connecticut specialty-banking compliance platform founded in 2017 that sits between
+  financial institutions and the cannabis and other cash-intensive businesses they serve. Banks and credit unions use it to onboard cannabis-related
+  businesses (CRBs), collect and review due-diligence documentation, validate that deposits trace to legally licensed sales, monitor licenses
+  and negative news, and produce the BSA/AML oversight reporting examiners require. Its public developer product, Green Check Access, is a REST
+  API suite that normalizes compliance, company and transactional data across more than twenty point-of-sale and seed-to-sale systems — Dutchie,
+  Treez, Flowhub, Biotrack, Metrc, Cova, Canix, Greenbits and others — so service providers such as payroll companies, CRMs, lenders and fintechs
+  can programmatically create and onboard CRBs and read their sales, products, inventory, customer and document data through one contract instead
+  of one integration per POS.
+
 url: https://raw.githubusercontent.com/api-evangelist/green-check-verified/refs/heads/main/apis.yml
+
 deliveryModel:
   model: saas
   open_source: false
@@ -23,6 +25,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -39,15 +42,25 @@ accessModel:
   - sandbox
   generated: '2026-09-02'
   method: derived
+
 image: https://greencheckverified.com/wp-content/uploads/2021/06/Feature-Image.png
+
 x-type: company
+
 x-source: harvest:secondary-market
+
 specificationVersion: '0.20'
+
 created: '2026-08-22'
+
 modified: '2026-10-06'
+
 x-docs-platform: redocly
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-10-03
+
 tags:
 - Company
 - Cannabis
@@ -61,6 +74,7 @@ tags:
 - Due Diligence
 - KYC
 - Data Aggregation
+
 tags_raw:
 - Company
 - Cannabis
@@ -75,236 +89,30 @@ tags_raw:
 - Know Your Customer
 - Data Aggregation
 - Financial-Services
-apis:
-- aid: green-check-verified:green-check-verified-authentication-api
-  name: Green Check Verified Authentication API
-  description: The Authentication API from Green Check Verified — 1 operation(s) for authentication.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Authentication
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-authentication-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-api
-  name: Green Check Verified CRB API
-  description: The CRB API from Green Check Verified — 1 operation(s) for crb.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-customers-api
-  name: Green Check Verified CRB Customers API
-  description: The CRB Customers API from Green Check Verified — 3 operation(s) for crb customers.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Customers
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-customers-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-documents-api
-  name: Green Check Verified CRB Documents API
-  description: The CRB Documents API from Green Check Verified — 1 operation(s) for crb documents.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Documents
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-documents-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-info-api
-  name: Green Check Verified CRB Info API
-  description: The CRB Info API from Green Check Verified — 2 operation(s) for crb info.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Info
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-info-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-inventory-api
-  name: Green Check Verified CRB Inventory API
-  description: The CRB Inventory API from Green Check Verified — 3 operation(s) for crb inventory.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Inventory
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-inventory-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-inventory-locations-api
-  name: Green Check Verified CRB Inventory Locations API
-  description: >-
-    The CRB Inventory Locations API from Green Check Verified — 2 operation(s) for crb inventory locations.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Inventory Locations
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-inventory-locations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-products-api
-  name: Green Check Verified CRB Products API
-  description: The CRB Products API from Green Check Verified — 3 operation(s) for crb products.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Products
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-products-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-sales-api
-  name: Green Check Verified CRB Sales API
-  description: The CRB Sales API from Green Check Verified — 1 operation(s) for crb sales.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Sales
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-sales-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-crb-templates-api
-  name: Green Check Verified CRB Templates API
-  description: The CRB Templates API from Green Check Verified — 3 operation(s) for crb templates.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - CRB Templates
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-crb-templates-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-customers-api
-  name: Green Check Verified Customers API
-  description: The Customers API from Green Check Verified — 2 operation(s) for customers.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Customers
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-customers-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-documents-api
-  name: Green Check Verified Documents API
-  description: The Documents API from Green Check Verified — 2 operation(s) for documents.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Documents
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-documents-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-inventory-api
-  name: Green Check Verified Inventory API
-  description: The Inventory API from Green Check Verified — 3 operation(s) for inventory.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Inventory
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-inventory-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-inventory-locations-api
-  name: Green Check Verified Inventory Locations API
-  description: >-
-    The Inventory Locations API from Green Check Verified — 2 operation(s) for inventory locations.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Inventory Locations
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-inventory-locations-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-products-api
-  name: Green Check Verified Products API
-  description: The Products API from Green Check Verified — 3 operation(s) for products.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Product
-  tags_raw:
-  - Products
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-products-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-sales-api
-  name: Green Check Verified Sales API
-  description: The Sales API from Green Check Verified — 1 operation(s) for sales.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Sales
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-sales-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-service-provider-api
-  name: Green Check Verified Service Provider API
-  description: >-
-    The Service Provider API from Green Check Verified — 7 operation(s) for service provider.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Service Providers
-  tags_raw:
-  - Service Provider
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-service-provider-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
-- aid: green-check-verified:green-check-verified-trace-api
-  name: Green Check Verified Trace API
-  description: The Trace API from Green Check Verified — 1 operation(s) for trace.
-  humanURL: https://developer.greencheckverified.com/apis/swagger
-  baseURL: https://prod-api.greencheckverified.com
-  tags:
-  - Trace
-  properties:
-  - type: OpenAPI
-    url: openapi/green-check-verified-trace-api-openapi.yml
-  - type: Documentation
-    url: https://developer.greencheckverified.com/apis/swagger
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/green-check-verified-agentic-access.yml
+- type: Spectral
+  url: rules/green-check-verified-rules.yml
+- type: JSONLD
+  url: json-ld/green-check-verified-context.jsonld
+- type: Vocabulary
+  url: vocabulary/green-check-verified-vocabulary.yml
+- type: Deprecation
+  url: lifecycle/green-check-verified-lifecycle.yml
+- type: Hosts
+  url: hosts/green-check-verified-hosts.yml
+- type: IntegrationEdges
+  url: integrations/green-check-verified-integration-edges.yml
+- type: Vendors
+  url: vendors/green-check-verified-vendors.yml
 - url: https://greencheckverified.com/feed/
   type: BlogRSS
 - type: CapabilityMap
@@ -358,18 +166,319 @@ common:
   url: scopes/green-check-verified-scopes.yml
 - type: Sandbox
   url: sandbox/green-check-verified-sandbox.yml
-- type: Conventions
-  url: conventions/green-check-verified-conventions.yml
 - type: DataModel
   url: data-model/green-check-verified-data-model.yml
 - type: AgentSkill
   url: skills/_index.yml
-- type: Plans
-  url: plans/green-check-verified-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/green-check-verified-rate-limits.yml
+
+apis:
+- aid: green-check-verified:green-check-verified-authentication-api
+  name: Green Check Verified Authentication API
+  description: The Authentication API from Green Check Verified — 1 operation(s) for authentication.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-auth-response-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-token-request-body-schema.json
+- aid: green-check-verified:green-check-verified-crb-api
+  name: Green Check Verified CRB API
+  description: The CRB API from Green Check Verified — 1 operation(s) for crb.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-crb-schema.json
+- aid: green-check-verified:green-check-verified-crb-customers-api
+  name: Green Check Verified CRB Customers API
+  description: The CRB Customers API from Green Check Verified — 3 operation(s) for crb customers.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-customer-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-customers-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-customers-schema.json
+- aid: green-check-verified:green-check-verified-crb-documents-api
+  name: Green Check Verified CRB Documents API
+  description: The CRB Documents API from Green Check Verified — 1 operation(s) for crb documents.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-documents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-document-download-schema.json
+- aid: green-check-verified:green-check-verified-crb-info-api
+  name: Green Check Verified CRB Info API
+  description: The CRB Info API from Green Check Verified — 2 operation(s) for crb info.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Info
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-info-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-service-provider-crb-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-update-crb-input-schema.json
+- aid: green-check-verified:green-check-verified-crb-inventory-api
+  name: Green Check Verified CRB Inventory API
+  description: The CRB Inventory API from Green Check Verified — 3 operation(s) for crb inventory.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-inventory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-expanded-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-location-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-inventory-schema.json
+- aid: green-check-verified:green-check-verified-crb-inventory-locations-api
+  name: Green Check Verified CRB Inventory Locations API
+  description: The CRB Inventory Locations API from Green Check Verified — 2 operation(s) for crb inventory locations.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Inventory Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-inventory-locations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-location-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-locations-schema.json
+- aid: green-check-verified:green-check-verified-crb-products-api
+  name: Green Check Verified CRB Products API
+  description: The CRB Products API from Green Check Verified — 3 operation(s) for crb products.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Products
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-product-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-products-schema.json
+- aid: green-check-verified:green-check-verified-crb-sales-api
+  name: Green Check Verified CRB Sales API
+  description: The CRB Sales API from Green Check Verified — 1 operation(s) for crb sales.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Sales
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-sales-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-sales-schema.json
+- aid: green-check-verified:green-check-verified-crb-templates-api
+  name: Green Check Verified CRB Templates API
+  description: The CRB Templates API from Green Check Verified — 3 operation(s) for crb templates.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - CRB Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-crb-templates-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-onboarding-template-response-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-document-requirement-response-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-add-document-to-onboarding-template-request-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-add-document-to-onboarding-template-response-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-update-document-request-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-add-existing-document-to-onboarding-template-request-schema.json
+- aid: green-check-verified:green-check-verified-customers-api
+  name: Green Check Verified Customers API
+  description: The Customers API from Green Check Verified — 2 operation(s) for customers.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-customer-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-customers-schema.json
+- aid: green-check-verified:green-check-verified-documents-api
+  name: Green Check Verified Documents API
+  description: The Documents API from Green Check Verified — 2 operation(s) for documents.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-documents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-document-schema.json
+- aid: green-check-verified:green-check-verified-inventory-api
+  name: Green Check Verified Inventory API
+  description: The Inventory API from Green Check Verified — 3 operation(s) for inventory.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-inventory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-expanded-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-location-inventory-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-inventory-schema.json
+- aid: green-check-verified:green-check-verified-inventory-locations-api
+  name: Green Check Verified Inventory Locations API
+  description: The Inventory Locations API from Green Check Verified — 2 operation(s) for inventory locations.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Inventory Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-inventory-locations-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-location-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-locations-schema.json
+- aid: green-check-verified:green-check-verified-products-api
+  name: Green Check Verified Products API
+  description: The Products API from Green Check Verified — 3 operation(s) for products.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Product
+  tags_raw:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-product-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-products-schema.json
+- aid: green-check-verified:green-check-verified-sales-api
+  name: Green Check Verified Sales API
+  description: The Sales API from Green Check Verified — 1 operation(s) for sales.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Sales
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-sales-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-paged-sales-schema.json
+- aid: green-check-verified:green-check-verified-service-provider-api
+  name: Green Check Verified Service Provider API
+  description: The Service Provider API from Green Check Verified — 7 operation(s) for service provider.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Service Providers
+  tags_raw:
+  - Service Provider
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-service-provider-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+  - type: JSONSchema
+    url: json-schema/green-check-verified-pos-credential-information-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-crb-creation-params-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-onboarding-template-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-crb-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-service-provider-schema.json
+  - type: JSONSchema
+    url: json-schema/green-check-verified-thin-crb-info-schema.json
+- aid: green-check-verified:green-check-verified-trace-api
+  name: Green Check Verified Trace API
+  description: The Trace API from Green Check Verified — 1 operation(s) for trace.
+  humanURL: https://developer.greencheckverified.com/apis/swagger
+  baseURL: https://prod-api.greencheckverified.com
+  tags:
+  - Trace
+  properties:
+  - type: OpenAPI
+    url: openapi/green-check-verified-trace-api-openapi.yml
+  - type: Documentation
+    url: https://developer.greencheckverified.com/apis/swagger
+
 x-enrichment:
-  date: '2026-08-22'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 21
-  pass: local-v1
+  artifacts_added: 0
+  pass: local-v5

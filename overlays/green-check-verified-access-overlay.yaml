@@ -9,7 +9,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enrichment overlay — Green Check Access
   version: 1.0.0
-extends: openapi/green-check-verified-access-openapi.yaml
+extends: ../openapi/_original/green-check-verified-access-openapi.yaml
 actions:
 - target: $.info
   update:

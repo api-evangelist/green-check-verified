@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-service-provider-schema.json",
+  "title": "ServiceProvider",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-service-provider-api-openapi.yml#/components/schemas/ServiceProvider",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "Organization name"
+    },
+    "street_address": {
+      "type": "string",
+      "description": "Street Address"
+    },
+    "city": {
+      "type": "string",
+      "description": "City"
+    },
+    "ein": {
+      "type": "string",
+      "description": "Employer Identification Number"
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone Number"
+    },
+    "postal_code": {
+      "type": "string",
+      "description": "Postal Code"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country"
+    },
+    "state": {
+      "$ref": "#/$defs/USStates",
+      "description": "State"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website"
+    },
+    "timezone": {
+      "$ref": "#/$defs/IANATimezones",
+      "description": "Timezone"
+    },
+    "primary_point_of_contact": {
+      "properties": {
+        "phoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "phoneNumber",
+        "emailAddress",
+        "title",
+        "lastName",
+        "firstName"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "street_address",
+    "city",
+    "ein",
+    "phone_number",
+    "postal_code",
+    "country",
+    "state",
+    "website",
+    "timezone"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "IANATimezones": {
+      "enum": [
+        "America/New_York",
+        "America/Detroit",
+        "America/Kentucky/Louisville",
+        "America/Kentucky/Monticello",
+        "America/Indiana/Indianapolis",
+        "America/Indiana/Vincennes",
+        "America/Indiana/Winamac",
+        "America/Indiana/Marengo",
+        "America/Indiana/Petersburg",
+        "America/Indiana/Vevay",
+        "America/Chicago",
+        "America/Indiana/Tell_City",
+        "America/Indiana/Knox",
+        "America/Menominee",
+        "America/North_Dakota/Center",
+        "America/North_Dakota/New_Salem",
+        "America/North_Dakota/Beulah",
+        "America/Denver",
+        "America/Boise",
+        "America/Phoenix",
+        "America/Los_Angeles",
+        "America/Anchorage",
+        "America/Juneau",
+        "America/Puerto_Rico",
+        "America/Sitka",
+        "America/St_Thomas",
+        "America/Metlakatla",
+        "America/Yakutat",
+        "America/Nome",
+        "America/Adak",
+        "Pacific/Honolulu",
+        "Pacific/Guam",
+        "Pacific/Kosrae",
+        "Pacific/Midway",
+        "Pacific/Pago_Pago",
+        "Pacific/Palau",
+        "Pacific/Kwajalein",
+        "Pacific/Saipan"
+      ],
+      "type": "string"
+    },
+    "USStates": {
+      "description": "Enumeration of all of the United States",
+      "enum": [
+        "AL",
+        "AK",
+        "AZ",
+        "AR",
+        "AS",
+        "CA",
+        "CO",
+        "CT",
+        "DE",
+        "DC",
+        "FM",
+        "FL",
+        "GA",
+        "GU",
+        "HI",
+        "ID",
+        "IL",
+        "IN",
+        "IA",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MA",
+        "MH",
+        "MI",
+        "MN",
+        "MS",
+        "MO",
+        "MT",
+        "NE",
+        "NV",
+        "NH",
+        "NJ",
+        "NM",
+        "NY",
+        "NC",
+        "ND",
+        "MP",
+        "OH",
+        "OK",
+        "OR",
+        "PW",
+        "PA",
+        "PR",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UM",
+        "UT",
+        "VT",
+        "VA",
+        "VI",
+        "WA",
+        "WV",
+        "WI",
+        "WY",
+        "AA",
+        "AE",
+        "AP"
+      ],
+      "type": "string"
+    }
+  }
+}

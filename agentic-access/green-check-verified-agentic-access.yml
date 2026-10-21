@@ -1,0 +1,730 @@
+generated: '2026-10-20'
+method: generated
+source: openapi/green-check-verified-authentication-api-openapi.yml, openapi/green-check-verified-crb-api-openapi.yml,
+  openapi/green-check-verified-crb-customers-api-openapi.yml, openapi/green-check-verified-crb-documents-api-openapi.yml,
+  openapi/green-check-verified-crb-info-api-openapi.yml, openapi/green-check-verified-crb-inventory-api-openapi.yml,
+  openapi/green-check-verified-crb-inventory-locations-api-openapi.yml, openapi/green-check-verified-crb-products-api-openapi.yml,
+  openapi/green-check-verified-crb-sales-api-openapi.yml, openapi/green-check-verified-crb-templates-api-openapi.yml,
+  openapi/green-check-verified-customers-api-openapi.yml, openapi/green-check-verified-documents-api-openapi.yml,
+  openapi/green-check-verified-inventory-api-openapi.yml, openapi/green-check-verified-inventory-locations-api-openapi.yml,
+  openapi/green-check-verified-products-api-openapi.yml, openapi/green-check-verified-sales-api-openapi.yml,
+  openapi/green-check-verified-service-provider-api-openapi.yml, openapi/green-check-verified-trace-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 49
+  by_action_class:
+    acting: 12
+    connected: 37
+  by_consequence:
+    write: 12
+    read: 37
+  human_in_the_loop_required: 0
+operations:
+- path: /auth/token
+  method: post
+  operationId: get-token
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crbs/{crb_id}
+  method: get
+  operationId: get-crb
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - crb:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/customers
+  method: get
+  operationId: get-crb-customers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/customers/{customer_id}
+  method: get
+  operationId: get-crb-customer-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/customers-search
+  method: get
+  operationId: get-crb-customers-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:write
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/documents/{doc_id}/download
+  method: get
+  operationId: get-crb-document-download-link
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}
+  method: get
+  operationId: get-crb-info
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}
+  method: put
+  operationId: update-crb-info
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - service-provider:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service-providers/{sp_id}/crbs/{crb_id}/access
+  method: post
+  operationId: generate-crb-access-creds
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - create-crb-api-key:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service-providers/{sp_id}/crbs/{crb_id}/inventory
+  method: get
+  operationId: get-crb-inventory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/inventory/{inventory_id}
+  method: get
+  operationId: get-crb-inventory-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/inventory-locations/{location_id}/inventory
+  method: get
+  operationId: get-crb-inventory-by-location
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/inventory-locations
+  method: get
+  operationId: get-crb-inventory-locations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/inventory-locations/{location_id}
+  method: get
+  operationId: get-crb-inventory-location-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/products
+  method: get
+  operationId: get-crb-products
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/products-by-barcode/{barcode}
+  method: get
+  operationId: get-crb-products-by-barcode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/products/{product_id}
+  method: get
+  operationId: get-crb-product-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/sales
+  method: get
+  operationId: get-crb-sales
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template
+  method: get
+  operationId: get-crb-onboarding-template
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents
+  method: put
+  operationId: put-crb-onboarding-document
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - service-provider:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents/{document_id}
+  method: put
+  operationId: update-crb-onboarding-document
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - service-provider:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service-providers/{sp_id}/crbs/{crb_id}/onboarding-template/requirements/{requirement_id}/documents/{document_id}
+  method: delete
+  operationId: delete-crb-onboarding-document
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - service-provider:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /crbs/{crb_id}/customers
+  method: get
+  operationId: get-customers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/customers/{customer_id}
+  method: get
+  operationId: get-customer-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/documents
+  method: get
+  operationId: get-documents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - crb:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/documents/{doc_id}
+  method: get
+  operationId: get-document-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - crb:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/inventory
+  method: get
+  operationId: get-inventory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/inventory/{inventory_id}
+  method: get
+  operationId: get-inventory-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/inventory-locations/{location_id}/inventory
+  method: get
+  operationId: get-inventory-by-location
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/inventory-locations
+  method: get
+  operationId: get-inventory-locations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/inventory-locations/{location_id}
+  method: get
+  operationId: get-inventory-location-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/products
+  method: get
+  operationId: get-products
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/products-by-barcode/{barcode}
+  method: get
+  operationId: get-products-by-barcode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/products/{product_id}
+  method: get
+  operationId: get-product-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /crbs/{crb_id}/sales
+  method: get
+  operationId: get-sales
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - point-of-sale:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}
+  method: get
+  operationId: get-service-provider
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs
+  method: get
+  operationId: get-service-provider-crbs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/crbs
+  method: post
+  operationId: create-crb-for-service-provider
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - service-provider:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /service-providers/{sp_id}/pos-credentials-schema
+  method: get
+  operationId: get-service-provider-pos-credentials-schema
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/licenses-search
+  method: get
+  operationId: get-service-provider-licenses-search
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/onboarding-templates
+  method: get
+  operationId: get-service-provider-onboarding-templates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - service-provider:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/ein-search
+  method: get
+  operationId: get-crbs-by-ein
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - ein:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /service-providers/{sp_id}/connect-crb
+  method: post
+  operationId: connect-crb-by-id
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - connect-crb-to-sp:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /trace/*
+  method: options
+  operationId: ProxyOptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - trace
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /trace/*
+  method: get
+  operationId: ProxyGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - admin
+    - trace
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /trace/*
+  method: patch
+  operationId: ProxyPatch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - trace
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /trace/*
+  method: post
+  operationId: ProxyPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - trace
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /trace/*
+  method: put
+  operationId: ProxyPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - trace
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /trace/*
+  method: delete
+  operationId: ProxyDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - admin
+    - trace
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

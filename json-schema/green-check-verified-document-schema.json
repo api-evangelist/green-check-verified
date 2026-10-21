@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-document-schema.json",
+  "title": "Document",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-documents-api-openapi.yml#/components/schemas/Document",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "org_id": {
+      "type": "string"
+    },
+    "s3_key": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "uploaded_by": {
+      "type": "string"
+    },
+    "upload_date": {
+      "type": "string"
+    },
+    "deleted": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "org_id",
+    "s3_key",
+    "file_name",
+    "uploaded_by",
+    "upload_date",
+    "deleted"
+  ],
+  "type": "object",
+  "additionalProperties": false
+}

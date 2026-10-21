@@ -1,0 +1,75 @@
+generated: '2026-10-20'
+method: probed
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors:
+- vendor: aws-api-gateway
+  name: Amazon API Gateway
+  area: api-gateway
+  host: prod-api.greencheckverified.com
+  evidence: header:x-amz-apigw-id
+  signal: header
+  confidence: high
+  kin_score: []
+- vendor: cloudfront
+  name: Amazon CloudFront
+  area: cdn
+  host: developer.greencheckverified.com
+  evidence: header:x-amz-cf-id
+  signal: header
+  confidence: high
+  kin_score: []
+- vendor: redocly
+  name: Redocly
+  area: documentation
+  host: developer.greencheckverified.com
+  evidence: cname:redocly.app
+  signal: docs-platform
+  confidence: high
+  kin_score:
+  - openapi_published
+  - rules_present
+- vendor: hubspot
+  name: HubSpot
+  area: hosting
+  host: support.greencheckverified.com
+  evidence: cname:hubspot.net
+  signal: cname
+  confidence: high
+  kin_score: []
+reliance:
+  areas_vendor_served:
+  - api-gateway
+  - cdn
+  - documentation
+  - hosting
+  vendor_count: 4
+  areas_observed: 12
+  share_of_observable_areas: 0.333
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: redocly'
+- greencheckverified.com (Website)
+- developer.greencheckverified.com (DeveloperPortal)
+- developer.greencheckverified.com (Documentation)
+- developer.greencheckverified.com (APIReference)
+- developer.greencheckverified.com (GettingStarted)
+- support.greencheckverified.com (Support)
+- greencheckverified.com (SignUp)
+- app.greencheckverified.com (Login)
+- prod-api.greencheckverified.com (baseURL)
+- developer.greencheckverified.com (mcp)

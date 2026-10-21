@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-add-existing-document-to-onboarding-template-request-schema.json",
+  "title": "AddExistingDocumentToOnboardingTemplateRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-crb-templates-api-openapi.yml#/components/schemas/AddExistingDocumentToOnboardingTemplateRequest",
+  "properties": {
+    "document_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id"
+  ],
+  "type": "object",
+  "additionalProperties": false
+}

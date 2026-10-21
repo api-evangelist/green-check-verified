@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-token-request-body-schema.json",
+  "title": "TokenRequestBody",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-authentication-api-openapi.yml#/components/schemas/TokenRequestBody",
+  "properties": {
+    "client_id": {
+      "type": "string"
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "grant_type": {
+      "$ref": "#/$defs/AccessGrantType"
+    },
+    "scope": {
+      "items": {
+        "$ref": "#/$defs/AccessScopes"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret",
+    "grant_type"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "AccessGrantType": {
+      "enum": [
+        "client_credentials"
+      ],
+      "type": "string"
+    },
+    "AccessScopes": {
+      "enum": [
+        "service-provider:read",
+        "service-provider:write",
+        "crb:read",
+        "point-of-sale:read",
+        "point-of-sale:write",
+        "trace",
+        "admin",
+        "ein:read",
+        "crb-id-request:read",
+        "create-crb-api-key:write",
+        "connect-crb-to-sp:write"
+      ],
+      "type": "string"
+    }
+  }
+}

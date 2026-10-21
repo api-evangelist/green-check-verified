@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-thin-crb-info-schema.json",
+  "title": "ThinCrbInfo",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-service-provider-api-openapi.yml#/components/schemas/ThinCrbInfo",
+  "properties": {
+    "ein": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "mailingstreetaddress": {
+      "type": "string"
+    },
+    "mailingstate": {
+      "type": "string"
+    },
+    "mailingpostalcode": {
+      "type": "string"
+    },
+    "mailingcity": {
+      "type": "string"
+    },
+    "streetaddress": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "postalcode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "ein"
+  ],
+  "type": "object",
+  "additionalProperties": false
+}

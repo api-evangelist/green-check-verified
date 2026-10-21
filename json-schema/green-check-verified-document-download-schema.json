@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-document-download-schema.json",
+  "title": "DocumentDownload",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-crb-documents-api-openapi.yml#/components/schemas/DocumentDownload",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "org_id": {
+      "type": "string"
+    },
+    "s3_key": {
+      "type": "string"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "uploaded_by": {
+      "type": "string"
+    },
+    "upload_date": {
+      "type": "string"
+    },
+    "deleted": {
+      "type": "boolean"
+    },
+    "download_link": {
+      "type": "string",
+      "description": "Link to download a document. Expires in one hour"
+    },
+    "expires_at": {
+      "type": "number",
+      "format": "double",
+      "description": "Expiration time in UTC milliseconds"
+    }
+  },
+  "required": [
+    "id",
+    "org_id",
+    "s3_key",
+    "file_name",
+    "uploaded_by",
+    "upload_date",
+    "deleted",
+    "download_link",
+    "expires_at"
+  ],
+  "type": "object",
+  "additionalProperties": false
+}

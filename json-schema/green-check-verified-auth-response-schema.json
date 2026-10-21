@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-auth-response-schema.json",
+  "title": "AuthResponse",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-authentication-api-openapi.yml#/components/schemas/AuthResponse",
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "Bearer token passed with request"
+    },
+    "token_type": {
+      "type": "string",
+      "enum": [
+        "Bearer"
+      ],
+      "description": "Access returns a Bearer token"
+    },
+    "scope": {
+      "items": {
+        "$ref": "#/$defs/AccessScopes"
+      },
+      "type": "array",
+      "description": "List of scopes this token has access to"
+    },
+    "expires_at": {
+      "type": "number",
+      "format": "double",
+      "description": "Seconds until this token expires"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Your client Id"
+    },
+    "issued_at": {
+      "type": "number",
+      "format": "double",
+      "description": "When the token was issued, expressed as the number of seconds since the Unix epoch"
+    }
+  },
+  "required": [
+    "access_token",
+    "token_type",
+    "scope",
+    "expires_at",
+    "client_id",
+    "issued_at"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "AccessScopes": {
+      "enum": [
+        "service-provider:read",
+        "service-provider:write",
+        "crb:read",
+        "point-of-sale:read",
+        "point-of-sale:write",
+        "trace",
+        "admin",
+        "ein:read",
+        "crb-id-request:read",
+        "create-crb-api-key:write",
+        "connect-crb-to-sp:write"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-customer-schema.json",
+  "title": "Customer",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-crb-customers-api-openapi.yml#/components/schemas/Customer",
+  "properties": {
+    "crb_id": {
+      "$ref": "#/$defs/UUID",
+      "description": "ID of the CRB the customer record belongs to."
+    },
+    "id": {
+      "$ref": "#/$defs/UUID",
+      "description": "The unique ID of this customer record."
+    },
+    "pos_type": {
+      "$ref": "#/$defs/FriendlyPosName",
+      "description": "the PosType the customer record is sourced from"
+    },
+    "pos_customer_id": {
+      "type": "string",
+      "description": "ID of the customer in the POS"
+    },
+    "first_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed first name"
+    },
+    "last_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed last name"
+    },
+    "middle_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed middle name"
+    },
+    "dob": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Plain date field for customer date of birth"
+    },
+    "address_1": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Customer address"
+    },
+    "address_2": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Additional Customer address"
+    },
+    "city": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "City"
+    },
+    "state": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "State"
+    },
+    "zip_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Zip code"
+    },
+    "phone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed phone number"
+    },
+    "cell_phone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed cell phone number"
+    },
+    "email_address": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed email address"
+    },
+    "gender": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Gender"
+        }
+      ],
+      "description": "Gender",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pos_identification_type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Main form of identification used by the customer"
+    },
+    "pos_customer_type": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Raw POS value for customer type, used to determine if medical or recreational"
+    },
+    "gc_customer_type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/MedicalOrRec"
+        }
+      ],
+      "description": "Customer type determined by GCV, Medical or Recreational",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "medical_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed medical ID"
+    },
+    "medical_id_expiration_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Medical ID expiration date"
+    },
+    "drivers_license_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed drivers license ID"
+    },
+    "drivers_license_expiration_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Drivers license expiration date"
+    },
+    "other_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hashed other license ID"
+    },
+    "other_id_expiration_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Other ID expiration"
+    },
+    "caregiver": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "True if this customer is a caregiver"
+    },
+    "loyalty_member": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "True if this customer is a loyalty member"
+    },
+    "loyalty_points": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/PositiveDouble"
+        }
+      ],
+      "description": "Number of accrued loyalty points",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "anonymous": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "True if this is an anonymous customer, can depend on the state"
+    },
+    "pos_updated_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "the timestamp reported by the pos for the last update to this record in UTC"
+    },
+    "pos_updated_date_local": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "the timestamp reported by the pos for the last update to this record in the crb local time"
+    },
+    "gc_updated_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "the timestamp of this records insertion/updates in UTC"
+    },
+    "gc_created_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "crb_id",
+    "id",
+    "pos_type",
+    "pos_customer_id",
+    "first_name",
+    "last_name",
+    "middle_name",
+    "dob",
+    "address_1",
+    "address_2",
+    "city",
+    "state",
+    "zip_code",
+    "phone",
+    "cell_phone",
+    "email_address",
+    "gender",
+    "pos_identification_type",
+    "pos_customer_type",
+    "gc_customer_type",
+    "medical_id",
+    "medical_id_expiration_date",
+    "drivers_license_id",
+    "drivers_license_expiration_date",
+    "other_id",
+    "other_id_expiration_date",
+    "caregiver",
+    "loyalty_member",
+    "loyalty_points",
+    "anonymous",
+    "pos_updated_date",
+    "pos_updated_date_local",
+    "gc_updated_date",
+    "gc_created_date"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "FriendlyPosName": {
+      "type": "string",
+      "enum": [
+        "Alleaves",
+        "Dutchie",
+        "Dutchie Wholesale",
+        "Cova",
+        "Meadow",
+        "MJ Freeway",
+        "MJ Freeway Wholesale",
+        "Greenbits",
+        "GrowFlow",
+        "GrowFlow Wholesale",
+        "Portal42",
+        "Metrc S2S",
+        "Metrc S2S Wholesale",
+        "Flourish",
+        "Flourish Wholesale",
+        "Flowhub",
+        "BioTrack",
+        "BioTrack Wholesale",
+        "Treez",
+        "Blaze",
+        "Quickbooks",
+        "Sage Intacct",
+        "Canix",
+        "Brytemap",
+        "POSaBIT",
+        "Proteus420",
+        "IndicaOnline",
+        "Sweed",
+        "Weave",
+        "Jane",
+        "Manual Upload Wholesale",
+        "Cova Test Account",
+        "Leaf Logix Test Account",
+        "BioTrack Test Account",
+        "Mj Freeway Test Account",
+        "Treez IO Test Account",
+        "Green Bits Test Account",
+        "Manual Upload Retail",
+        "Not Configured",
+        "Unsupported",
+        "CRBMonitor",
+        "Plaid"
+      ]
+    },
+    "Gender": {
+      "enum": [
+        "Male",
+        "Female",
+        "Other"
+      ],
+      "type": "string"
+    },
+    "MedicalOrRec": {
+      "enum": [
+        "medical",
+        "rec"
+      ],
+      "type": "string"
+    },
+    "PositiveDouble": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0
+    },
+    "UUID": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$"
+    }
+  }
+}

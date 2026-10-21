@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/green-check-verified/main/json-schema/green-check-verified-add-document-to-onboarding-template-request-schema.json",
+  "title": "AddDocumentToOnboardingTemplateRequest",
+  "x-generated": "2026-10-20",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/green-check-verified-crb-templates-api-openapi.yml#/components/schemas/AddDocumentToOnboardingTemplateRequest",
+  "properties": {
+    "file_name": {
+      "type": "string",
+      "description": "Full file name, including the file extension",
+      "pattern": "^[^./\\\\]+\\.(csv|docx?|gif|jpe?g|json|odp|ods|odt|png|pdf|pptx?|rtf|svg|tiff?|txt|vsd|xlsx?|xml)$"
+    },
+    "file_type": {
+      "$ref": "#/$defs/AllowedS3FileMimeTypes",
+      "description": "File mime type, to ensure only allowed types are uploaded"
+    },
+    "base64": {
+      "type": "string",
+      "description": "A base 64 encoded string of the file contents."
+    }
+  },
+  "required": [
+    "file_name",
+    "file_type",
+    "base64"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "AllowedS3FileMimeTypes": {
+      "enum": [
+        "text/csv",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "image/gif",
+        "image/jpeg",
+        "application/json",
+        "application/vnd.oasis.opendocument.presentation",
+        "application/vnd.oasis.opendocument.spreadsheet",
+        "application/vnd.oasis.opendocument.text",
+        "image/png",
+        "application/pdf",
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/rtf",
+        "image/svg+xml",
+        "image/tiff",
+        "text/plain",
+        "application/vnd.visio",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/xml",
+        "text/xml"
+      ],
+      "type": "string"
+    }
+  }
+}
